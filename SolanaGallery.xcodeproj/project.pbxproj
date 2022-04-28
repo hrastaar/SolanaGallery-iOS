@@ -11,9 +11,16 @@
 		741373772819FBAF004B31A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373762819FBAF004B31A8 /* SceneDelegate.swift */; };
 		741373792819FBAF004B31A8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373782819FBAF004B31A8 /* ViewController.swift */; };
 		7413737C2819FBAF004B31A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7413737A2819FBAF004B31A8 /* Main.storyboard */; };
-		7413737F2819FBAF004B31A8 /* SolanaGallery.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7413737D2819FBAF004B31A8 /* SolanaGallery.xcdatamodeld */; };
 		741373812819FBAF004B31A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741373802819FBAF004B31A8 /* Assets.xcassets */; };
 		741373842819FBAF004B31A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 741373822819FBAF004B31A8 /* LaunchScreen.storyboard */; };
+		7413738D2819FBEA004B31A8 /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7413738C2819FBEA004B31A8 /* WatchlistViewController.swift */; };
+		7413738F2819FD4F004B31A8 /* SolanaGalleryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7413738E2819FD4F004B31A8 /* SolanaGalleryAPI.swift */; };
+		7413739A281A3EDB004B31A8 /* SolanaGallery.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 74137398281A3EDB004B31A8 /* SolanaGallery.xcdatamodeld */; };
+		741373A1281A3FB7004B31A8 /* WatchlistItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7413739F281A3FB7004B31A8 /* WatchlistItem+CoreDataClass.swift */; };
+		741373A2281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373A0281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift */; };
+		741373A5281A41C5004B31A8 /* CollectionStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373A4281A41C5004B31A8 /* CollectionStats.swift */; };
+		741373A7281A41E9004B31A8 /* CollectionCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373A6281A41E9004B31A8 /* CollectionCount.swift */; };
+		741373AA281A4233004B31A8 /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373A9281A4233004B31A8 /* WatchlistViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,10 +29,17 @@
 		741373762819FBAF004B31A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		741373782819FBAF004B31A8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7413737B2819FBAF004B31A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		7413737E2819FBAF004B31A8 /* SolanaGallery.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SolanaGallery.xcdatamodel; sourceTree = "<group>"; };
 		741373802819FBAF004B31A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		741373832819FBAF004B31A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		741373852819FBAF004B31A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7413738C2819FBEA004B31A8 /* WatchlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
+		7413738E2819FD4F004B31A8 /* SolanaGalleryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaGalleryAPI.swift; sourceTree = "<group>"; };
+		74137399281A3EDB004B31A8 /* SolanaGallery.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SolanaGallery.xcdatamodel; sourceTree = "<group>"; };
+		7413739F281A3FB7004B31A8 /* WatchlistItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchlistItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		741373A0281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchlistItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		741373A4281A41C5004B31A8 /* CollectionStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionStats.swift; sourceTree = "<group>"; };
+		741373A6281A41E9004B31A8 /* CollectionCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCount.swift; sourceTree = "<group>"; };
+		741373A9281A4233004B31A8 /* WatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +72,10 @@
 		741373732819FBAF004B31A8 /* SolanaGallery */ = {
 			isa = PBXGroup;
 			children = (
+				741373A8281A4209004B31A8 /* View Models */,
+				741373A3281A41A8004B31A8 /* Models */,
+				74137397281A23F7004B31A8 /* Core Data */,
+				7413738B2819FBDB004B31A8 /* View Controllers */,
 				741373742819FBAF004B31A8 /* AppDelegate.swift */,
 				741373762819FBAF004B31A8 /* SceneDelegate.swift */,
 				741373782819FBAF004B31A8 /* ViewController.swift */,
@@ -65,9 +83,44 @@
 				741373802819FBAF004B31A8 /* Assets.xcassets */,
 				741373822819FBAF004B31A8 /* LaunchScreen.storyboard */,
 				741373852819FBAF004B31A8 /* Info.plist */,
-				7413737D2819FBAF004B31A8 /* SolanaGallery.xcdatamodeld */,
+				7413738E2819FD4F004B31A8 /* SolanaGalleryAPI.swift */,
+				74137398281A3EDB004B31A8 /* SolanaGallery.xcdatamodeld */,
 			);
 			path = SolanaGallery;
+			sourceTree = "<group>";
+		};
+		7413738B2819FBDB004B31A8 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7413738C2819FBEA004B31A8 /* WatchlistViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		74137397281A23F7004B31A8 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				7413739F281A3FB7004B31A8 /* WatchlistItem+CoreDataClass.swift */,
+				741373A0281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		741373A3281A41A8004B31A8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				741373A4281A41C5004B31A8 /* CollectionStats.swift */,
+				741373A6281A41E9004B31A8 /* CollectionCount.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		741373A8281A4209004B31A8 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				741373A9281A4233004B31A8 /* WatchlistViewModel.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,9 +194,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7413737F2819FBAF004B31A8 /* SolanaGallery.xcdatamodeld in Sources */,
+				7413738D2819FBEA004B31A8 /* WatchlistViewController.swift in Sources */,
+				7413739A281A3EDB004B31A8 /* SolanaGallery.xcdatamodeld in Sources */,
+				741373AA281A4233004B31A8 /* WatchlistViewModel.swift in Sources */,
 				741373792819FBAF004B31A8 /* ViewController.swift in Sources */,
+				7413738F2819FD4F004B31A8 /* SolanaGalleryAPI.swift in Sources */,
+				741373A1281A3FB7004B31A8 /* WatchlistItem+CoreDataClass.swift in Sources */,
 				741373752819FBAF004B31A8 /* AppDelegate.swift in Sources */,
+				741373A5281A41C5004B31A8 /* CollectionStats.swift in Sources */,
+				741373A7281A41E9004B31A8 /* CollectionCount.swift in Sources */,
+				741373A2281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift in Sources */,
 				741373772819FBAF004B31A8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,12 +424,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		7413737D2819FBAF004B31A8 /* SolanaGallery.xcdatamodeld */ = {
+		74137398281A3EDB004B31A8 /* SolanaGallery.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				7413737E2819FBAF004B31A8 /* SolanaGallery.xcdatamodel */,
+				74137399281A3EDB004B31A8 /* SolanaGallery.xcdatamodel */,
 			);
-			currentVersion = 7413737E2819FBAF004B31A8 /* SolanaGallery.xcdatamodel */;
+			currentVersion = 74137399281A3EDB004B31A8 /* SolanaGallery.xcdatamodel */;
 			path = SolanaGallery.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

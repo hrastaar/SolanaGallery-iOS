@@ -14,7 +14,27 @@ class WatchlistViewModel {
         self.collectionStats = stats
     }
     
-    func watchlistItemLabelText() -> String {
-        return self.collectionStats.symbol + ", floor: " + String(self.collectionStats.floorPrice) + ", # listed: " + String(self.collectionStats.listedCount)
+    func getCollectionNameString() -> String {
+        var collectionName = collectionStats.symbol
+        collectionName = collectionName.replacingOccurrences(of: "_", with: " ")
+        return collectionName.capitalized
+    }
+    
+    func getFloorPriceString() -> String {
+        return String(format: "Floor Price\n%.2f◎", collectionStats.floorPrice)
+    }
+    
+    func getListedCountString() -> String {
+        return "# Listed\n" + String(collectionStats.listedCount)
+    }
+    
+    func getLastUpdatedString() -> String {
+        let timestamp = Double(collectionStats.lastUpdated)
+        let date = Date(timeIntervalSince1970: timestamp)
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateStyle = .full
+        
+        return dateFormatter.string(from: date)
     }
 }

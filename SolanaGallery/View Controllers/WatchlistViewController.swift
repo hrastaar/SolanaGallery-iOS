@@ -7,9 +7,15 @@
 
 import UIKit
 
-class WatchlistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class WatchlistViewController: UIViewController {
 
-    @IBOutlet var tableView: UITableView!
+    let cellIdentifier = "WatchlistTableViewCell"
+    
+    var tableView: UITableView = {
+        var tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        return tableView
+    }()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -17,20 +23,23 @@ class WatchlistViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+        title = "Watchlist"
+        view.backgroundColor = .systemBackground
+        view.addSubview(tableView)
+
         tableView.delegate = self
         tableView.dataSource = self
-        
-        
-        addCollectionToWatchlist(collectionName: "quantum_traders")
-        addCollectionToWatchlist(collectionName: "solstein")
-        addCollectionToWatchlist(collectionName: "solsteads_surreal_estate")
-        addCollectionToWatchlist(collectionName: "quantum_traders")
+        tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+
         syncWatchlistCollections()
     }
     
-    func syncWatchlistCollections() {
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.tableView.frame = self.view.bounds
+    }
+    
+    private func syncWatchlistCollections() {
         self.watchlistItems.removeAll()
         do {
             let collections = try context.fetch(WatchlistItem.fetchRequest())
@@ -39,7 +48,6 @@ class WatchlistViewController: UIViewController, UITableViewDelegate, UITableVie
                     SolanaGalleryAPI.sharedInstance.getNftCollectionStats(collectionName: collectionName) { stats in
                         if let stats = stats {
                             let watchlistViewModel = WatchlistViewModel(withCollectionStats: stats)
-                            print(watchlistViewModel)
                             self.watchlistItems.append(watchlistViewModel)
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
@@ -98,16 +106,14 @@ class WatchlistViewController: UIViewController, UITableViewDelegate, UITableVie
 
 }
 
-extension WatchlistViewController {
+extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return watchlistItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WatchlistCell", for: indexPath)
-        cell.textLabel?.adjustsFontSizeToFitWidth = true
-        cell.textLabel?.minimumScaleFactor = 0.5
-        cell.textLabel?.text = watchlistItems[indexPath.row].watchlistItemLabelText()
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! WatchlistTableViewCell
+        cell.updateData(with: watchlistItems[indexPath.row])
         return cell
     }
     

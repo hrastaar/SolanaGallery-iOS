@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		741373752819FBAF004B31A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373742819FBAF004B31A8 /* AppDelegate.swift */; };
 		741373772819FBAF004B31A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373762819FBAF004B31A8 /* SceneDelegate.swift */; };
-		741373792819FBAF004B31A8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373782819FBAF004B31A8 /* ViewController.swift */; };
 		741373812819FBAF004B31A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741373802819FBAF004B31A8 /* Assets.xcassets */; };
 		741373842819FBAF004B31A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 741373822819FBAF004B31A8 /* LaunchScreen.storyboard */; };
 		7413738D2819FBEA004B31A8 /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7413738C2819FBEA004B31A8 /* WatchlistViewController.swift */; };
@@ -23,14 +22,16 @@
 		741373AE281B65C4004B31A8 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373AD281B65C4004B31A8 /* MainTabBarViewController.swift */; };
 		741373B0281B6DC4004B31A8 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373AF281B6DC4004B31A8 /* HomePageViewController.swift */; };
 		745392B2281DD3EA003DE9CD /* WatchlistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392B1281DD3EA003DE9CD /* WatchlistTableViewCell.swift */; };
-		745392B5281DE154003DE9CD /* UIView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392B4281DE154003DE9CD /* UIView_Extension.swift */; };
+		745392B5281DE154003DE9CD /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392B4281DE154003DE9CD /* UIView+Extension.swift */; };
+		745392B7281F7931003DE9CD /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392B6281F7931003DE9CD /* UIFont+Extension.swift */; };
+		745392B9281F7A29003DE9CD /* DIN-D.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 745392B8281F7A29003DE9CD /* DIN-D.ttf */; };
+		745392BB281F7CDA003DE9CD /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392BA281F7CDA003DE9CD /* UIColor+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		741373712819FBAF004B31A8 /* SolanaGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolanaGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		741373742819FBAF004B31A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		741373762819FBAF004B31A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		741373782819FBAF004B31A8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		741373802819FBAF004B31A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		741373832819FBAF004B31A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		741373852819FBAF004B31A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -45,7 +46,11 @@
 		741373AD281B65C4004B31A8 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		741373AF281B6DC4004B31A8 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		745392B1281DD3EA003DE9CD /* WatchlistTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistTableViewCell.swift; sourceTree = "<group>"; };
-		745392B4281DE154003DE9CD /* UIView_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_Extension.swift; sourceTree = "<group>"; };
+		745392B4281DE154003DE9CD /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		745392B6281F7931003DE9CD /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		745392B8281F7A29003DE9CD /* DIN-D.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DIN-D.ttf"; path = "SolanaGallery/DIN-D.ttf"; sourceTree = SOURCE_ROOT; };
+		745392BA281F7CDA003DE9CD /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		745392C6281F8DC4003DE9CD /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gradient.png; path = ../../../../gradient.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,20 +83,18 @@
 		741373732819FBAF004B31A8 /* SolanaGallery */ = {
 			isa = PBXGroup;
 			children = (
-				745392B3281DE140003DE9CD /* Extensions */,
-				745392B0281DD3C7003DE9CD /* Views */,
-				741373A8281A4209004B31A8 /* View Models */,
-				741373A3281A41A8004B31A8 /* Models */,
-				74137397281A23F7004B31A8 /* Core Data */,
-				7413738B2819FBDB004B31A8 /* View Controllers */,
+				741373852819FBAF004B31A8 /* Info.plist */,
+				741373822819FBAF004B31A8 /* LaunchScreen.storyboard */,
 				741373742819FBAF004B31A8 /* AppDelegate.swift */,
 				741373762819FBAF004B31A8 /* SceneDelegate.swift */,
-				741373782819FBAF004B31A8 /* ViewController.swift */,
-				741373802819FBAF004B31A8 /* Assets.xcassets */,
-				741373822819FBAF004B31A8 /* LaunchScreen.storyboard */,
-				741373852819FBAF004B31A8 /* Info.plist */,
 				7413738E2819FD4F004B31A8 /* SolanaGalleryAPI.swift */,
-				74137398281A3EDB004B31A8 /* SolanaGallery.xcdatamodeld */,
+				745392C2281F8D8F003DE9CD /* Assets */,
+				74137397281A23F7004B31A8 /* Core Data */,
+				745392B3281DE140003DE9CD /* Extensions */,
+				741373A3281A41A8004B31A8 /* Models */,
+				7413738B2819FBDB004B31A8 /* View Controllers */,
+				741373A8281A4209004B31A8 /* View Models */,
+				745392B0281DD3C7003DE9CD /* Views */,
 			);
 			path = SolanaGallery;
 			sourceTree = "<group>";
@@ -109,6 +112,7 @@
 		74137397281A23F7004B31A8 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				74137398281A3EDB004B31A8 /* SolanaGallery.xcdatamodeld */,
 				7413739F281A3FB7004B31A8 /* WatchlistItem+CoreDataClass.swift */,
 				741373A0281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift */,
 			);
@@ -136,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				745392B1281DD3EA003DE9CD /* WatchlistTableViewCell.swift */,
+				745392B8281F7A29003DE9CD /* DIN-D.ttf */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -143,9 +148,20 @@
 		745392B3281DE140003DE9CD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				745392B4281DE154003DE9CD /* UIView_Extension.swift */,
+				745392B4281DE154003DE9CD /* UIView+Extension.swift */,
+				745392B6281F7931003DE9CD /* UIFont+Extension.swift */,
+				745392BA281F7CDA003DE9CD /* UIColor+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		745392C2281F8D8F003DE9CD /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				741373802819FBAF004B31A8 /* Assets.xcassets */,
+				745392C6281F8DC4003DE9CD /* gradient.png */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,6 +222,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				745392B9281F7A29003DE9CD /* DIN-D.ttf in Resources */,
 				741373842819FBAF004B31A8 /* LaunchScreen.storyboard in Resources */,
 				741373812819FBAF004B31A8 /* Assets.xcassets in Resources */,
 			);
@@ -220,13 +237,14 @@
 			files = (
 				7413738D2819FBEA004B31A8 /* WatchlistViewController.swift in Sources */,
 				7413739A281A3EDB004B31A8 /* SolanaGallery.xcdatamodeld in Sources */,
+				745392B7281F7931003DE9CD /* UIFont+Extension.swift in Sources */,
 				741373AA281A4233004B31A8 /* WatchlistViewModel.swift in Sources */,
+				745392BB281F7CDA003DE9CD /* UIColor+Extension.swift in Sources */,
 				745392B2281DD3EA003DE9CD /* WatchlistTableViewCell.swift in Sources */,
-				741373792819FBAF004B31A8 /* ViewController.swift in Sources */,
 				7413738F2819FD4F004B31A8 /* SolanaGalleryAPI.swift in Sources */,
 				741373A1281A3FB7004B31A8 /* WatchlistItem+CoreDataClass.swift in Sources */,
 				741373752819FBAF004B31A8 /* AppDelegate.swift in Sources */,
-				745392B5281DE154003DE9CD /* UIView_Extension.swift in Sources */,
+				745392B5281DE154003DE9CD /* UIView+Extension.swift in Sources */,
 				741373B0281B6DC4004B31A8 /* HomePageViewController.swift in Sources */,
 				741373A5281A41C5004B31A8 /* CollectionStats.swift in Sources */,
 				741373A7281A41E9004B31A8 /* CollectionCount.swift in Sources */,

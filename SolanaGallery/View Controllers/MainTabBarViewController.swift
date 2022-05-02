@@ -27,6 +27,8 @@ class MainTabBarViewController: UITabBarController {
         watchlistVC.tabBarItem.title = "Watchlist"
         
         tabBar.tintColor = .label
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.primaryFont(size: 12)], for: .normal)
+
         
         setViewControllers([homepageVC, watchlistVC], animated: true)
     }

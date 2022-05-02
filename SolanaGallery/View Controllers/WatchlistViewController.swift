@@ -25,11 +25,13 @@ class WatchlistViewController: UIViewController {
         super.viewDidLoad()
         title = "Watchlist"
         view.backgroundColor = .systemBackground
+
         view.addSubview(tableView)
 
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.allowsMultipleSelectionDuringEditing = false
 
         syncWatchlistCollections()
     }
@@ -47,13 +49,11 @@ class WatchlistViewController: UIViewController {
                 if let collectionName = collection.collectionName {
                     SolanaGalleryAPI.sharedInstance.getNftCollectionStats(collectionName: collectionName) { stats in
                         if let stats = stats {
-                            let watchlistViewModel = WatchlistViewModel(withCollectionStats: stats)
+                            let watchlistViewModel = WatchlistViewModel(withCollectionStats: stats, coreDataItem: collection)
                             self.watchlistItems.append(watchlistViewModel)
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
                             }
-                        } else {
-                            print("HERE with collection: ", collectionName)
                         }
 
                     }
@@ -64,7 +64,50 @@ class WatchlistViewController: UIViewController {
         }
 
     }
+}
+// MARK: UITableView Extension
+
+extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return watchlistItems.count
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! WatchlistTableViewCell
+
+        cell.updateData(with: watchlistItems[indexPath.row])
+
+        return cell
+    }
+    
+    private func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+
+    private func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCell.EditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (editingStyle == UITableViewCell.EditingStyle.delete) {
+            // handle delete (by removing the data from your array and updating the tableview)
+            print("delete")
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            let item = watchlistItems[indexPath.row]
+            watchlistItems.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            removeCollectionFromWatchList(item: item.coreDataItem)
+        }
+    }
+}
+
+// MARK: CoreData Save Interactions
+extension WatchlistViewController {
+    // Save new collection to CoreData
     func addCollectionToWatchlist(collectionName: String) {
         do {
             let items = try context.fetch(WatchlistItem.fetchRequest())
@@ -83,48 +126,13 @@ class WatchlistViewController: UIViewController {
         }
     }
     
+    // Remove a collection from CoreData (call when delete action in WatchlistTableViewCell)
     func removeCollectionFromWatchList(item: WatchlistItem) {
         context.delete(item)
-        
         do {
             try context.save()
         } catch {
             print("error deleting collection from watchlist")
-        }
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-
-extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return watchlistItems.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! WatchlistTableViewCell
-        cell.updateData(with: watchlistItems[indexPath.row])
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCell.EditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if (editingStyle == UITableViewCell.EditingStyle.delete) {
-            // handle delete (by removing the data from your array and updating the tableview)
-            print("delete")
         }
     }
 }

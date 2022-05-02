@@ -21,6 +21,7 @@ class WatchlistTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textAlignment = .left
         label.numberOfLines = 2
+        label.font = UIFont.primaryFont(size: 15)
         label.sizeToFit()
         return label
     }()
@@ -29,12 +30,14 @@ class WatchlistTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = 2
+        label.font = UIFont.primaryFont(size: 13)
         return label
     }()
     var listedCountLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = 2
+        label.font = UIFont.primaryFont(size: 13)
         return label
     }()
     
@@ -44,7 +47,6 @@ class WatchlistTableViewCell: UITableViewCell {
     
     func updateData(with watchlistViewModel: WatchlistViewModel) {
         self.watchlistViewModel = watchlistViewModel
-        
         setupUI()
     }
     private func setupUI() {
@@ -52,15 +54,14 @@ class WatchlistTableViewCell: UITableViewCell {
         super.addSubview(floorPriceLabel)
         super.addSubview(listedCountLabel)
 
-        collectionNameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: bounds.width * 0.5, height: 0, enableInsets: false)
+        collectionNameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 10, paddingBottom: 5, paddingRight: 0, width: 0, height: 0, enableInsets: false)
 
         let stackView = UIStackView(arrangedSubviews: [floorPriceLabel, listedCountLabel])
         stackView.distribution = .equalSpacing
         stackView.axis = .vertical
-        stackView.spacing = 25
+        stackView.spacing = 20
         addSubview(stackView)
-        stackView.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 15, paddingLeft: 5, paddingBottom: 15, paddingRight: 5, width: 0, height: 0, enableInsets: false)
-
+        stackView.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 5, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
     }
     
     required init?(coder: NSCoder) {
@@ -69,7 +70,6 @@ class WatchlistTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
     override func prepareForReuse() {

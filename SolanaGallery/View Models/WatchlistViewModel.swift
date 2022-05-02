@@ -9,9 +9,11 @@ import Foundation
 
 class WatchlistViewModel {
     let collectionStats: CollectionStats
+    let coreDataItem: WatchlistItem
     
-    init(withCollectionStats stats: CollectionStats) {
+    init(withCollectionStats stats: CollectionStats, coreDataItem: WatchlistItem) {
         self.collectionStats = stats
+        self.coreDataItem = coreDataItem
     }
     
     func getCollectionNameString() -> String {

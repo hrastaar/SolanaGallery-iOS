@@ -10,7 +10,8 @@ import UIKit
 class WatchlistViewController: UIViewController {
 
     let cellIdentifier = "WatchlistTableViewCell"
-    
+    private let refreshControl = UIRefreshControl()
+
     var tableView: UITableView = {
         var tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -32,8 +33,20 @@ class WatchlistViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.allowsMultipleSelectionDuringEditing = false
+        // Add Refresh Control to Table View
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        // Configure Refresh Control
+        refreshControl.tintColor = UIColor().getSolanaPurpleColor()
+        refreshControl.attributedTitle = NSAttributedString("Refreshing Watchlist Data")
 
-        syncWatchlistCollections()
+        refreshControl.addTarget(self, action: #selector(refreshWatchlist(_:)), for: .valueChanged)
+//        populateWithCollections()
+        
+        self.syncWatchlistCollections {}
     }
     
     override func viewDidLayoutSubviews() {
@@ -41,26 +54,32 @@ class WatchlistViewController: UIViewController {
         self.tableView.frame = self.view.bounds
     }
     
-    private func syncWatchlistCollections() {
+    @objc private func refreshWatchlist(_ sender: Any) {
+        syncWatchlistCollections {
+            DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
+            }
+        }
+    }
+    private func syncWatchlistCollections(completion: @escaping () -> ()) {
         self.watchlistItems.removeAll()
+        self.reloadTableView()
         do {
             let collections = try context.fetch(WatchlistItem.fetchRequest())
-            for collection in collections {
-                if let collectionName = collection.collectionName {
-                    SolanaGalleryAPI.sharedInstance.getNftCollectionStats(collectionName: collectionName) { stats in
-                        if let stats = stats {
-                            let watchlistViewModel = WatchlistViewModel(withCollectionStats: stats, coreDataItem: collection)
-                            self.watchlistItems.append(watchlistViewModel)
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                            }
-                        }
-
+            DispatchQueue.global(qos: .userInitiated).async {
+                SolanaGalleryAPI.sharedInstance.fetchCollectionStatsAndCreateWatchlistViewModels(collections: collections) { models in
+                    if let models = models {
+                        self.watchlistItems = models
+                        self.reloadTableView()
+                        completion()
                     }
                 }
+
             }
+            
         } catch {
             print("error getting watchlist items")
+            completion()
         }
 
     }
@@ -74,7 +93,6 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! WatchlistTableViewCell
-
         cell.updateData(with: watchlistItems[indexPath.row])
 
         return cell
@@ -101,6 +119,12 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
             watchlistItems.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             removeCollectionFromWatchList(item: item.coreDataItem)
+        }
+    }
+    
+    private func reloadTableView() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
 }
@@ -134,5 +158,16 @@ extension WatchlistViewController {
         } catch {
             print("error deleting collection from watchlist")
         }
+    }
+    
+    func populateWithCollections() {
+        addCollectionToWatchlist(collectionName: "atadians")
+        addCollectionToWatchlist(collectionName: "okay_bears")
+        addCollectionToWatchlist(collectionName: "quantum_traders")
+        addCollectionToWatchlist(collectionName: "solstein")
+        addCollectionToWatchlist(collectionName: "thugbirdz")
+        addCollectionToWatchlist(collectionName: "meerkat_millionaires_country_club")
+        addCollectionToWatchlist(collectionName: "meerkat_millionaires_country_club")
+        addCollectionToWatchlist(collectionName: "naked_meerkats_beach_club")
     }
 }

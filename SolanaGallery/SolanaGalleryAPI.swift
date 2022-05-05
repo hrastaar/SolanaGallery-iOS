@@ -41,14 +41,44 @@ class SolanaGalleryAPI {
         }
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, err in
             if let data = data {
-                guard let collectionStats = try? JSONDecoder().decode(CollectionStats.self, from: data) else {
-                    print("Error: couldn't decode data into CollectionStats")
-                    return
+                if let collectionStats = try? JSONDecoder().decode(CollectionStats.self, from: data)  {
+                    completion(collectionStats)
+                } else {
+                    print("Couldn't decode data for collection \(collectionName)")
+                    completion(nil)
                 }
-                completion(collectionStats)
+            } else {
+                print("Failed to fetch data for collection \(collectionName)")
+                completion(nil)
             }
         }
         task.resume()
+    }
+    
+    public func fetchCollectionStatsAndCreateWatchlistViewModels(collections: [WatchlistItem], completion: @escaping ([WatchlistViewModel]?) -> ()) {
+        var watchlistItems = [WatchlistViewModel]()
+        
+        let dispatchGroup = DispatchGroup()
+        
+        for collection in collections {
+            if let collectionName = collection.collectionName {
+                dispatchGroup.enter()
+                SolanaGalleryAPI.sharedInstance.getNftCollectionStats(collectionName: collectionName) { stats in
+                    if let stats = stats {
+                        let watchlistViewModel = WatchlistViewModel(withCollectionStats: stats, coreDataItem: collection)
+                        watchlistItems.append(watchlistViewModel)
+                    }
+                    dispatchGroup.leave()
+                }
+            }
+        }
+
+        // Wait for all collection stats requests to complete
+        dispatchGroup.wait()
+        watchlistItems.sort {
+            $1.getCollectionNameString() > $0.getCollectionNameString()
+        }
+        completion(watchlistItems)
     }
     
     private func getNftCollectionCountsEndpoint(wallet: String) -> String {

@@ -28,39 +28,22 @@ class WatchlistViewController: UIViewController {
         view.backgroundColor = .systemBackground
 
         view.addSubview(tableView)
+        self.populateWithCollections()
+        // Configure tableview delegate / data source + initialize its refresh control
+        self.setupTableView()
 
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        tableView.allowsMultipleSelectionDuringEditing = false
-        // Add Refresh Control to Table View
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = refreshControl
-        } else {
-            tableView.addSubview(refreshControl)
+        self.syncWatchlistCollections {
+            print(self.watchlistItems)
         }
-        // Configure Refresh Control
-        refreshControl.tintColor = UIColor().getSolanaPurpleColor()
-        refreshControl.attributedTitle = NSAttributedString("Refreshing Watchlist Data")
-
-        refreshControl.addTarget(self, action: #selector(refreshWatchlist(_:)), for: .valueChanged)
-//        populateWithCollections()
-        
-        self.syncWatchlistCollections {}
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.tableView.frame = self.view.bounds
     }
+
     
-    @objc private func refreshWatchlist(_ sender: Any) {
-        syncWatchlistCollections {
-            DispatchQueue.main.async {
-                self.refreshControl.endRefreshing()
-            }
-        }
-    }
+    // Removes current watchlistItems from tableview and fetches up-to-date collection statistics via SolanaGalleryAPI
     private func syncWatchlistCollections(completion: @escaping () -> ()) {
         self.watchlistItems.removeAll()
         self.reloadTableView()
@@ -70,6 +53,7 @@ class WatchlistViewController: UIViewController {
                 SolanaGalleryAPI.sharedInstance.fetchCollectionStatsAndCreateWatchlistViewModels(collections: collections) { models in
                     if let models = models {
                         self.watchlistItems = models
+                        print(models)
                         self.reloadTableView()
                         completion()
                     }
@@ -78,7 +62,7 @@ class WatchlistViewController: UIViewController {
             }
             
         } catch {
-            print("error getting watchlist items")
+            print("Error loading watchlist items via CoreData")
             completion()
         }
 
@@ -101,11 +85,19 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
     private func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
+    
+    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let collectionSymbol = watchlistItems[indexPath.row].collectionStats.symbol
+        let detailVC = CollectionDetailViewController(collectionSymbol: collectionSymbol)
+        self.navigationController?.pushViewController(detailVC, animated: true)
+        
+        self.tableView.deselectRow(at: indexPath, animated: true)
+    }
 
     private func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCell.EditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCell.EditingStyle.delete) {
             // handle delete (by removing the data from your array and updating the tableview)
-            print("delete")
+            print("Delete operation invoked on indexPatch \(indexPath.row)")
         }
     }
     
@@ -125,6 +117,37 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
     private func reloadTableView() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
+        }
+    }
+    
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.allowsMultipleSelectionDuringEditing = false
+        
+        initializeTableViewRefreshControl()
+    }
+    
+    private func initializeTableViewRefreshControl() {
+        // Add Refresh Control to Table View
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        // Configure Refresh Control
+        refreshControl.tintColor = UIColor().getSolanaPurpleColor()
+        refreshControl.attributedTitle = NSAttributedString("Refreshing Watchlist Data")
+
+        refreshControl.addTarget(self, action: #selector(refreshWatchlist(_:)), for: .valueChanged)
+    }
+    
+    @objc private func refreshWatchlist(_ sender: Any) {
+        syncWatchlistCollections {
+            DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
+            }
         }
     }
 }
@@ -160,13 +183,12 @@ extension WatchlistViewController {
         }
     }
     
-    func populateWithCollections() {
+    private func populateWithCollections() {
         addCollectionToWatchlist(collectionName: "atadians")
         addCollectionToWatchlist(collectionName: "okay_bears")
         addCollectionToWatchlist(collectionName: "quantum_traders")
         addCollectionToWatchlist(collectionName: "solstein")
         addCollectionToWatchlist(collectionName: "thugbirdz")
-        addCollectionToWatchlist(collectionName: "meerkat_millionaires_country_club")
         addCollectionToWatchlist(collectionName: "meerkat_millionaires_country_club")
         addCollectionToWatchlist(collectionName: "naked_meerkats_beach_club")
     }

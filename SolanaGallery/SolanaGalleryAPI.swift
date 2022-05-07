@@ -63,7 +63,7 @@ class SolanaGalleryAPI {
         for collection in collections {
             if let collectionName = collection.collectionName {
                 dispatchGroup.enter()
-                SolanaGalleryAPI.sharedInstance.getNftCollectionStats(collectionName: collectionName) { stats in
+                getNftCollectionStats(collectionName: collectionName) { stats in
                     if let stats = stats {
                         let watchlistViewModel = WatchlistViewModel(withCollectionStats: stats, coreDataItem: collection)
                         watchlistItems.append(watchlistViewModel)

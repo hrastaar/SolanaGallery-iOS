@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import RxSwift
 
 class WatchlistViewController: UIViewController {
 
     let cellIdentifier = "WatchlistTableViewCell"
+    let disposeBag = DisposeBag()
     private let refreshControl = UIRefreshControl()
 
     var tableView: UITableView = {
@@ -28,13 +30,10 @@ class WatchlistViewController: UIViewController {
         view.backgroundColor = .systemBackground
 
         view.addSubview(tableView)
-        self.populateWithCollections()
         // Configure tableview delegate / data source + initialize its refresh control
         self.setupTableView()
 
-        self.syncWatchlistCollections {
-            print(self.watchlistItems)
-        }
+        self.syncWatchlistCollections()
     }
     
     override func viewDidLayoutSubviews() {
@@ -44,26 +43,25 @@ class WatchlistViewController: UIViewController {
 
     
     // Removes current watchlistItems from tableview and fetches up-to-date collection statistics via SolanaGalleryAPI
-    private func syncWatchlistCollections(completion: @escaping () -> ()) {
+    private func syncWatchlistCollections() {
         self.watchlistItems.removeAll()
         self.reloadTableView()
+
         do {
             let collections = try context.fetch(WatchlistItem.fetchRequest())
-            DispatchQueue.global(qos: .userInitiated).async {
-                SolanaGalleryAPI.sharedInstance.fetchCollectionStatsAndCreateWatchlistViewModels(collections: collections) { models in
-                    if let models = models {
-                        self.watchlistItems = models
-                        print(models)
-                        self.reloadTableView()
-                        completion()
-                    }
+            for collection in collections {
+                guard let collectionName = collection.collectionName else {
+                    continue
                 }
-
+                SolanaGalleryAPI.sharedInstance.fetchCollectionStats(collectionName: collectionName).subscribe(onNext: { stat in
+                    let watchlistViewModel = WatchlistViewModel(withCollectionStats: stat, coreDataItem: collection)
+                    self.watchlistItems.append(watchlistViewModel)
+                    self.watchlistItems.sort(by: { $0.getCollectionNameString() < $1.getCollectionNameString() })
+                    self.reloadTableView()
+                }).disposed(by: disposeBag)
             }
-            
         } catch {
-            print("Error loading watchlist items via CoreData")
-            completion()
+            print(error)
         }
 
     }
@@ -144,10 +142,9 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc private func refreshWatchlist(_ sender: Any) {
-        syncWatchlistCollections {
-            DispatchQueue.main.async {
-                self.refreshControl.endRefreshing()
-            }
+        syncWatchlistCollections()
+        DispatchQueue.main.async {
+            self.refreshControl.endRefreshing()
         }
     }
 }

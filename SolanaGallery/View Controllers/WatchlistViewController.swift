@@ -63,7 +63,6 @@ class WatchlistViewController: UIViewController {
         } catch {
             print(error)
         }
-
     }
 }
 // MARK: UITableView Extension

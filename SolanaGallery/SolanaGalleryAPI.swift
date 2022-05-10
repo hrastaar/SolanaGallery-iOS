@@ -70,6 +70,35 @@ class SolanaGalleryAPI {
 
     }
     
+    public func getWalletCollectionCounts(wallet: String) -> Observable<[CollectionCount]> {
+        return Observable.create { observer -> Disposable in
+            let endpoint = self.getNftCollectionCountsEndpoint(wallet: wallet)
+            guard let url = URL(string: endpoint) else {
+                return Disposables.create {}
+            }
+            
+            let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, _ in
+                guard let data = data else {
+                    observer.onError(NSError(domain: "no data", code: -1, userInfo: nil))
+                    return
+                }
+                
+                do {
+                    let collectionCounts = try JSONDecoder().decode([CollectionCount].self, from: data)
+                    print(collectionCounts)
+                    observer.onNext(collectionCounts)
+                } catch {
+                    observer.onError(error)
+                }
+            }
+            task.resume()
+            
+            return Disposables.create {
+                task.cancel()
+            }
+        }
+    }
+    
     private func getNftCollectionCountsEndpoint(wallet: String) -> String {
         return BASE_URL + WALLET_ENDPOINT_EXTENSION + wallet + GET_NFT_COLLECTION_COUNTS;
     }

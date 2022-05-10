@@ -26,6 +26,9 @@ class MainTabBarViewController: UITabBarController {
         watchlistVC.tabBarItem.image = UIImage(systemName: "bookmark")
         watchlistVC.tabBarItem.title = "Watchlist"
         
+        let walletTrackerVC = UINavigationController(rootViewController: WalletTrackerViewController())
+        walletTrackerVC.tabBarItem.title = "Portfolio"
+        
         let searchVC = UINavigationController(rootViewController: SearchViewController())
         searchVC.tabBarItem.image = UIImage(systemName: "magnifyingglass")
         searchVC.tabBarItem.title = "Search"
@@ -34,17 +37,6 @@ class MainTabBarViewController: UITabBarController {
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.primaryFont(size: 12)], for: .normal)
 
         
-        setViewControllers([homepageVC, searchVC, watchlistVC], animated: true)
+        setViewControllers([homepageVC, searchVC, walletTrackerVC, watchlistVC], animated: true)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

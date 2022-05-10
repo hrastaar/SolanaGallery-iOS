@@ -7,11 +7,7 @@
 
 import Foundation
 
-struct CollectionCount: Codable {
-    let collectionName: String
+struct CollectionCount: Decodable {
+    let collection: String
     let count: Int
-
-    private enum CodingKeys: String, CodingKey {
-        case collectionName = "collection", count
-    }
 }

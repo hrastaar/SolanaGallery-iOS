@@ -11,92 +11,48 @@ import RxSwift
 class SolanaGalleryAPI {
     static let sharedInstance = SolanaGalleryAPI()
     
-    public func getNftCollectionCounts(wallet: String) -> Observable<[CollectionCount]> {
-        return Observable.create { observer -> Disposable in
-            let endpoint = self.getNftCollectionCountsEndpoint(wallet: wallet)
-            guard let url = URL(string: endpoint) else {
-                observer.onError(NSError(domain: "Failed to create URL", code: -1, userInfo: nil))
-                return Disposables.create { }
-            }
-            
-            let urlRequest = URLRequest(url: url)
-            let task = URLSession.shared.dataTask(with: urlRequest) { data, response, err in
-                guard let data = data else {
-                    observer.onError(NSError(domain: "no data", code: -1, userInfo: nil))
-                    return
-                }
-                guard let collectionCounts = try? JSONDecoder().decode([CollectionCount].self, from: data) else {
-                    print("Error: couldn't decode data into [CollectionCount]")
-                    return
-                }
-                observer.onNext(collectionCounts)
-            }
-            
-            task.resume()
-            
-            return Disposables.create {
-                task.cancel()
-            }
+    public func getNftCollectionCounts(wallet: String, completion: @escaping ([CollectionCount]?) -> Void) -> Void {
+        let endpoint = self.getNftCollectionCountsEndpoint(wallet: wallet)
+        guard let url = URL(string: endpoint) else {
+            completion(nil)
+            return
         }
-
+        
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, err in
+            guard let data = data else {
+                completion(nil)
+                return
+            }
+            guard let collectionCounts = try? JSONDecoder().decode([CollectionCount].self, from: data) else {
+                completion(nil)
+                return
+            }
+            completion(collectionCounts)
+        }
+        
+        task.resume()
     }
     
-    public func fetchCollectionStats(collectionName: String) -> Observable<CollectionStats> {
-        return Observable.create { observer -> Disposable in
-            let endpoint = self.getNftCollectionStatsEndpoint(collectionName: collectionName)
-            guard let url = URL(string: endpoint) else {
-                observer.onError(NSError(domain: "Failed to create URL", code: -1, userInfo: nil))
-                return Disposables.create { }
-            }
-            let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, _ in
-                guard let data = data else {
-                    observer.onError(NSError(domain: "no data", code: -1, userInfo: nil))
-                    return
-                }
-                
-                do {
-                    let collectionStats = try JSONDecoder().decode(CollectionStats.self, from: data)
-                    observer.onNext(collectionStats)
-                } catch {
-                    observer.onError(error)
-                }
-            }
-            task.resume()
-            
-            return Disposables.create {
-                task.cancel()
-            }
+    public func fetchCollectionStats(collectionName: String, completion: @escaping (CollectionStats?) -> Void) -> Void {
+        let endpoint = self.getNftCollectionStatsEndpoint(collectionName: collectionName)
+        guard let url = URL(string: endpoint) else {
+            completion(nil)
+            return
         }
-
-    }
-    
-    public func getWalletCollectionCounts(wallet: String) -> Observable<[CollectionCount]> {
-        return Observable.create { observer -> Disposable in
-            let endpoint = self.getNftCollectionCountsEndpoint(wallet: wallet)
-            guard let url = URL(string: endpoint) else {
-                return Disposables.create {}
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, _ in
+            guard let data = data else {
+                completion(nil)
+                return
             }
-            
-            let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, _ in
-                guard let data = data else {
-                    observer.onError(NSError(domain: "no data", code: -1, userInfo: nil))
-                    return
-                }
-                
-                do {
-                    let collectionCounts = try JSONDecoder().decode([CollectionCount].self, from: data)
-                    print(collectionCounts)
-                    observer.onNext(collectionCounts)
-                } catch {
-                    observer.onError(error)
-                }
+            guard let collectionStats = try? JSONDecoder().decode(CollectionStats.self, from: data) else {
+                print("Error: couldn't decode data into CollectionStats for \(collectionName)")
+                completion(nil)
+                return
             }
-            task.resume()
-            
-            return Disposables.create {
-                task.cancel()
-            }
+            completion(collectionStats)
+            return
         }
+        task.resume()
     }
     
     private func getNftCollectionCountsEndpoint(wallet: String) -> String {

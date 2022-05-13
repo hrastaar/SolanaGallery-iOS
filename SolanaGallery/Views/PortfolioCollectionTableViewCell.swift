@@ -9,11 +9,11 @@ import UIKit
 
 class PortfolioCollectionTableViewCell: UITableViewCell {
     
-    var portfolioItem: PortfolioCollectionViewModel? {
+    var portfolioCollectionViewModel: PortfolioCollectionViewModel? {
         didSet {
-            collectionNameLabel.text = portfolioItem?.getCollectionNameString()
-            countLabel.text = portfolioItem?.getCollectionCount()
-            floorPriceLabel.text = portfolioItem?.getFloorPriceString()
+            collectionNameLabel.text = portfolioCollectionViewModel?.getCollectionNameString()
+            countLabel.text = portfolioCollectionViewModel?.getCollectionCount()
+            floorPriceLabel.text = portfolioCollectionViewModel?.getFloorPriceString()
         }
     }
     
@@ -45,8 +45,8 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    func updateData(with portfolioItem: PortfolioCollectionViewModel) {
-        self.portfolioItem = portfolioItem
+    func updateData(with portfolioCollectionViewModel: PortfolioCollectionViewModel) {
+        self.portfolioCollectionViewModel = portfolioCollectionViewModel
         setupUI()
     }
     private func setupUI() {

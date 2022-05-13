@@ -11,7 +11,12 @@ import RxCocoa
 import RxSwift
 
 class WalletTrackerViewController: UIViewController, ChartViewDelegate {
-    let cellIdentifier = "PortfolioCollectionTableViewCell"
+    static let cellIdentifier = "PortfolioCollectionTableViewCell"
+    
+    let walletAddressViewModel = WalletAddressViewModel()
+    let disposeBag = DisposeBag()
+    
+    let portfolioViewModel = PortfolioViewModel()
     
     let walletSearchTextField: UITextField = {
         let textField = UITextField(frame: .zero)
@@ -49,9 +54,9 @@ class WalletTrackerViewController: UIViewController, ChartViewDelegate {
     
     var tableView: UITableView = {
         var tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(PortfolioCollectionTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.alpha = 0.0
-        
+        tableView.allowsMultipleSelectionDuringEditing = false
         return tableView
     }()
     
@@ -64,31 +69,111 @@ class WalletTrackerViewController: UIViewController, ChartViewDelegate {
         return chart
     }()
     
-    let walletAddressViewModel = WalletAddressViewModel()
-    let disposeBag = DisposeBag()
-    
-    var portfolioObjects = [PortfolioCollectionViewModel]()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         title = "Portfolio"
         
         // Do any additional setup after loading the view.
-        self.setupTableView()
+        self.bindTableData()
+        self.bindPortfolioData()
         self.setupUI()
                 
-        walletSearchTextField.rx.text.map { $0 ?? "" }.bind(to: walletAddressViewModel.walletAddressPublishSubject).disposed(by: disposeBag)
-        walletAddressViewModel.isValidWallet().bind(to: searchButton.rx.isEnabled).disposed(by: disposeBag)
-        walletAddressViewModel.isValidWallet().map { $0 ? 1 : 0.1 }.bind(to: searchButton.rx.alpha).disposed(by: disposeBag)
+        walletSearchTextField.rx.text.map { $0 ?? "" }.bind(
+            to: walletAddressViewModel.walletAddressPublishSubject
+        ).disposed(by: disposeBag)
         
-        tableView.dataSource = self
-        tableView.delegate = self
+        walletAddressViewModel.isValidWallet().bind(
+            to: searchButton.rx.isEnabled
+        ).disposed(by: disposeBag)
+        
+        walletAddressViewModel.isValidWallet().map { $0 ? 1 : 0.1 }.bind(
+            to: searchButton.rx.alpha
+        ).disposed(by: disposeBag)
+
         pieChart.delegate = self
 
         searchButton.addTarget(self, action: #selector(getWalletCollections(_:)), for: .touchUpInside)
     }
     
+    
+
+    @objc
+    private func getWalletCollections(_ sender: Any) {
+        guard let walletAddress = walletSearchTextField.text else {
+            print("Couldn't get wallet address")
+            return
+        }
+        portfolioViewModel.fetchWalletPortfolioData(wallet: walletAddress)
+    }
+}
+
+extension WalletTrackerViewController {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        pieChart.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.bounds.width, height: 400, enableInsets: false)
+        return pieChart
+    }
+    
+    private func updatePortfolioValueAndCharts(collections: [PortfolioCollectionViewModel]) {
+        var portfolioTotal: Double = 0.00
+        var entries: [PieChartDataEntry] = []
+        for obj in collections {
+            portfolioTotal += obj.getCollectionTotalValueDouble()
+            if (obj.getCollectionTotalValueDouble() < 0.05) {
+                continue
+            }
+            entries.append(PieChartDataEntry(value: obj.getCollectionTotalValueDouble(),
+                                             label: obj.getCollectionTotalValueTruncatedString()))
+        }
+
+        let dataset = PieChartDataSet(entries: entries, label: "Portfolio Distribution")
+        dataset.colors = [
+            UIColor().getSolanaPurpleColor()!,
+            UIColor().getSolanaGreenColor()!,
+            .secondarySystemFill,
+            .systemTeal
+        ]
+        DispatchQueue.main.async {
+            self.pieChart.data = PieChartData(dataSet: dataset)
+
+            self.portfolioTotalValueLabel.text = String(format: "Portfolio Value: %.2f◎", portfolioTotal)
+            self.pieChart.notifyDataSetChanged()
+            
+            self.tableView.alpha = 1.0
+            self.portfolioTotalValueLabel.alpha = 1.0
+            self.pieChart.alpha = 1.0
+        }
+    }
+    
+    private func bindTableData() {
+        portfolioViewModel.collections.bind(
+            to: tableView.rx.items(
+                cellIdentifier: "PortfolioCollectionTableViewCell",
+                cellType: PortfolioCollectionTableViewCell.self)
+        ) { row, model, cell in
+            cell.updateData(with: model)
+        }.disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(PortfolioCollectionViewModel.self).bind { collection in
+            print(collection.collectionCount.collection)
+        }.disposed(by: disposeBag)
+    }
+    
+    private func bindPortfolioData() {
+        portfolioViewModel.collections.subscribe { event in
+            switch event {
+                case .next(let value):
+                    self.updatePortfolioValueAndCharts(collections: value)
+                case .completed:
+                    print("Completed")
+                case .error(let error):
+                    print(error)
+            }
+        }.disposed(by: disposeBag)
+    }
+}
+
+extension WalletTrackerViewController {
     private func setupUI() {
         view.addSubview(portfolioTotalValueLabel)
         view.addSubview(tableView)
@@ -110,91 +195,5 @@ class WalletTrackerViewController: UIViewController, ChartViewDelegate {
         portfolioTotalValueLabel.anchor(top: searchButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingLeft: 0, paddingBottom: 25, paddingRight: 0, width: view.bounds.width * 0.3, height: 35, enableInsets: false)
         
         tableView.anchor(top: searchButton.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 50, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 0, enableInsets: false)
-    }
-    
-    private func getWalletPortfolioCollectionInfo(wallet: String) {
-        self.portfolioObjects.removeAll()
-        SolanaGalleryAPI.sharedInstance.getNftCollectionCounts(wallet: wallet).subscribe(onNext: { counts in
-            for count in counts {
-                SolanaGalleryAPI.sharedInstance.fetchCollectionStats(collectionName: count.collection).subscribe(onNext: { stats in
-                    let portfolioItemViewModel = PortfolioCollectionViewModel(with: stats, collectionCount: count)
-                    self.portfolioObjects.append(portfolioItemViewModel)
-                    self.portfolioItemsUpdated()
-                }).disposed(by: self.disposeBag)
-            }
-        }).disposed(by: self.disposeBag)
-    }
-    
-    @objc
-    private func getWalletCollections(_ sender: Any) {
-        guard let walletAddress = walletSearchTextField.text else { return }
-        self.portfolioObjects.removeAll()
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-        getWalletPortfolioCollectionInfo(wallet: walletAddress)
-    }
-}
-
-extension WalletTrackerViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return portfolioObjects.count
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        pieChart.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.bounds.width, height: 400, enableInsets: false)
-        return pieChart
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! PortfolioCollectionTableViewCell
-        cell.updateData(with: portfolioObjects[indexPath.row])
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = self.portfolioObjects[indexPath.row]
-        print(item.collectionCount.collection + ", " + String(item.collectionCount.count) + ", price: " + String(item.collectionStats.floorPrice))
-        
-    }
-    
-    private func portfolioItemsUpdated() {
-        var portfolioTotal: Double = 0.00
-        for obj in portfolioObjects {
-            portfolioTotal += obj.getCollectionTotalValueDouble()
-        }
-        
-        var entries: [PieChartDataEntry] = []
-        for obj in portfolioObjects {
-            if (obj.getCollectionTotalValueDouble() < 0.05) {
-                continue
-            }
-            entries.append(PieChartDataEntry(value: obj.getCollectionTotalValueDouble(),
-                                             label: obj.getCollectionTotalValueTruncatedString()))
-        }
-        let dataset = PieChartDataSet(entries: entries, label: "Portfolio Distribution")
-        dataset.colors = [
-            UIColor().getSolanaPurpleColor()!,
-            UIColor().getSolanaGreenColor()!,
-            .secondarySystemFill,
-            .systemTeal
-        ]
-        self.pieChart.data = PieChartData(dataSet: dataset)
-        DispatchQueue.main.async {
-            self.portfolioTotalValueLabel.text = String(format: "Portfolio Value: %.2f◎", portfolioTotal)
-            self.tableView.reloadData()
-            self.pieChart.notifyDataSetChanged()
-            
-            self.tableView.alpha = 1.0
-            self.portfolioTotalValueLabel.alpha = 1.0
-            self.pieChart.alpha = 1.0
-        }
-    }
-    
-    private func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(PortfolioCollectionTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        tableView.allowsMultipleSelectionDuringEditing = false
     }
 }

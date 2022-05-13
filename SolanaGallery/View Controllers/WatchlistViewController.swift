@@ -10,28 +10,32 @@ import RxSwift
 
 class WatchlistViewController: UIViewController {
 
-    let cellIdentifier = "WatchlistTableViewCell"
+    let watchlistListViewModel = WatchlistListViewModel()
     let disposeBag = DisposeBag()
+
+    static let cellIdentifier = "WatchlistTableViewCell"
     private let refreshControl = UIRefreshControl()
 
     var tableView: UITableView = {
         var tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.allowsMultipleSelectionDuringEditing = false
+
         return tableView
     }()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    var watchlistItems = [WatchlistViewModel]()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Watchlist"
         view.backgroundColor = .systemBackground
 
         view.addSubview(tableView)
-        // Configure tableview delegate / data source + initialize its refresh control
-        self.setupTableView()
+        
+        self.bindTableData()
+        
+        self.initializeTableViewRefreshControl()
 
         self.syncWatchlistCollections()
     }
@@ -44,51 +48,53 @@ class WatchlistViewController: UIViewController {
     
     // Removes current watchlistItems from tableview and fetches up-to-date collection statistics via SolanaGalleryAPI
     private func syncWatchlistCollections() {
-        self.watchlistItems.removeAll()
-        self.reloadTableView()
-
         do {
             let collections = try context.fetch(WatchlistItem.fetchRequest())
-            for collection in collections {
-                guard let collectionName = collection.collectionName else {
-                    continue
-                }
-                SolanaGalleryAPI.sharedInstance.fetchCollectionStats(collectionName: collectionName).subscribe(onNext: { stat in
-                    let watchlistViewModel = WatchlistViewModel(withCollectionStats: stat, coreDataItem: collection)
-                    self.watchlistItems.append(watchlistViewModel)
-                    self.watchlistItems.sort(by: { $0.getCollectionNameString() < $1.getCollectionNameString() })
-                    self.reloadTableView()
-                }).disposed(by: disposeBag)
-            }
+            watchlistListViewModel.fetchWatchlistData(watchlistItems: collections)
         } catch {
             print(error)
         }
     }
 }
-// MARK: UITableView Extension
 
-extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return watchlistItems.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! WatchlistTableViewCell
-        cell.updateData(with: watchlistItems[indexPath.row])
+extension WatchlistViewController {
 
-        return cell
+    private func bindTableData() {
+        watchlistListViewModel.watchlistItems.bind(
+            to: tableView.rx.items(
+                cellIdentifier: WatchlistViewController.cellIdentifier,
+                cellType: WatchlistTableViewCell.self)
+        ) { row, model, cell in
+            cell.updateData(with: model)
+        }.disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(onNext: {
+                guard let cell = self.tableView.cellForRow(at: $0) as? WatchlistTableViewCell,
+                    let watchlistViewModel = cell.watchlistViewModel else {
+                  print("Couldn't identify cell pressed")
+                  return
+                }
+
+                let detailVC = CollectionDetailViewController(watchlistViewModel: watchlistViewModel)
+                self.navigationController?.pushViewController(detailVC, animated: true)
+
+                self.tableView.deselectRow(at: $0, animated: true)
+            }).disposed(by: disposeBag)
+        
+        tableView.rx.itemDeleted
+            .subscribe(onNext: {
+                guard let cell = self.tableView.cellForRow(at: $0) as? WatchlistTableViewCell,
+                    let watchlistViewModel = cell.watchlistViewModel else {
+                    print("Couldn't identify cell pressed")
+                    return
+                }
+                self.removeCollectionFromWatchList(collectionName: watchlistViewModel.collectionStats.symbol)
+            }).disposed(by: disposeBag)
     }
     
     private func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
-    }
-    
-    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let collectionSymbol = watchlistItems[indexPath.row].collectionStats.symbol
-        let detailVC = CollectionDetailViewController(collectionSymbol: collectionSymbol)
-        self.navigationController?.pushViewController(detailVC, animated: true)
-        
-        self.tableView.deselectRow(at: indexPath, animated: true)
     }
 
     private func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCell.EditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -102,28 +108,10 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == .delete) {
-            let item = watchlistItems[indexPath.row]
-            watchlistItems.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            removeCollectionFromWatchList(item: item.coreDataItem)
-        }
-    }
-    
     private func reloadTableView() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-    }
-    
-    private func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        tableView.allowsMultipleSelectionDuringEditing = false
-        
-        initializeTableViewRefreshControl()
     }
     
     private func initializeTableViewRefreshControl() {
@@ -170,12 +158,22 @@ extension WatchlistViewController {
     }
     
     // Remove a collection from CoreData (call when delete action in WatchlistTableViewCell)
-    func removeCollectionFromWatchList(item: WatchlistItem) {
-        context.delete(item)
+    func removeCollectionFromWatchList(collectionName: String) {
         do {
+            let collections = try context.fetch(WatchlistItem.fetchRequest())
+            watchlistListViewModel.fetchWatchlistData(watchlistItems: collections)
+            
+            let itemsToDelete = collections.filter { $0.collectionName == collectionName }
+
+            guard let itemToDelete = itemsToDelete.first else {
+                return
+            }
+            context.delete(itemToDelete)
             try context.save()
+            
+            self.watchlistListViewModel.removeItemsFromWatchlist(collectionName: collectionName)
         } catch {
-            print("error deleting collection from watchlist")
+            print(error)
         }
     }
     

@@ -2,23 +2,46 @@
 //  WatchlistListViewModel.swift
 //  SolanaGallery
 //
-//  Created by Rastaar Haghi on 5/6/22.
+//  Created by Rastaar Haghi on 5/12/22.
 //
 
 import Foundation
 import RxSwift
 
-final class WatchlistListViewModel {
-    private let solanaGalleryAPI = SolanaGalleryAPI.sharedInstance
-    private let disposeBag = DisposeBag()
-    func fetchWatchlistViewModels(watchlistItems: [WatchlistItem]) -> Observable<[WatchlistViewModel]> {
-        for collection in watchlistItems {
-            guard let collectionName = collection.collectionName else {
+class WatchlistListViewModel {
+    var watchlistItems = PublishSubject<[WatchlistViewModel]>()
+    
+    let SolanaGalleryApiInstance = SolanaGalleryAPI.sharedInstance
+        
+    func fetchWatchlistData(watchlistItems: [WatchlistItem]) {
+        let dispatchGroup = DispatchGroup()
+        
+        var watchlistItemsResponse = [WatchlistViewModel]()
+        for item in watchlistItems {
+            guard let collectionName = item.collectionName else {
                 continue
             }
-            SolanaGalleryAPI.sharedInstance.fetchCollectionStat(collectionName: collectionName).subscribe(onNext: { stat in
-                let watchlistViewModel = WatchlistViewModel(withCollectionStats: stat, coreDataItem: collection)
-            }).disposed(by: disposeBag)
+            dispatchGroup.enter()
+            self.SolanaGalleryApiInstance.fetchCollectionStats(collectionName: collectionName) { stats in
+                guard let stats = stats else {
+                    print("Failed to fetch stats for collection: \(collectionName)")
+                    dispatchGroup.leave()
+                    return
+                }
+                watchlistItemsResponse.append(WatchlistViewModel(withCollectionStats: stats, coreDataItem: item))
+                self.watchlistItems.onNext(watchlistItemsResponse)
+                dispatchGroup.leave()
+            }
         }
+        
+        dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
+            print("Successfully fetched collection stats for \(watchlistItems.count) collections")
+            self.watchlistItems.onCompleted()
+        }
+    }
+    
+    // TODO: Implement this function, where collectionName will be removed from watchlistItems array
+    func removeItemsFromWatchlist(collectionName: String) {
+        
     }
 }

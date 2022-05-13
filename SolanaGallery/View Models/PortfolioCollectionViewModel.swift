@@ -6,14 +6,15 @@
 //
 
 import Foundation
+import RxSwift
 
 struct PortfolioCollectionViewModel {
-    let collectionStats: CollectionStats
     let collectionCount: CollectionCount
+    let collectionStats: CollectionStats
     
-    init(with collectionStats: CollectionStats, collectionCount: CollectionCount) {
-        self.collectionStats = collectionStats
+    init(collectionCount: CollectionCount, collectionStats: CollectionStats) {
         self.collectionCount = collectionCount
+        self.collectionStats = collectionStats
     }
     
     func getCollectionNameString() -> String {

@@ -35,6 +35,8 @@
 		745E143028261CEF00478A8D /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 745E142F28261CEF00478A8D /* RxCocoa */; };
 		745E143228261CEF00478A8D /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 745E143128261CEF00478A8D /* RxSwift */; };
 		74606112282A3EB800BB1DDA /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 74606111282A3EB800BB1DDA /* Charts */; };
+		74606114282E153400BB1DDA /* PortfolioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606113282E153400BB1DDA /* PortfolioViewModel.swift */; };
+		74606116282E1F1400BB1DDA /* WatchlistListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,9 +65,10 @@
 		745392B6281F7931003DE9CD /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		745392B8281F7A29003DE9CD /* DIN-D.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DIN-D.ttf"; path = "SolanaGallery/DIN-D.ttf"; sourceTree = SOURCE_ROOT; };
 		745392BA281F7CDA003DE9CD /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
-		745392C6281F8DC4003DE9CD /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gradient.png; path = ../../../../gradient.png; sourceTree = "<group>"; };
 		745392C728236452003DE9CD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		745392C928236530003DE9CD /* CollectionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailViewController.swift; sourceTree = "<group>"; };
+		74606113282E153400BB1DDA /* PortfolioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioViewModel.swift; sourceTree = "<group>"; };
+		74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +158,8 @@
 				743A50F62828D71F00101284 /* PortfolioCollectionViewModel.swift */,
 				741373A9281A4233004B31A8 /* WatchlistViewModel.swift */,
 				743A50FA2828DDA200101284 /* WalletAddressViewModel.swift */,
+				74606113282E153400BB1DDA /* PortfolioViewModel.swift */,
+				74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -183,7 +188,6 @@
 			isa = PBXGroup;
 			children = (
 				741373802819FBAF004B31A8 /* Assets.xcassets */,
-				745392C6281F8DC4003DE9CD /* gradient.png */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -278,6 +282,8 @@
 				745392B2281DD3EA003DE9CD /* WatchlistTableViewCell.swift in Sources */,
 				7413738F2819FD4F004B31A8 /* SolanaGalleryAPI.swift in Sources */,
 				743A50F92828DB9200101284 /* WalletTrackerViewController.swift in Sources */,
+				74606116282E1F1400BB1DDA /* WatchlistListViewModel.swift in Sources */,
+				74606114282E153400BB1DDA /* PortfolioViewModel.swift in Sources */,
 				741373A1281A3FB7004B31A8 /* WatchlistItem+CoreDataClass.swift in Sources */,
 				741373752819FBAF004B31A8 /* AppDelegate.swift in Sources */,
 				745392B5281DE154003DE9CD /* UIView+Extension.swift in Sources */,

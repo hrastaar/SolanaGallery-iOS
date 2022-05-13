@@ -9,10 +9,10 @@ import UIKit
 
 class CollectionDetailViewController: UIViewController {
 
-    let collectionSymbol: String
+    let watchlistViewModel: WatchlistViewModel
     
-    init(collectionSymbol: String) {
-        self.collectionSymbol = collectionSymbol
+    init(watchlistViewModel: WatchlistViewModel) {
+        self.watchlistViewModel = watchlistViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -24,9 +24,9 @@ class CollectionDetailViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        print("Loading CollectionDetailViewController for symbol \(self.collectionSymbol)")
+        print("Loading CollectionDetailViewController for symbol \(watchlistViewModel.getCollectionNameString())")
         view.backgroundColor = .systemBackground
-        title = self.collectionSymbol
+        title = watchlistViewModel.getCollectionNameString()
     }
     
 

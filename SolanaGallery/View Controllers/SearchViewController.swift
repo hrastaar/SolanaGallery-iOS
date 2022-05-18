@@ -68,12 +68,6 @@ class SearchViewController: UIViewController {
             cell.updateData(with: model)
         }.disposed(by: disposeBag)
         
-        collectionSearchViewModel.collectionSearchResults.subscribe { observer in
-            if (observer.isCompleted) {
-                print(observer)
-            }
-        }
-        
         tableView.rx.modelSelected(CollectionSearchResult.self).bind { collection in
             print(collection.symbol)
         }.disposed(by: disposeBag)

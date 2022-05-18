@@ -45,7 +45,7 @@ class SolanaGalleryAPI {
                 return
             }
             guard let collectionStats = try? JSONDecoder().decode(CollectionStats.self, from: data) else {
-                print("Error: couldn't decode data into CollectionStats for \(collectionName)")
+                print("Couldn't decode data into CollectionStats for \(collectionName)")
                 completion(nil)
                 return
             }
@@ -90,9 +90,9 @@ class SolanaGalleryAPI {
         return BASE_URL + COLLECTION_SEARCH_EXTENSION + searchText
     }
     
-    let BASE_URL = "https://rastaar.com/";
-    let WALLET_ENDPOINT_EXTENSION = "solana/wallet/";
-    let COLLECTION_ENDPOINT = "solana/stats/"
-    let GET_NFT_COLLECTION_COUNTS = "/get_nft_collection_counts"
-    let COLLECTION_SEARCH_EXTENSION = "solana/search/collections/"
+    private let BASE_URL = "https://rastaar.com/";
+    private let WALLET_ENDPOINT_EXTENSION = "solana/wallet/";
+    private let COLLECTION_ENDPOINT = "solana/stats/"
+    private let GET_NFT_COLLECTION_COUNTS = "/get_nft_collection_counts"
+    private let COLLECTION_SEARCH_EXTENSION = "solana/search/collections/"
 }

@@ -18,10 +18,6 @@ class MainTabBarViewController: UITabBarController {
     }
     
     private func setupTabBarViewControllers() {
-//        let homepageVC = UINavigationController(rootViewController: HomePageViewController())
-//        homepageVC.tabBarItem.image = UIImage(systemName: "house")
-//        homepageVC.tabBarItem.title = "Home"
-        
         let watchlistVC = UINavigationController(rootViewController: WatchlistViewController())
         watchlistVC.tabBarItem.image = UIImage(systemName: "bookmark")
         watchlistVC.tabBarItem.title = "Watchlist"
@@ -36,7 +32,6 @@ class MainTabBarViewController: UITabBarController {
         tabBar.tintColor = .label
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.primaryFont(size: 12)], for: .normal)
 
-        
         setViewControllers([searchVC, walletTrackerVC, watchlistVC], animated: true)
     }
 }

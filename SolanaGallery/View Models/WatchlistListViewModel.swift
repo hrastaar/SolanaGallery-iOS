@@ -39,9 +39,4 @@ class WatchlistListViewModel {
             self.watchlistItems.onCompleted()
         }
     }
-    
-    // TODO: Implement this function, where collectionName will be removed from watchlistItems array
-    func removeItemsFromWatchlist(collectionName: String) {
-        
-    }
 }

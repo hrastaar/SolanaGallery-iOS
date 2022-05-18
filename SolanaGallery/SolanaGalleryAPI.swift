@@ -55,6 +55,29 @@ class SolanaGalleryAPI {
         task.resume()
     }
     
+    public func fetchCollectionsList(searchText: String, completion: @escaping ([CollectionSearchResult]?) -> Void) -> Void {
+        let endpoint = getSearchCollectionsEndpoint(searchText: searchText)
+        guard let url = URL(string: endpoint) else {
+            completion(nil)
+            return
+        }
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, _ in
+            guard let data = data else {
+                completion(nil)
+                return
+            }
+            
+            guard let collectionSearchResults = try? JSONDecoder().decode([CollectionSearchResult].self, from: data) else {
+                print("Couldn't decode data into CollectionSearchResults")
+                completion(nil)
+                return
+            }
+            completion(collectionSearchResults)
+            return
+        }
+        task.resume()
+    }
+    
     private func getNftCollectionCountsEndpoint(wallet: String) -> String {
         return BASE_URL + WALLET_ENDPOINT_EXTENSION + wallet + GET_NFT_COLLECTION_COUNTS;
     }
@@ -62,9 +85,14 @@ class SolanaGalleryAPI {
     private func getNftCollectionStatsEndpoint(collectionName: String) -> String {
         return BASE_URL + COLLECTION_ENDPOINT + collectionName
     }
+
+    private func getSearchCollectionsEndpoint(searchText: String) -> String {
+        return BASE_URL + COLLECTION_SEARCH_EXTENSION + searchText
+    }
     
     let BASE_URL = "https://rastaar.com/";
     let WALLET_ENDPOINT_EXTENSION = "solana/wallet/";
     let COLLECTION_ENDPOINT = "solana/stats/"
     let GET_NFT_COLLECTION_COUNTS = "/get_nft_collection_counts"
+    let COLLECTION_SEARCH_EXTENSION = "solana/search/collections/"
 }

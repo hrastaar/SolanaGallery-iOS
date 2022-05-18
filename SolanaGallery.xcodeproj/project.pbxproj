@@ -37,6 +37,9 @@
 		74606112282A3EB800BB1DDA /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 74606111282A3EB800BB1DDA /* Charts */; };
 		74606114282E153400BB1DDA /* PortfolioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606113282E153400BB1DDA /* PortfolioViewModel.swift */; };
 		74606116282E1F1400BB1DDA /* WatchlistListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */; };
+		7460611A2833701900BB1DDA /* CollectionSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746061192833701900BB1DDA /* CollectionSearchResult.swift */; };
+		7460611C283372B100BB1DDA /* CollectionSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7460611B283372B100BB1DDA /* CollectionSearchViewModel.swift */; };
+		74BF32FE2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BF32FD2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +72,9 @@
 		745392C928236530003DE9CD /* CollectionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailViewController.swift; sourceTree = "<group>"; };
 		74606113282E153400BB1DDA /* PortfolioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioViewModel.swift; sourceTree = "<group>"; };
 		74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistListViewModel.swift; sourceTree = "<group>"; };
+		746061192833701900BB1DDA /* CollectionSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchResult.swift; sourceTree = "<group>"; };
+		7460611B283372B100BB1DDA /* CollectionSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchViewModel.swift; sourceTree = "<group>"; };
+		74BF32FD2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchResultTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +154,7 @@
 			children = (
 				741373A4281A41C5004B31A8 /* CollectionStats.swift */,
 				741373A6281A41E9004B31A8 /* CollectionCount.swift */,
+				746061192833701900BB1DDA /* CollectionSearchResult.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -160,6 +167,7 @@
 				743A50FA2828DDA200101284 /* WalletAddressViewModel.swift */,
 				74606113282E153400BB1DDA /* PortfolioViewModel.swift */,
 				74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */,
+				7460611B283372B100BB1DDA /* CollectionSearchViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -170,6 +178,7 @@
 				745392B1281DD3EA003DE9CD /* WatchlistTableViewCell.swift */,
 				743A50FE28298FF100101284 /* PortfolioCollectionTableViewCell.swift */,
 				745392B8281F7A29003DE9CD /* DIN-D.ttf */,
+				74BF32FD2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -272,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7460611A2833701900BB1DDA /* CollectionSearchResult.swift in Sources */,
 				7413738D2819FBEA004B31A8 /* WatchlistViewController.swift in Sources */,
 				7413739A281A3EDB004B31A8 /* SolanaGallery.xcdatamodeld in Sources */,
 				745392B7281F7931003DE9CD /* UIFont+Extension.swift in Sources */,
@@ -281,6 +291,7 @@
 				743A50FF28298FF100101284 /* PortfolioCollectionTableViewCell.swift in Sources */,
 				745392B2281DD3EA003DE9CD /* WatchlistTableViewCell.swift in Sources */,
 				7413738F2819FD4F004B31A8 /* SolanaGalleryAPI.swift in Sources */,
+				7460611C283372B100BB1DDA /* CollectionSearchViewModel.swift in Sources */,
 				743A50F92828DB9200101284 /* WalletTrackerViewController.swift in Sources */,
 				74606116282E1F1400BB1DDA /* WatchlistListViewModel.swift in Sources */,
 				74606114282E153400BB1DDA /* PortfolioViewModel.swift in Sources */,
@@ -291,6 +302,7 @@
 				741373B0281B6DC4004B31A8 /* HomePageViewController.swift in Sources */,
 				741373A5281A41C5004B31A8 /* CollectionStats.swift in Sources */,
 				741373A7281A41E9004B31A8 /* CollectionCount.swift in Sources */,
+				74BF32FE2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift in Sources */,
 				741373AE281B65C4004B31A8 /* MainTabBarViewController.swift in Sources */,
 				743A50FB2828DDA200101284 /* WalletAddressViewModel.swift in Sources */,
 				741373A2281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift in Sources */,

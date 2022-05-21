@@ -39,6 +39,7 @@
 		74606116282E1F1400BB1DDA /* WatchlistListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */; };
 		7460611A2833701900BB1DDA /* CollectionSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746061192833701900BB1DDA /* CollectionSearchResult.swift */; };
 		7460611C283372B100BB1DDA /* CollectionSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7460611B283372B100BB1DDA /* CollectionSearchViewModel.swift */; };
+		74BC37F7283999C500887360 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BC37F6283999C500887360 /* ImageManager.swift */; };
 		74BF32FE2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BF32FD2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,7 +67,7 @@
 		745392B1281DD3EA003DE9CD /* WatchlistTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistTableViewCell.swift; sourceTree = "<group>"; };
 		745392B4281DE154003DE9CD /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		745392B6281F7931003DE9CD /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
-		745392B8281F7A29003DE9CD /* DIN-D.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DIN-D.ttf"; path = "SolanaGallery/DIN-D.ttf"; sourceTree = SOURCE_ROOT; };
+		745392B8281F7A29003DE9CD /* DIN-D.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DIN-D.ttf"; path = "SolanaGallery/Assets/DIN-D.ttf"; sourceTree = SOURCE_ROOT; };
 		745392BA281F7CDA003DE9CD /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		745392C728236452003DE9CD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		745392C928236530003DE9CD /* CollectionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +75,7 @@
 		74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistListViewModel.swift; sourceTree = "<group>"; };
 		746061192833701900BB1DDA /* CollectionSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchResult.swift; sourceTree = "<group>"; };
 		7460611B283372B100BB1DDA /* CollectionSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchViewModel.swift; sourceTree = "<group>"; };
+		74BC37F6283999C500887360 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		74BF32FD2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchResultTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,8 +116,8 @@
 				741373822819FBAF004B31A8 /* LaunchScreen.storyboard */,
 				741373742819FBAF004B31A8 /* AppDelegate.swift */,
 				741373762819FBAF004B31A8 /* SceneDelegate.swift */,
-				7413738E2819FD4F004B31A8 /* SolanaGalleryAPI.swift */,
 				745392C2281F8D8F003DE9CD /* Assets */,
+				74BC37F828399D2400887360 /* Data Management */,
 				74137397281A23F7004B31A8 /* Core Data */,
 				745392B3281DE140003DE9CD /* Extensions */,
 				741373A3281A41A8004B31A8 /* Models */,
@@ -130,11 +132,11 @@
 			isa = PBXGroup;
 			children = (
 				741373AD281B65C4004B31A8 /* MainTabBarViewController.swift */,
-				7413738C2819FBEA004B31A8 /* WatchlistViewController.swift */,
 				741373AF281B6DC4004B31A8 /* HomePageViewController.swift */,
 				745392C728236452003DE9CD /* SearchViewController.swift */,
-				745392C928236530003DE9CD /* CollectionDetailViewController.swift */,
 				743A50F82828DB9200101284 /* WalletTrackerViewController.swift */,
+				7413738C2819FBEA004B31A8 /* WatchlistViewController.swift */,
+				745392C928236530003DE9CD /* CollectionDetailViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -162,12 +164,12 @@
 		741373A8281A4209004B31A8 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				7460611B283372B100BB1DDA /* CollectionSearchViewModel.swift */,
 				743A50F62828D71F00101284 /* PortfolioCollectionViewModel.swift */,
 				741373A9281A4233004B31A8 /* WatchlistViewModel.swift */,
 				743A50FA2828DDA200101284 /* WalletAddressViewModel.swift */,
 				74606113282E153400BB1DDA /* PortfolioViewModel.swift */,
 				74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */,
-				7460611B283372B100BB1DDA /* CollectionSearchViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -175,10 +177,9 @@
 		745392B0281DD3C7003DE9CD /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				745392B1281DD3EA003DE9CD /* WatchlistTableViewCell.swift */,
-				743A50FE28298FF100101284 /* PortfolioCollectionTableViewCell.swift */,
-				745392B8281F7A29003DE9CD /* DIN-D.ttf */,
 				74BF32FD2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift */,
+				743A50FE28298FF100101284 /* PortfolioCollectionTableViewCell.swift */,
+				745392B1281DD3EA003DE9CD /* WatchlistTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -197,8 +198,18 @@
 			isa = PBXGroup;
 			children = (
 				741373802819FBAF004B31A8 /* Assets.xcassets */,
+				745392B8281F7A29003DE9CD /* DIN-D.ttf */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		74BC37F828399D2400887360 /* Data Management */ = {
+			isa = PBXGroup;
+			children = (
+				74BC37F6283999C500887360 /* ImageManager.swift */,
+				7413738E2819FD4F004B31A8 /* SolanaGalleryAPI.swift */,
+			);
+			path = "Data Management";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,6 +315,7 @@
 				741373A7281A41E9004B31A8 /* CollectionCount.swift in Sources */,
 				74BF32FE2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift in Sources */,
 				741373AE281B65C4004B31A8 /* MainTabBarViewController.swift in Sources */,
+				74BC37F7283999C500887360 /* ImageManager.swift in Sources */,
 				743A50FB2828DDA200101284 /* WalletAddressViewModel.swift in Sources */,
 				741373A2281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift in Sources */,
 				741373772819FBAF004B31A8 /* SceneDelegate.swift in Sources */,

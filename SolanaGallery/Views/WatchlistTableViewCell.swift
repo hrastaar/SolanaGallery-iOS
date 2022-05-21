@@ -8,7 +8,8 @@
 import UIKit
 
 class WatchlistTableViewCell: UITableViewCell {
-    
+    static let ReuseIdentifier = "WatchlistTableViewCell"
+
     var watchlistViewModel: WatchlistViewModel? {
         didSet {
             collectionNameLabel.text = watchlistViewModel?.getCollectionNameString()

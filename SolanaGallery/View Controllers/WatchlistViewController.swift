@@ -9,8 +9,6 @@ import UIKit
 import RxSwift
 
 class WatchlistViewController: UIViewController {
-    static let cellIdentifier = "WatchlistTableViewCell"
-
     let watchlistListViewModel = WatchlistListViewModel()
     let disposeBag = DisposeBag()
 
@@ -18,7 +16,7 @@ class WatchlistViewController: UIViewController {
 
     var tableView: UITableView = {
         var tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: WatchlistTableViewCell.ReuseIdentifier)
         tableView.allowsMultipleSelectionDuringEditing = false
         return tableView
     }()
@@ -31,7 +29,7 @@ class WatchlistViewController: UIViewController {
         view.backgroundColor = .systemBackground
 
         view.addSubview(tableView)
-        
+        populateWithCollections()
         // Configure tableview data source (using rxswift/rxcocoa)
         self.bindTableData()
         
@@ -63,7 +61,7 @@ extension WatchlistViewController {
     private func bindTableData() {
         watchlistListViewModel.watchlistItems.bind(
             to: tableView.rx.items(
-                cellIdentifier: WatchlistViewController.cellIdentifier,
+                cellIdentifier: WatchlistTableViewCell.ReuseIdentifier,
                 cellType: WatchlistTableViewCell.self)
         ) { row, model, cell in
             cell.updateData(with: model)
@@ -97,12 +95,6 @@ extension WatchlistViewController {
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
-    }
-    
-    private func reloadTableView() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
     }
     
     private func initializeTableViewRefreshControl() {

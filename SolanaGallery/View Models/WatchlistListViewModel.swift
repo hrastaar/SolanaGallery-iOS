@@ -36,7 +36,6 @@ class WatchlistListViewModel {
         
         dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
             print("Successfully fetched collection stats for \(watchlistItems.count) collections")
-            self.watchlistItems.onCompleted()
         }
     }
 }

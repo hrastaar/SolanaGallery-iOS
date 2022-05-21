@@ -8,18 +8,21 @@
 import UIKit
 
 class CollectionSearchResultTableViewCell: UITableViewCell {
-    
+    static let ReuseIdentifier = "CollectionSearchResultTableViewCell"
     var searchResult: CollectionSearchResult? {
         didSet {
-            collectionNameLabel.text = searchResult?.name
-            guard let imageURL = searchResult?.image,
-                  let url = URL(string: imageURL),
-                  let data = try? Data(contentsOf: url),
-                  let image = UIImage(data: data) else {
+            collectionNameLabel.text = self.searchResult?.name
+            image.isHidden = true
+            guard let imageString = searchResult?.image else {
                 return
             }
-            DispatchQueue.main.async {
-                self.image.image = image
+            DispatchQueue.global(qos: .userInteractive).async {
+                ImageManager.sharedInstance.fetchImage(imageUrlString: imageString) { image in
+                    DispatchQueue.main.async {
+                        self.image.image = image
+                        self.image.isHidden = false
+                    }
+                }
             }
         }
     }
@@ -37,11 +40,6 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
     }
     
     func updateData(with searchResult: CollectionSearchResult) {
@@ -52,7 +50,7 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
     private func setupUI() {
         addSubview(collectionNameLabel)
         addSubview(image)
-        image.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 0, width: 50, height: 50, enableInsets: false)
+        image.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 50, height: 50, enableInsets: false)
         
         collectionNameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 10, paddingBottom: 5, paddingRight: 0, width: 0, height: 0, enableInsets: false)
 
@@ -70,6 +68,10 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

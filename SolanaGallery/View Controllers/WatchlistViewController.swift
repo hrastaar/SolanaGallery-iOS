@@ -75,7 +75,7 @@ extension WatchlistViewController {
                   return
                 }
 
-                let detailVC = CollectionDetailViewController(watchlistViewModel: watchlistViewModel)
+                let detailVC = CollectionDetailViewController(collectionSymbol: watchlistViewModel.collectionStats.symbol)
                 self.navigationController?.pushViewController(detailVC, animated: true)
 
                 self.tableView.deselectRow(at: $0, animated: true)

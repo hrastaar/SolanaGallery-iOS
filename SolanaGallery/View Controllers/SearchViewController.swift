@@ -23,6 +23,7 @@ class SearchViewController: UIViewController {
         textField.layer.cornerRadius = 10
         textField.adjustsFontSizeToFitWidth = true
         textField.font = UIFont.primaryFont(size: 15)
+        textField.autocapitalizationType = .none
 
         return textField
     }()
@@ -31,9 +32,7 @@ class SearchViewController: UIViewController {
         var tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(CollectionSearchResultTableViewCell.self, forCellReuseIdentifier: CollectionSearchResultTableViewCell.ReuseIdentifier)
         tableView.allowsMultipleSelectionDuringEditing = false
-        
         tableView.layer.cornerRadius = 10
-        tableView.backgroundColor = .secondarySystemFill
         return tableView
     }()
 
@@ -74,5 +73,19 @@ class SearchViewController: UIViewController {
         ) { row, model, cell in
             cell.updateData(with: model)
         }.disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(onNext: {
+                guard let cell = self.tableView.cellForRow(at: $0) as? CollectionSearchResultTableViewCell,
+                      let symbol = cell.searchResult?.symbol else {
+                  print("Couldn't identify cell pressed")
+                  return
+                }
+
+                let detailVC = CollectionDetailViewController(collectionSymbol: symbol)
+                self.navigationController?.pushViewController(detailVC, animated: true)
+
+                self.tableView.deselectRow(at: $0, animated: true)
+            }).disposed(by: disposeBag)
     }
 }

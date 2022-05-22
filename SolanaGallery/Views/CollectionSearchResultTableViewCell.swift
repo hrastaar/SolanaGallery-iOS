@@ -9,23 +9,7 @@ import UIKit
 
 class CollectionSearchResultTableViewCell: UITableViewCell {
     static let ReuseIdentifier = "CollectionSearchResultTableViewCell"
-    var searchResult: CollectionSearchResult? {
-        didSet {
-            collectionNameLabel.text = self.searchResult?.name
-            image.isHidden = true
-            guard let imageString = searchResult?.image else {
-                return
-            }
-            DispatchQueue.global(qos: .userInteractive).async {
-                ImageManager.sharedInstance.fetchImage(imageUrlString: imageString) { image in
-                    DispatchQueue.main.async {
-                        self.image.image = image
-                        self.image.isHidden = false
-                    }
-                }
-            }
-        }
-    }
+    var searchResult: CollectionSearchResult?
     
     var collectionNameLabel: UILabel = {
         let label = UILabel()
@@ -44,6 +28,20 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
     
     func updateData(with searchResult: CollectionSearchResult) {
         self.searchResult = searchResult
+        collectionNameLabel.text = self.searchResult?.name
+        
+        let oldSymbol = searchResult.symbol
+        DispatchQueue.global(qos: .userInteractive).async {
+            ImageManager.sharedInstance.fetchImage(imageUrlString: searchResult.image) { image in
+                // Ensures that old async call to uiimage doesn't update cell with outdated collection image
+                if oldSymbol == self.searchResult?.symbol {
+                    DispatchQueue.main.async {
+                        self.image.image = image
+                    }
+                }
+
+            }
+        }
         setupUI()
     }
     

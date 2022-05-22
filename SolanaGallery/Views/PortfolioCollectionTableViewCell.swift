@@ -8,9 +8,12 @@
 import UIKit
 
 class PortfolioCollectionTableViewCell: UITableViewCell {
+    static let ReuseIdentifier = "PortfolioCollectionTableViewCell"
     
     var portfolioCollectionViewModel: PortfolioCollectionViewModel?
     
+    let colorManager = ColorManager.sharedInstance
+
     var collectionNameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -47,6 +50,8 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
         setupUI()
     }
     private func setupUI() {
+        backgroundColor = colorManager.primaryCellColor
+
         super.addSubview(collectionNameLabel)
         super.addSubview(floorPriceLabel)
         super.addSubview(countLabel)

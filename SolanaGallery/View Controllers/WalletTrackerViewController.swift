@@ -17,23 +17,26 @@ class WalletTrackerViewController: UIViewController, ChartViewDelegate {
     let disposeBag = DisposeBag()
     
     let portfolioViewModel = PortfolioViewModel()
-    
-    let walletSearchTextField: UITextField = {
-        let textField = UITextField(frame: .zero)
+    let colorManager = ColorManager.sharedInstance
+
+    let walletSearchTextField: TextField = {
+        let textField = TextField(frame: .zero)
         textField.placeholder = "Enter a valid Solana Wallet Address"
-        textField.backgroundColor = .secondarySystemFill
-        textField.layer.cornerRadius = 10
+        textField.backgroundColor = ColorManager.sharedInstance.primaryCellColor
+        textField.layer.cornerRadius = 20
         textField.adjustsFontSizeToFitWidth = true
         textField.font = UIFont.primaryFont(size: 15)
-
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
+        
         return textField
     }()
     
     let searchButton: UIButton = {
         let button = UIButton()
         button.setTitle("Search", for: .normal)
-        button.backgroundColor = .secondarySystemFill
-        button.layer.cornerRadius = 10
+        button.backgroundColor = ColorManager.sharedInstance.primaryCellColor
+        button.layer.cornerRadius = 20
         button.isEnabled = false
         button.alpha = 0.1
         button.titleLabel?.font = UIFont.primaryFont(size: 15)
@@ -53,10 +56,14 @@ class WalletTrackerViewController: UIViewController, ChartViewDelegate {
     }()
     
     var tableView: UITableView = {
-        var tableView = UITableView(frame: .zero, style: .grouped)
+        var tableView = UITableView(frame: .zero)
         tableView.register(PortfolioCollectionTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.alpha = 0.0
+        tableView.layer.cornerRadius = 25
         tableView.allowsMultipleSelectionDuringEditing = false
+        tableView.backgroundColor = .clear
+        tableView.separatorColor = .clear
+        
         return tableView
     }()
     
@@ -71,7 +78,7 @@ class WalletTrackerViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = colorManager.backgroundColor
         
         // Do any additional setup after loading the view.
         self.bindTableData()
@@ -100,7 +107,6 @@ class WalletTrackerViewController: UIViewController, ChartViewDelegate {
     @objc
     private func getWalletCollections(_ sender: Any) {
         guard let walletAddress = walletSearchTextField.text else {
-            print("Couldn't get wallet address")
             return
         }
         portfolioViewModel.fetchWalletPortfolioData(wallet: walletAddress)
@@ -108,11 +114,6 @@ class WalletTrackerViewController: UIViewController, ChartViewDelegate {
 }
 
 extension WalletTrackerViewController {
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        pieChart.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.bounds.width, height: 400, enableInsets: false)
-        return pieChart
-    }
-    
     private func updatePortfolioValueAndCharts(collections: [PortfolioCollectionViewModel]) {
         var portfolioTotal: Double = 0.00
         var entries: [PieChartDataEntry] = []
@@ -147,7 +148,7 @@ extension WalletTrackerViewController {
     private func bindTableData() {
         portfolioViewModel.collections.bind(
             to: tableView.rx.items(
-                cellIdentifier: "PortfolioCollectionTableViewCell",
+                cellIdentifier: PortfolioCollectionTableViewCell.ReuseIdentifier,
                 cellType: PortfolioCollectionTableViewCell.self)
         ) { row, model, cell in
             cell.updateData(with: model)
@@ -194,7 +195,7 @@ extension WalletTrackerViewController {
         
         portfolioTotalValueLabel.anchor(top: searchButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingLeft: 0, paddingBottom: 25, paddingRight: 0, width: view.bounds.width * 0.3, height: 35, enableInsets: false)
         
-        tableView.anchor(top: searchButton.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 50, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 0, enableInsets: false)
+        tableView.anchor(top: portfolioTotalValueLabel.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
     }
     
     private func setupNavigationTitle() {

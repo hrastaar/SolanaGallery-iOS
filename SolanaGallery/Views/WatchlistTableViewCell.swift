@@ -10,13 +10,7 @@ import UIKit
 class WatchlistTableViewCell: UITableViewCell {
     static let ReuseIdentifier = "WatchlistTableViewCell"
 
-    var watchlistViewModel: WatchlistViewModel? {
-        didSet {
-            collectionNameLabel.text = watchlistViewModel?.getCollectionNameString()
-            floorPriceLabel.text = watchlistViewModel?.getFloorPriceString()
-            listedCountLabel.text = watchlistViewModel?.getListedCountString()
-        }
-    }
+    var watchlistViewModel: WatchlistViewModel?
     
     var collectionNameLabel: UILabel = {
         let label = UILabel()
@@ -48,6 +42,9 @@ class WatchlistTableViewCell: UITableViewCell {
     
     func updateData(with watchlistViewModel: WatchlistViewModel) {
         self.watchlistViewModel = watchlistViewModel
+        collectionNameLabel.text = watchlistViewModel.getCollectionNameString()
+        floorPriceLabel.text = watchlistViewModel.getFloorPriceString()
+        listedCountLabel.text = watchlistViewModel.getListedCountString()
         setupUI()
     }
     private func setupUI() {

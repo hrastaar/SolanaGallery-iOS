@@ -13,7 +13,6 @@ class CollectionDetailViewController: UIViewController {
     
     init(collectionSymbol: String) {
         self.collectionSymbol = collectionSymbol
-
         super.init(nibName: nil, bundle: nil)
     }
     

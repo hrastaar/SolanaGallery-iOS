@@ -24,7 +24,7 @@ class WatchlistListViewModel {
             dispatchGroup.enter()
             self.SolanaGalleryApiInstance.fetchCollectionStats(collectionName: collectionName) { stats in
                 guard let stats = stats else {
-                    print("Failed to fetch stats for collection: \(collectionName)")
+                    print("Failed to fetch stats for collection \(collectionName)")
                     dispatchGroup.leave()
                     return
                 }

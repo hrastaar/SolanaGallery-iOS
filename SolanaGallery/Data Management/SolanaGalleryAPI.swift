@@ -11,6 +11,10 @@ import RxSwift
 class SolanaGalleryAPI {
     static let sharedInstance = SolanaGalleryAPI()
     
+    /// This function returns an array of CollectionCount objects, each representing a Solana NFT collection in the wallet address provided.
+    ///
+    /// - Parameter wallet: A Solana wallet address string. Bonfida domains are not supported.
+    /// - Returns: Completion that provides an optional array of CollectionCount objects
     public func getNftCollectionCounts(wallet: String, completion: @escaping ([CollectionCount]?) -> Void) -> Void {
         let endpoint = self.getNftCollectionCountsEndpoint(wallet: wallet)
         guard let url = URL(string: endpoint) else {
@@ -33,6 +37,10 @@ class SolanaGalleryAPI {
         task.resume()
     }
     
+    /// This function returns collection statistics for the collection provided
+    ///
+    /// - Parameter wallet: A Solana wallet address string object. Bonfida domains are not supported.
+    /// - Returns: Completion that provides collection stats (if available)
     public func fetchCollectionStats(collectionName: String, completion: @escaping (CollectionStats?) -> Void) -> Void {
         let endpoint = self.getNftCollectionStatsEndpoint(collectionName: collectionName)
         guard let url = URL(string: endpoint) else {
@@ -55,6 +63,10 @@ class SolanaGalleryAPI {
         task.resume()
     }
     
+    /// This function returns an array of CollectionSearchResult objects that partially match the search text provided.
+    ///
+    /// - Parameter searchText: Search text string
+    /// - Returns: Completion that provides an array of all collections that match the search text
     public func fetchCollectionsList(searchText: String, completion: @escaping ([CollectionSearchResult]?) -> Void) -> Void {
         let endpoint = getSearchCollectionsEndpoint(searchText: searchText)
         guard let url = URL(string: endpoint) else {

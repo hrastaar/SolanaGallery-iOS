@@ -59,6 +59,7 @@ class WatchlistViewController: UIViewController {
 extension WatchlistViewController {
 
     private func bindTableData() {
+        // Reactively manage watch list items based on WatchlistListViewModel
         watchlistListViewModel.watchlistItems.bind(
             to: tableView.rx.items(
                 cellIdentifier: WatchlistTableViewCell.ReuseIdentifier,
@@ -67,6 +68,7 @@ extension WatchlistViewController {
             cell.updateData(with: model)
         }.disposed(by: disposeBag)
         
+        // Provide collection detail view controller if pressed
         tableView.rx.itemSelected
             .subscribe(onNext: {
                 guard let cell = self.tableView.cellForRow(at: $0) as? WatchlistTableViewCell,
@@ -74,7 +76,7 @@ extension WatchlistViewController {
                   print("Couldn't identify cell pressed")
                   return
                 }
-
+                
                 let detailVC = CollectionDetailViewController(collectionSymbol: watchlistViewModel.collectionStats.symbol)
                 self.navigationController?.pushViewController(detailVC, animated: true)
 

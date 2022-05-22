@@ -72,7 +72,6 @@ class WalletTrackerViewController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = "Portfolio"
         
         // Do any additional setup after loading the view.
         self.bindTableData()
@@ -175,6 +174,7 @@ extension WalletTrackerViewController {
 
 extension WalletTrackerViewController {
     private func setupUI() {
+        setupNavigationTitle()
         view.addSubview(portfolioTotalValueLabel)
         view.addSubview(tableView)
         view.addSubview(pieChart)
@@ -195,5 +195,14 @@ extension WalletTrackerViewController {
         portfolioTotalValueLabel.anchor(top: searchButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingLeft: 0, paddingBottom: 25, paddingRight: 0, width: view.bounds.width * 0.3, height: 35, enableInsets: false)
         
         tableView.anchor(top: searchButton.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 50, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 0, enableInsets: false)
+    }
+    
+    private func setupNavigationTitle() {
+        let label = UILabel()
+        label.text = "Portfolio"
+        label.textAlignment = .left
+        self.navigationItem.titleView = label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.anchor(top: navigationController?.navigationBar.topAnchor, left: navigationController?.navigationBar.leftAnchor, bottom: navigationController?.navigationBar.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: navigationController?.navigationBar.bounds.width ?? 0, height: 0, enableInsets: false)
     }
 }

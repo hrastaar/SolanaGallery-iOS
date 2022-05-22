@@ -14,10 +14,16 @@ class WatchlistViewController: UIViewController {
 
     private let refreshControl = UIRefreshControl()
 
+    let colorManager = ColorManager.sharedInstance
+    
     var tableView: UITableView = {
-        var tableView = UITableView(frame: .zero, style: .grouped)
+        var tableView = UITableView(frame: .zero)
         tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: WatchlistTableViewCell.ReuseIdentifier)
         tableView.allowsMultipleSelectionDuringEditing = false
+        tableView.layer.cornerRadius = 25
+        tableView.backgroundColor = .clear
+        tableView.separatorColor = .clear
+        
         return tableView
     }()
     
@@ -25,10 +31,8 @@ class WatchlistViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Watchlist"
-        view.backgroundColor = .systemBackground
-
-        view.addSubview(tableView)
+        
+        setupUI()
         populateWithCollections()
         // Configure tableview data source (using rxswift/rxcocoa)
         self.bindTableData()
@@ -40,9 +44,16 @@ class WatchlistViewController: UIViewController {
         self.syncWatchlistCollections()
     }
     
+    private func setupUI() {
+        view.backgroundColor = colorManager.backgroundColor
+        setupNavigationTitle()
+        
+        view.addSubview(tableView)
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.tableView.frame = self.view.bounds
     }
 
     // Removes current watchlistItems from tableview and fetches up-to-date collection statistics via SolanaGalleryAPI
@@ -111,6 +122,15 @@ extension WatchlistViewController {
         refreshControl.attributedTitle = NSAttributedString("Refreshing Watchlist Data")
 
         refreshControl.addTarget(self, action: #selector(refreshWatchlist(_:)), for: .valueChanged)
+    }
+    
+    private func setupNavigationTitle() {
+        let label = UILabel()
+        label.text = "Watchlist"
+        label.textAlignment = .left
+        self.navigationItem.titleView = label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.anchor(top: navigationController?.navigationBar.topAnchor, left: navigationController?.navigationBar.leftAnchor, bottom: navigationController?.navigationBar.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: navigationController?.navigationBar.bounds.width ?? 0, height: 0, enableInsets: false)
     }
     
     @objc private func refreshWatchlist(_ sender: Any) {

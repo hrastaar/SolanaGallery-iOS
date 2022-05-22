@@ -15,47 +15,61 @@ class SearchViewController: UIViewController {
     let collectionSearchViewModel = CollectionSearchViewModel()
 
     let disposeBag = DisposeBag()
+    let colorManager = ColorManager.sharedInstance
 
-    let searchTextField: UITextField = {
-        let textField = UITextField(frame: .zero)
+    let searchTextField: TextField = {
+        let textField = TextField(frame: .zero)
         textField.placeholder = "Search for a collection"
-        textField.backgroundColor = .secondarySystemFill
-        textField.layer.cornerRadius = 10
+        textField.backgroundColor = ColorManager.sharedInstance.primaryCellColor
+        textField.layer.cornerRadius = 20
         textField.adjustsFontSizeToFitWidth = true
         textField.font = UIFont.primaryFont(size: 15)
         textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
 
         return textField
     }()
     
     let tableView: UITableView = {
-        var tableView = UITableView(frame: .zero, style: .plain)
+        var tableView = UITableView(frame: .zero)
         tableView.register(CollectionSearchResultTableViewCell.self, forCellReuseIdentifier: CollectionSearchResultTableViewCell.ReuseIdentifier)
         tableView.allowsMultipleSelectionDuringEditing = false
-        tableView.layer.cornerRadius = 10
+        tableView.layer.cornerRadius = 25
+        tableView.backgroundColor = .clear
+        tableView.separatorColor = .clear
+        
         return tableView
     }()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = ColorManager.sharedInstance.backgroundColor
         // Position + arrange UI
         setupUI()
-        
         // Use RxCocoa to bind data to tableview reactively
         bindTableView()
-
+        
+    }
+    
+    private func setupNavigationTitle() {
+        let label = UILabel()
+        label.text = "Search"
+        label.textAlignment = .left
+        self.navigationItem.titleView = label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.anchor(top: navigationController?.navigationBar.topAnchor, left: navigationController?.navigationBar.leftAnchor, bottom: navigationController?.navigationBar.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: navigationController?.navigationBar.bounds.width ?? 0, height: 0, enableInsets: false)
     }
     
     private func setupUI() {
+        setupNavigationTitle()
         view.addSubview(searchTextField)
         view.addSubview(tableView)
         
         searchTextField.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 100, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: view.bounds.width * 0.75, height: 50, enableInsets: false)
         
         tableView.anchor(top: searchTextField.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
-
+        
         searchTextField.rx.controlEvent(.allEditingEvents)
             .subscribe(onNext: { event in
                 guard let searchText = self.searchTextField.text else {

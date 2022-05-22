@@ -12,6 +12,8 @@ class WatchlistTableViewCell: UITableViewCell {
 
     var watchlistViewModel: WatchlistViewModel?
     
+    let colorManager = ColorManager.sharedInstance
+
     var collectionNameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -48,6 +50,8 @@ class WatchlistTableViewCell: UITableViewCell {
         setupUI()
     }
     private func setupUI() {
+        backgroundColor = colorManager.primaryCellColor
+
         super.addSubview(collectionNameLabel)
         super.addSubview(floorPriceLabel)
         super.addSubview(listedCountLabel)

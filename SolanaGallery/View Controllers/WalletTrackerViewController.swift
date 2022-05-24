@@ -6,11 +6,10 @@
 //
 
 import UIKit
-import Charts
 import RxCocoa
 import RxSwift
 
-class WalletTrackerViewController: UIViewController, ChartViewDelegate {
+class WalletTrackerViewController: UIViewController {
     static let cellIdentifier = "PortfolioCollectionTableViewCell"
     
     let walletAddressViewModel = WalletAddressViewModel()
@@ -67,15 +66,6 @@ class WalletTrackerViewController: UIViewController, ChartViewDelegate {
         return tableView
     }()
     
-    var pieChart: PieChartView = {
-        let chart = PieChartView(frame: .zero)
-        chart.alpha = 0.0
-        chart.chartDescription?.font = UIFont.primaryFont(size: 12)
-        chart.legend.font = UIFont.primaryFont(size: 8)
-        
-        return chart
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = colorManager.backgroundColor
@@ -97,8 +87,6 @@ class WalletTrackerViewController: UIViewController, ChartViewDelegate {
             to: searchButton.rx.alpha
         ).disposed(by: disposeBag)
 
-        pieChart.delegate = self
-
         searchButton.addTarget(self, action: #selector(getWalletCollections(_:)), for: .touchUpInside)
     }
     
@@ -116,32 +104,14 @@ class WalletTrackerViewController: UIViewController, ChartViewDelegate {
 extension WalletTrackerViewController {
     private func updatePortfolioValueAndCharts(collections: [PortfolioCollectionViewModel]) {
         var portfolioTotal: Double = 0.00
-        var entries: [PieChartDataEntry] = []
-        for obj in collections {
-            portfolioTotal += obj.getCollectionTotalValueDouble()
-            if (obj.getCollectionTotalValueDouble() < 0.05) {
-                continue
-            }
-            entries.append(PieChartDataEntry(value: obj.getCollectionTotalValueDouble(),
-                                             label: obj.getCollectionTotalValueTruncatedString()))
+        collections.forEach { collection in
+            portfolioTotal += collection.getCollectionTotalValueDouble()
         }
 
-        let dataset = PieChartDataSet(entries: entries, label: "Portfolio Distribution")
-        dataset.colors = [
-            UIColor().getSolanaPurpleColor()!,
-            UIColor().getSolanaGreenColor()!,
-            .secondarySystemFill,
-            .systemTeal
-        ]
         DispatchQueue.main.async {
-            self.pieChart.data = PieChartData(dataSet: dataset)
-
             self.portfolioTotalValueLabel.text = String(format: "Portfolio Value: %.2f◎", portfolioTotal)
-            self.pieChart.notifyDataSetChanged()
-            
             self.tableView.alpha = 1.0
             self.portfolioTotalValueLabel.alpha = 1.0
-            self.pieChart.alpha = 1.0
         }
     }
     
@@ -178,7 +148,6 @@ extension WalletTrackerViewController {
         setupNavigationTitle()
         view.addSubview(portfolioTotalValueLabel)
         view.addSubview(tableView)
-        view.addSubview(pieChart)
 
         // Setup wallet search area (includes text field for wallet address, and send button)
         let stackView = UIStackView(arrangedSubviews: [walletSearchTextField, searchButton])

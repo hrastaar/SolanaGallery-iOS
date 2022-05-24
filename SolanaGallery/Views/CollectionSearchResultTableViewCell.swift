@@ -36,6 +36,9 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
         self.searchResult = searchResult
         collectionNameLabel.text = self.searchResult?.name
         
+        DispatchQueue.main.async {
+            self.collectionImageView.image = .none
+        }
         let oldSymbol = searchResult.symbol
         DispatchQueue.global(qos: .userInteractive).async {
             ImageManager.sharedInstance.fetchImage(imageUrlString: searchResult.image) { image in

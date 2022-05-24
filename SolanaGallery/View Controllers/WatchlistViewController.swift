@@ -88,26 +88,11 @@ extension WatchlistViewController {
                   return
                 }
                 
-                let detailVC = CollectionDetailViewController(collectionSymbol: watchlistViewModel.collectionStats.symbol)
+                let detailVC = CollectionDetailViewController(collectionSymbol: watchlistViewModel.collectionStats.symbol, collectionName: watchlistViewModel.getCollectionNameString())
                 self.navigationController?.pushViewController(detailVC, animated: true)
 
                 self.tableView.deselectRow(at: $0, animated: true)
             }).disposed(by: disposeBag)
-    }
-    
-    private func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-
-    private func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCell.EditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if (editingStyle == UITableViewCell.EditingStyle.delete) {
-            // handle delete (by removing the data from your array and updating the tableview)
-            print("Delete operation invoked on indexPatch \(indexPath.row)")
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
     }
     
     private func initializeTableViewRefreshControl() {

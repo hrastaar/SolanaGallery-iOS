@@ -32,13 +32,13 @@
 		745392BB281F7CDA003DE9CD /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392BA281F7CDA003DE9CD /* UIColor+Extension.swift */; };
 		745392C828236452003DE9CD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392C728236452003DE9CD /* SearchViewController.swift */; };
 		745392CA28236530003DE9CD /* CollectionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392C928236530003DE9CD /* CollectionDetailViewController.swift */; };
-		745E143028261CEF00478A8D /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 745E142F28261CEF00478A8D /* RxCocoa */; };
-		745E143228261CEF00478A8D /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 745E143128261CEF00478A8D /* RxSwift */; };
-		74606112282A3EB800BB1DDA /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 74606111282A3EB800BB1DDA /* Charts */; };
 		74606114282E153400BB1DDA /* PortfolioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606113282E153400BB1DDA /* PortfolioViewModel.swift */; };
 		74606116282E1F1400BB1DDA /* WatchlistListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */; };
 		7460611A2833701900BB1DDA /* CollectionSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746061192833701900BB1DDA /* CollectionSearchResult.swift */; };
 		7460611C283372B100BB1DDA /* CollectionSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7460611B283372B100BB1DDA /* CollectionSearchViewModel.swift */; };
+		74B4BC85283AFEB2001BC218 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 74B4BC84283AFEB2001BC218 /* RxSwift */; };
+		74B4BC87283AFEB8001BC218 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 74B4BC86283AFEB8001BC218 /* RxCocoa */; };
+		74B4BC89283C91B6001BC218 /* CollectionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B4BC88283C91B6001BC218 /* CollectionDetailViewModel.swift */; };
 		74BC37F7283999C500887360 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BC37F6283999C500887360 /* ImageManager.swift */; };
 		74BF32FE2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BF32FD2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift */; };
 		74CFA7D92839F838008AEB6D /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CFA7D82839F838008AEB6D /* ColorManager.swift */; };
@@ -77,6 +77,7 @@
 		74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistListViewModel.swift; sourceTree = "<group>"; };
 		746061192833701900BB1DDA /* CollectionSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchResult.swift; sourceTree = "<group>"; };
 		7460611B283372B100BB1DDA /* CollectionSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchViewModel.swift; sourceTree = "<group>"; };
+		74B4BC88283C91B6001BC218 /* CollectionDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailViewModel.swift; sourceTree = "<group>"; };
 		74BC37F6283999C500887360 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		74BF32FD2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		74CFA7D82839F838008AEB6D /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
@@ -88,9 +89,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				745E143228261CEF00478A8D /* RxSwift in Frameworks */,
-				74606112282A3EB800BB1DDA /* Charts in Frameworks */,
-				745E143028261CEF00478A8D /* RxCocoa in Frameworks */,
+				74B4BC87283AFEB8001BC218 /* RxCocoa in Frameworks */,
+				74B4BC85283AFEB2001BC218 /* RxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +102,7 @@
 			children = (
 				741373732819FBAF004B31A8 /* SolanaGallery */,
 				741373722819FBAF004B31A8 /* Products */,
+				74B4BC83283AFEB2001BC218 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -174,6 +175,7 @@
 				743A50FA2828DDA200101284 /* WalletAddressViewModel.swift */,
 				74606113282E153400BB1DDA /* PortfolioViewModel.swift */,
 				74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */,
+				74B4BC88283C91B6001BC218 /* CollectionDetailViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -208,6 +210,13 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
+		74B4BC83283AFEB2001BC218 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		74BC37F828399D2400887360 /* Data Management */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,9 +244,8 @@
 			);
 			name = SolanaGallery;
 			packageProductDependencies = (
-				745E142F28261CEF00478A8D /* RxCocoa */,
-				745E143128261CEF00478A8D /* RxSwift */,
-				74606111282A3EB800BB1DDA /* Charts */,
+				74B4BC84283AFEB2001BC218 /* RxSwift */,
+				74B4BC86283AFEB8001BC218 /* RxCocoa */,
 			);
 			productName = SolanaGallery;
 			productReference = 741373712819FBAF004B31A8 /* SolanaGallery.app */;
@@ -306,6 +314,7 @@
 				745392C828236452003DE9CD /* SearchViewController.swift in Sources */,
 				741373AA281A4233004B31A8 /* WatchlistViewModel.swift in Sources */,
 				745392BB281F7CDA003DE9CD /* UIColor+Extension.swift in Sources */,
+				74B4BC89283C91B6001BC218 /* CollectionDetailViewModel.swift in Sources */,
 				743A50FF28298FF100101284 /* PortfolioCollectionTableViewCell.swift in Sources */,
 				745392B2281DD3EA003DE9CD /* WatchlistTableViewCell.swift in Sources */,
 				7413738F2819FD4F004B31A8 /* SolanaGalleryAPI.swift in Sources */,
@@ -556,20 +565,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		745E142F28261CEF00478A8D /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		745E143128261CEF00478A8D /* RxSwift */ = {
+		74B4BC84283AFEB2001BC218 /* RxSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
 		};
-		74606111282A3EB800BB1DDA /* Charts */ = {
+		74B4BC86283AFEB8001BC218 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 74606110282A3EB800BB1DDA /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = Charts;
+			package = 745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxDataSources
 
 class SearchViewController: UIViewController {
     // Manage Data Models
@@ -91,12 +90,13 @@ class SearchViewController: UIViewController {
         tableView.rx.itemSelected
             .subscribe(onNext: {
                 guard let cell = self.tableView.cellForRow(at: $0) as? CollectionSearchResultTableViewCell,
-                      let symbol = cell.searchResult?.symbol else {
+                      let symbol = cell.searchResult?.symbol,
+                      let collectionName = cell.searchResult?.name else {
                   print("Couldn't identify cell pressed")
                   return
                 }
 
-                let detailVC = CollectionDetailViewController(collectionSymbol: symbol)
+                let detailVC = CollectionDetailViewController(collectionSymbol: symbol, collectionName: collectionName)
                 self.navigationController?.pushViewController(detailVC, animated: true)
 
                 self.tableView.deselectRow(at: $0, animated: true)

@@ -22,7 +22,7 @@ class WalletTrackerViewController: UIViewController {
         let textField = TextField(frame: .zero)
         textField.placeholder = "Enter a valid Solana Wallet Address"
         textField.backgroundColor = ColorManager.sharedInstance.primaryCellColor
-        textField.layer.cornerRadius = 20
+        textField.layer.cornerRadius = Constants.UI.TextField.CornerRadius
         textField.adjustsFontSizeToFitWidth = true
         textField.font = UIFont.primaryFont(size: 15)
         textField.autocapitalizationType = .none
@@ -35,7 +35,7 @@ class WalletTrackerViewController: UIViewController {
         let button = UIButton()
         button.setTitle("Search", for: .normal)
         button.backgroundColor = ColorManager.sharedInstance.primaryCellColor
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = Constants.UI.Button.CornerRadius
         button.isEnabled = false
         button.alpha = 0.1
         button.titleLabel?.font = UIFont.primaryFont(size: 15)
@@ -58,7 +58,7 @@ class WalletTrackerViewController: UIViewController {
         var tableView = UITableView(frame: .zero)
         tableView.register(PortfolioCollectionTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.alpha = 0.0
-        tableView.layer.cornerRadius = 25
+        tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
         tableView.allowsMultipleSelectionDuringEditing = false
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
@@ -155,12 +155,13 @@ extension WalletTrackerViewController {
         stackView.axis = .horizontal
         stackView.spacing = 20
         view.addSubview(stackView)
+        stackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0, enableInsets: false)
         
-        walletSearchTextField.anchor(top: stackView.topAnchor, left: stackView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.bounds.width * 0.65, height: 50, enableInsets: false)
+        walletSearchTextField.anchor(top: stackView.topAnchor, left: stackView.leftAnchor, bottom: stackView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.bounds.width * 0.7, height: 50, enableInsets: false)
         
-        searchButton.anchor(top: stackView.topAnchor, left: nil, bottom: stackView.bottomAnchor, right: stackView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 25, width: view.bounds.width * 0.2 , height: 50, enableInsets: false)
+        searchButton.anchor(top: stackView.topAnchor, left: walletSearchTextField.rightAnchor, bottom: stackView.bottomAnchor, right: stackView.rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 25, width: 0, height: 50, enableInsets: false)
         
-        stackView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 100, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+
         
         portfolioTotalValueLabel.anchor(top: searchButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingLeft: 0, paddingBottom: 25, paddingRight: 0, width: view.bounds.width * 0.3, height: 35, enableInsets: false)
         
@@ -170,7 +171,7 @@ extension WalletTrackerViewController {
     private func setupNavigationTitle() {
         let label = UILabel()
         label.text = "Portfolio"
-        label.textAlignment = .left
+        label.textAlignment = .center
         self.navigationItem.titleView = label
         label.translatesAutoresizingMaskIntoConstraints = false
         label.anchor(top: navigationController?.navigationBar.topAnchor, left: navigationController?.navigationBar.leftAnchor, bottom: navigationController?.navigationBar.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: navigationController?.navigationBar.bounds.width ?? 0, height: 0, enableInsets: false)

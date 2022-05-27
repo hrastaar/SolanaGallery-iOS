@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class CollectionSearchResultTableViewCell: UITableViewCell {
     static let ReuseIdentifier = "CollectionSearchResultTableViewCell"
@@ -19,12 +20,17 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 15)
         label.sizeToFit()
+        label.isSkeletonable = true
+        
         return label
     }()
     
     var collectionImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
+        imageView.isSkeletonable = true
+        imageView.skeletonCornerRadius = 10
+        
         return imageView
     }()
     
@@ -35,7 +41,6 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
     func updateData(with searchResult: CollectionSearchResult) {
         self.searchResult = searchResult
         collectionNameLabel.text = self.searchResult?.name
-        
         DispatchQueue.main.async {
             self.collectionImageView.image = .none
         }
@@ -45,7 +50,10 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
                 // Ensures that old async call to uiimage doesn't update cell with outdated collection image
                 if oldSymbol == self.searchResult?.symbol {
                     DispatchQueue.main.async {
+                        self.collectionImageView.hideSkeleton()
+                        self.collectionImageView.layer.cornerRadius = 10
                         self.collectionImageView.image = image
+                        self.collectionNameLabel.hideSkeleton()
                     }
                 }
 
@@ -59,7 +67,7 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
 
         addSubview(collectionNameLabel)
         addSubview(collectionImageView)
-
+        setupSkeletonViews()
         let stackView = UIStackView(arrangedSubviews: [collectionImageView, collectionNameLabel])
         stackView.alignment = .leading
         stackView.axis = .horizontal
@@ -68,7 +76,6 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
         stackView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 5, width: 0, height: 65, enableInsets: false)
         collectionImageView.anchor(top: nil, left: stackView.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 10, paddingBottom: 25, paddingRight: 10, width: 50, height: 50, enableInsets: false)
         collectionImageView.centerYAnchor.constraint(equalTo: stackView.centerYAnchor).isActive = true
-        collectionImageView.layer.cornerRadius = 20
 
         collectionNameLabel.anchor(top: stackView.topAnchor, left: collectionImageView.rightAnchor, bottom: stackView.bottomAnchor, right: stackView.rightAnchor, paddingTop: 5, paddingLeft: 10, paddingBottom: 5, paddingRight: 0, width: 0, height: 0, enableInsets: false)
     }
@@ -88,5 +95,13 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
+    private func setupSkeletonViews() {
+        let animation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .topLeftBottomRight)
+        collectionImageView.showAnimatedGradientSkeleton(animation: animation)
+        collectionNameLabel.skeletonTextLineHeight = .relativeToFont
+        collectionNameLabel.skeletonTextNumberOfLines = 1
+        collectionNameLabel.linesCornerRadius = 10
+        collectionNameLabel.showSkeleton()
+    }
 }
-

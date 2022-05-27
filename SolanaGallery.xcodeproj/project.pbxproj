@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7404139E2840741D0061DFE8 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 7404139D2840741D0061DFE8 /* SkeletonView */; };
+		740413C42840816F0061DFE8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740413C32840816F0061DFE8 /* Constants.swift */; };
 		741373752819FBAF004B31A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373742819FBAF004B31A8 /* AppDelegate.swift */; };
 		741373772819FBAF004B31A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373762819FBAF004B31A8 /* SceneDelegate.swift */; };
 		741373812819FBAF004B31A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741373802819FBAF004B31A8 /* Assets.xcassets */; };
@@ -46,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		740413C32840816F0061DFE8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		741373712819FBAF004B31A8 /* SolanaGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolanaGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		741373742819FBAF004B31A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		741373762819FBAF004B31A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +93,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				74B4BC87283AFEB8001BC218 /* RxCocoa in Frameworks */,
+				7404139E2840741D0061DFE8 /* SkeletonView in Frameworks */,
 				74B4BC85283AFEB2001BC218 /* RxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,6 +133,7 @@
 				7413738B2819FBDB004B31A8 /* View Controllers */,
 				741373A8281A4209004B31A8 /* View Models */,
 				745392B0281DD3C7003DE9CD /* Views */,
+				740413C32840816F0061DFE8 /* Constants.swift */,
 			);
 			path = SolanaGallery;
 			sourceTree = "<group>";
@@ -246,6 +251,7 @@
 			packageProductDependencies = (
 				74B4BC84283AFEB2001BC218 /* RxSwift */,
 				74B4BC86283AFEB8001BC218 /* RxCocoa */,
+				7404139D2840741D0061DFE8 /* SkeletonView */,
 			);
 			productName = SolanaGallery;
 			productReference = 741373712819FBAF004B31A8 /* SolanaGallery.app */;
@@ -278,6 +284,7 @@
 			packageReferences = (
 				745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */,
 				74606110282A3EB800BB1DDA /* XCRemoteSwiftPackageReference "Charts" */,
+				7404139C2840741D0061DFE8 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = 741373722819FBAF004B31A8 /* Products */;
 			projectDirPath = "";
@@ -313,6 +320,7 @@
 				745392B7281F7931003DE9CD /* UIFont+Extension.swift in Sources */,
 				745392C828236452003DE9CD /* SearchViewController.swift in Sources */,
 				741373AA281A4233004B31A8 /* WatchlistViewModel.swift in Sources */,
+				740413C42840816F0061DFE8 /* Constants.swift in Sources */,
 				745392BB281F7CDA003DE9CD /* UIColor+Extension.swift in Sources */,
 				74B4BC89283C91B6001BC218 /* CollectionDetailViewModel.swift in Sources */,
 				743A50FF28298FF100101284 /* PortfolioCollectionTableViewCell.swift in Sources */,
@@ -546,6 +554,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7404139C2840741D0061DFE8 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -565,6 +581,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7404139D2840741D0061DFE8 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7404139C2840741D0061DFE8 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
 		74B4BC84283AFEB2001BC218 /* RxSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */;

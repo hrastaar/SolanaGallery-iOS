@@ -20,7 +20,7 @@ class WatchlistViewController: UIViewController {
         var tableView = UITableView(frame: .zero)
         tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: WatchlistTableViewCell.ReuseIdentifier)
         tableView.allowsMultipleSelectionDuringEditing = false
-        tableView.layer.cornerRadius = 25
+        tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
         
@@ -112,7 +112,7 @@ extension WatchlistViewController {
     private func setupNavigationTitle() {
         let label = UILabel()
         label.text = "Watchlist"
-        label.textAlignment = .left
+        label.textAlignment = .center
         self.navigationItem.titleView = label
         label.translatesAutoresizingMaskIntoConstraints = false
         label.anchor(top: navigationController?.navigationBar.topAnchor, left: navigationController?.navigationBar.leftAnchor, bottom: navigationController?.navigationBar.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: navigationController?.navigationBar.bounds.width ?? 0, height: 0, enableInsets: false)

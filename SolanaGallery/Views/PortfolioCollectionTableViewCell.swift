@@ -20,6 +20,7 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 15)
         label.sizeToFit()
+        
         return label
     }()
     
@@ -28,6 +29,7 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 13)
+        
         return label
     }()
     var countLabel: UILabel = {
@@ -35,6 +37,7 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 13)
+        
         return label
     }()
     

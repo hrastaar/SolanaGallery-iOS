@@ -63,6 +63,28 @@ class SolanaGalleryAPI {
         task.resume()
     }
     
+    public func fetchCollectionListings(collectionName: String, completion: @escaping ([CollectionListing]?) -> Void) -> Void {
+        let endpoint = self.getNftCollectionListingsEndpoint(collectionName: collectionName)
+        guard let url = URL(string: endpoint) else {
+            completion(nil)
+            return
+        }
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, _ in
+            guard let data = data else {
+                completion(nil)
+                return
+            }
+            guard let collectionListings = try? JSONDecoder().decode([CollectionListing].self, from: data) else {
+                print("Couldn't decode data into [CollectionListing] for \(collectionName)")
+                completion(nil)
+                return
+            }
+            completion(collectionListings)
+            return
+        }
+        task.resume()
+    }
+    
     /// This function returns an array of CollectionSearchResult objects that partially match the search text provided.
     ///
     /// - Parameter searchText: Search text string
@@ -95,16 +117,21 @@ class SolanaGalleryAPI {
     }
     
     private func getNftCollectionStatsEndpoint(collectionName: String) -> String {
-        return BASE_URL + COLLECTION_ENDPOINT + collectionName
+        return BASE_URL + COLLECTION_STATS_ENDPOINT + collectionName
+    }
+    
+    private func getNftCollectionListingsEndpoint(collectionName: String) -> String {
+        return BASE_URL + COLLECTION_LISTING_ENDPOINT + collectionName
     }
 
     private func getSearchCollectionsEndpoint(searchText: String) -> String {
         return BASE_URL + COLLECTION_SEARCH_EXTENSION + searchText
     }
     
-    private let BASE_URL = "https://rastaar.com/";
-    private let WALLET_ENDPOINT_EXTENSION = "solana/wallet/";
-    private let COLLECTION_ENDPOINT = "solana/stats/"
+    private let BASE_URL = "https://rastaar.com/"
+    private let WALLET_ENDPOINT_EXTENSION = "solana/wallet/"
+    private let COLLECTION_STATS_ENDPOINT = "solana/stats/"
+    private let COLLECTION_LISTING_ENDPOINT = "solana/listings/"
     private let GET_NFT_COLLECTION_COUNTS = "/get_nft_collection_counts"
     private let COLLECTION_SEARCH_EXTENSION = "solana/search/collections/"
 }

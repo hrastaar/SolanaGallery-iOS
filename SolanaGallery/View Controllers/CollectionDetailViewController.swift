@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 import RxSwift
 import RxCocoa
 
@@ -24,6 +25,19 @@ class CollectionDetailViewController: UIViewController {
         view.layer.cornerRadius = 20
         
         return view
+    }()
+    
+    var watchlistButton: UIButton?
+    
+    let tableView: UITableView = {
+        var tableView = UITableView(frame: .zero)
+        tableView.register(CollectionListingTableViewCell.self, forCellReuseIdentifier: CollectionListingTableViewCell.ReuseIdentifier)
+        tableView.allowsMultipleSelectionDuringEditing = false
+        tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
+        tableView.backgroundColor = .clear
+        tableView.separatorColor = .clear
+        
+        return tableView
     }()
     
     init(collectionSymbol: String, collectionName: String) {
@@ -49,6 +63,8 @@ class CollectionDetailViewController: UIViewController {
         setupStatisticsView()
         // Create button that toggles adding a collection to watchlist
         setupWatchlistButton()
+        
+        setupTableView()
     }
     
     @objc func toggleWatchlistStatus() {
@@ -113,6 +129,7 @@ class CollectionDetailViewController: UIViewController {
     
     private func setupWatchlistButton() {
         let watchlistActionButton = UIButton()
+        self.watchlistButton = watchlistActionButton
         watchlistActionButton.titleLabel?.textColor = .white
         watchlistActionButton.titleLabel?.font = .primaryFont(size: 14)
         view.addSubview(watchlistActionButton)
@@ -121,5 +138,17 @@ class CollectionDetailViewController: UIViewController {
         _ = collectionDetailViewModel.isInWatchlist(collectionSymbol: collectionSymbol)
         watchlistActionButton.isUserInteractionEnabled = true
         watchlistActionButton.addTarget(self, action: #selector(toggleWatchlistStatus), for: .touchUpInside)
+    }
+    
+    private func setupTableView() {
+        view.addSubview(tableView)
+        tableView.anchor(top: watchlistButton?.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        bindTableView()
+    }
+    
+    private func bindTableView() {
+        collectionDetailViewModel.listings.bind(to: tableView.rx.items(cellIdentifier: CollectionListingTableViewCell.ReuseIdentifier, cellType: CollectionListingTableViewCell.self)) { row, model, cell in
+            cell.updateData(with: model)
+        }.disposed(by: disposeBag)
     }
 }

@@ -10,6 +10,8 @@ import RxSwift
 
 class CollectionDetailViewModel {
     let stats = PublishSubject<CollectionStats?>()
+    let listings = PublishSubject<[CollectionListing]>()
+    
     let isOnWatchlist = PublishSubject<Bool>()
     
     let SolanaGalleryApi = SolanaGalleryAPI.sharedInstance
@@ -21,6 +23,7 @@ class CollectionDetailViewModel {
     
     func clearContent() {
         stats.onNext(nil)
+        listings.onNext([])
     }
 
     func fetchCollectionDetailsInfo(collectionSymbol: String) {
@@ -29,6 +32,13 @@ class CollectionDetailViewModel {
         
         SolanaGalleryApi.fetchCollectionStats(collectionName: collectionSymbol) { stats in
             self.stats.onNext(stats)
+        }
+        
+        SolanaGalleryApi.fetchCollectionListings(collectionName: collectionSymbol) { listings in
+            guard let listings = listings else {
+                return
+            }
+            self.listings.onNext(listings)
         }
     }
     

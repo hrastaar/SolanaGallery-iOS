@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7404139E2840741D0061DFE8 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 7404139D2840741D0061DFE8 /* SkeletonView */; };
 		740413C42840816F0061DFE8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740413C32840816F0061DFE8 /* Constants.swift */; };
+		740413C62841DF3A0061DFE8 /* CollectionListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740413C52841DF3A0061DFE8 /* CollectionListing.swift */; };
+		740413C82841ED080061DFE8 /* CollectionListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740413C72841ED080061DFE8 /* CollectionListingTableViewCell.swift */; };
 		741373752819FBAF004B31A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373742819FBAF004B31A8 /* AppDelegate.swift */; };
 		741373772819FBAF004B31A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373762819FBAF004B31A8 /* SceneDelegate.swift */; };
 		741373812819FBAF004B31A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741373802819FBAF004B31A8 /* Assets.xcassets */; };
@@ -49,6 +51,8 @@
 
 /* Begin PBXFileReference section */
 		740413C32840816F0061DFE8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		740413C52841DF3A0061DFE8 /* CollectionListing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListing.swift; sourceTree = "<group>"; };
+		740413C72841ED080061DFE8 /* CollectionListingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListingTableViewCell.swift; sourceTree = "<group>"; };
 		741373712819FBAF004B31A8 /* SolanaGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolanaGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		741373742819FBAF004B31A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		741373762819FBAF004B31A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -167,6 +171,7 @@
 				741373A4281A41C5004B31A8 /* CollectionStats.swift */,
 				741373A6281A41E9004B31A8 /* CollectionCount.swift */,
 				746061192833701900BB1DDA /* CollectionSearchResult.swift */,
+				740413C52841DF3A0061DFE8 /* CollectionListing.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -191,6 +196,7 @@
 				74BF32FD2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift */,
 				743A50FE28298FF100101284 /* PortfolioCollectionTableViewCell.swift */,
 				745392B1281DD3EA003DE9CD /* WatchlistTableViewCell.swift */,
+				740413C72841ED080061DFE8 /* CollectionListingTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -313,6 +319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				740413C62841DF3A0061DFE8 /* CollectionListing.swift in Sources */,
 				7460611A2833701900BB1DDA /* CollectionSearchResult.swift in Sources */,
 				7413738D2819FBEA004B31A8 /* WatchlistViewController.swift in Sources */,
 				7413739A281A3EDB004B31A8 /* SolanaGallery.xcdatamodeld in Sources */,
@@ -332,6 +339,7 @@
 				74606114282E153400BB1DDA /* PortfolioViewModel.swift in Sources */,
 				741373A1281A3FB7004B31A8 /* WatchlistItem+CoreDataClass.swift in Sources */,
 				741373752819FBAF004B31A8 /* AppDelegate.swift in Sources */,
+				740413C82841ED080061DFE8 /* CollectionListingTableViewCell.swift in Sources */,
 				745392B5281DE154003DE9CD /* UIView+Extension.swift in Sources */,
 				743A50F72828D71F00101284 /* PortfolioCollectionViewModel.swift in Sources */,
 				741373B0281B6DC4004B31A8 /* HomePageViewController.swift in Sources */,

@@ -15,6 +15,7 @@ class CollectionDetailViewModel {
     let isOnWatchlist = PublishSubject<Bool>()
     
     let SolanaGalleryApi = SolanaGalleryAPI.sharedInstance
+        
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     init() {
@@ -23,7 +24,6 @@ class CollectionDetailViewModel {
     
     func clearContent() {
         stats.onNext(nil)
-        listings.onNext([])
     }
 
     func fetchCollectionDetailsInfo(collectionSymbol: String) {
@@ -39,6 +39,7 @@ class CollectionDetailViewModel {
                 return
             }
             self.listings.onNext(listings)
+            self.listings.onCompleted()
         }
     }
     

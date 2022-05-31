@@ -124,9 +124,19 @@ extension WalletTrackerViewController {
             cell.updateData(with: model)
         }.disposed(by: disposeBag)
         
-        tableView.rx.modelSelected(PortfolioCollectionViewModel.self).bind { collection in
-            print(collection.collectionCount.collection)
-        }.disposed(by: disposeBag)
+        tableView.rx.itemSelected
+            .subscribe(onNext: {
+                guard let cell = self.tableView.cellForRow(at: $0) as? PortfolioCollectionTableViewCell,
+                      let selectedViewModel = cell.portfolioCollectionViewModel else {
+                  print("Couldn't identify cell pressed")
+                  return
+                }
+                
+                let detailVC = CollectionDetailViewController(collectionSymbol: selectedViewModel.collectionStats.symbol, collectionName: selectedViewModel.getCollectionNameString())
+                self.navigationController?.pushViewController(detailVC, animated: true)
+
+                self.tableView.deselectRow(at: $0, animated: true)
+            }).disposed(by: disposeBag)
     }
     
     private func bindPortfolioData() {
@@ -160,8 +170,6 @@ extension WalletTrackerViewController {
         walletSearchTextField.anchor(top: stackView.topAnchor, left: stackView.leftAnchor, bottom: stackView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.bounds.width * 0.7, height: 50, enableInsets: false)
         
         searchButton.anchor(top: stackView.topAnchor, left: walletSearchTextField.rightAnchor, bottom: stackView.bottomAnchor, right: stackView.rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 25, width: 0, height: 50, enableInsets: false)
-        
-
         
         portfolioTotalValueLabel.anchor(top: searchButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingLeft: 0, paddingBottom: 25, paddingRight: 0, width: view.bounds.width * 0.3, height: 35, enableInsets: false)
         

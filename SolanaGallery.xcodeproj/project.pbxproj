@@ -11,6 +11,9 @@
 		740413C42840816F0061DFE8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740413C32840816F0061DFE8 /* Constants.swift */; };
 		740413C62841DF3A0061DFE8 /* CollectionListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740413C52841DF3A0061DFE8 /* CollectionListing.swift */; };
 		740413C82841ED080061DFE8 /* CollectionListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740413C72841ED080061DFE8 /* CollectionListingTableViewCell.swift */; };
+		740413CA284301760061DFE8 /* howrare.png in Resources */ = {isa = PBXBuildFile; fileRef = 740413C9284301760061DFE8 /* howrare.png */; };
+		740413CC284303A10061DFE8 /* ListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740413CB284303A10061DFE8 /* ListingView.swift */; };
+		740413CE284307E80061DFE8 /* moonrank.png in Resources */ = {isa = PBXBuildFile; fileRef = 740413CD284307E80061DFE8 /* moonrank.png */; };
 		741373752819FBAF004B31A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373742819FBAF004B31A8 /* AppDelegate.swift */; };
 		741373772819FBAF004B31A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373762819FBAF004B31A8 /* SceneDelegate.swift */; };
 		741373812819FBAF004B31A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741373802819FBAF004B31A8 /* Assets.xcassets */; };
@@ -53,6 +56,9 @@
 		740413C32840816F0061DFE8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		740413C52841DF3A0061DFE8 /* CollectionListing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListing.swift; sourceTree = "<group>"; };
 		740413C72841ED080061DFE8 /* CollectionListingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListingTableViewCell.swift; sourceTree = "<group>"; };
+		740413C9284301760061DFE8 /* howrare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = howrare.png; sourceTree = "<group>"; };
+		740413CB284303A10061DFE8 /* ListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingView.swift; sourceTree = "<group>"; };
+		740413CD284307E80061DFE8 /* moonrank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moonrank.png; sourceTree = "<group>"; };
 		741373712819FBAF004B31A8 /* SolanaGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolanaGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		741373742819FBAF004B31A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		741373762819FBAF004B31A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -197,6 +203,7 @@
 				743A50FE28298FF100101284 /* PortfolioCollectionTableViewCell.swift */,
 				745392B1281DD3EA003DE9CD /* WatchlistTableViewCell.swift */,
 				740413C72841ED080061DFE8 /* CollectionListingTableViewCell.swift */,
+				740413CB284303A10061DFE8 /* ListingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -215,6 +222,8 @@
 		745392C2281F8D8F003DE9CD /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				740413CD284307E80061DFE8 /* moonrank.png */,
+				740413C9284301760061DFE8 /* howrare.png */,
 				741373802819FBAF004B31A8 /* Assets.xcassets */,
 				745392B8281F7A29003DE9CD /* DIN-D.ttf */,
 			);
@@ -308,6 +317,8 @@
 			files = (
 				745392B9281F7A29003DE9CD /* DIN-D.ttf in Resources */,
 				741373842819FBAF004B31A8 /* LaunchScreen.storyboard in Resources */,
+				740413CE284307E80061DFE8 /* moonrank.png in Resources */,
+				740413CA284301760061DFE8 /* howrare.png in Resources */,
 				741373812819FBAF004B31A8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,6 +361,7 @@
 				741373AE281B65C4004B31A8 /* MainTabBarViewController.swift in Sources */,
 				74BC37F7283999C500887360 /* ImageManager.swift in Sources */,
 				743A50FB2828DDA200101284 /* WalletAddressViewModel.swift in Sources */,
+				740413CC284303A10061DFE8 /* ListingView.swift in Sources */,
 				741373A2281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift in Sources */,
 				741373772819FBAF004B31A8 /* SceneDelegate.swift in Sources */,
 				745392CA28236530003DE9CD /* CollectionDetailViewController.swift in Sources */,

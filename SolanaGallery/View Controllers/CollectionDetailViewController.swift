@@ -10,7 +10,7 @@ import SafariServices
 import RxSwift
 import RxCocoa
 
-class CollectionDetailViewController: UIViewController {
+class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
 
     let collectionSymbol: String
     let collectionName: String
@@ -29,15 +29,12 @@ class CollectionDetailViewController: UIViewController {
     
     var watchlistButton: UIButton?
     
-    let tableView: UITableView = {
-        var tableView = UITableView(frame: .zero)
-        tableView.register(CollectionListingTableViewCell.self, forCellReuseIdentifier: CollectionListingTableViewCell.ReuseIdentifier)
-        tableView.allowsMultipleSelectionDuringEditing = false
-        tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
-        tableView.backgroundColor = .clear
-        tableView.separatorColor = .clear
-        
-        return tableView
+    var listingsScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.alwaysBounceHorizontal = true
+        scrollView.backgroundColor = .clear
+        return scrollView
     }()
     
     init(collectionSymbol: String, collectionName: String) {
@@ -63,8 +60,15 @@ class CollectionDetailViewController: UIViewController {
         setupStatisticsView()
         // Create button that toggles adding a collection to watchlist
         setupWatchlistButton()
-        
-        setupTableView()
+
+        // Construct stack view with live listings once data fetched
+        collectionDetailViewModel.listings.subscribe { listingEvent in
+            guard let elements = listingEvent.element else {
+                return
+            }
+            self.fillListingStackView(with: elements)
+        }.disposed(by: disposeBag)
+
     }
     
     @objc func toggleWatchlistStatus() {
@@ -140,15 +144,56 @@ class CollectionDetailViewController: UIViewController {
         watchlistActionButton.addTarget(self, action: #selector(toggleWatchlistStatus), for: .touchUpInside)
     }
     
-    private func setupTableView() {
-        view.addSubview(tableView)
-        tableView.anchor(top: watchlistButton?.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0, enableInsets: false)
-        bindTableView()
+    private func fillListingStackView(with collectionListings: [CollectionListing]) {
+        DispatchQueue.main.async {
+
+            print(collectionListings)
+            self.view.addSubview(self.listingsScrollView)
+            self.listingsScrollView.topAnchor.constraint(equalTo: self.watchlistButton?.bottomAnchor ?? self.statisticsView.bottomAnchor).isActive = true
+            self.listingsScrollView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+            self.listingsScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 12.5).isActive = true
+            self.listingsScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -12.5).isActive = true
+            
+            
+            let stackView = UIStackView()
+            stackView.axis = .horizontal
+            stackView.distribution = .equalSpacing
+            stackView.spacing = 15
+            stackView.alignment = .fill
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            self.listingsScrollView.addSubview(stackView)
+
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.topAnchor.constraint(equalTo: self.listingsScrollView.topAnchor).isActive = true
+            stackView.leadingAnchor.constraint(equalTo: self.listingsScrollView.leadingAnchor).isActive = true
+            stackView.trailingAnchor.constraint(equalTo: self.listingsScrollView.trailingAnchor).isActive = true
+            stackView.bottomAnchor.constraint(equalTo: self.listingsScrollView.bottomAnchor).isActive = true
+            stackView.heightAnchor.constraint(equalTo: self.listingsScrollView.heightAnchor).isActive = true
+        
+            for collectionListing in collectionListings {
+                let listingView = ListingView(listing: collectionListing, frame: .init(x: 0, y: 0, width: 400, height: stackView.bounds.height))
+                listingView.translatesAutoresizingMaskIntoConstraints = false
+                
+                let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.handleTap(_:)))
+                listingView.addGestureRecognizer(gesture)
+                stackView.addArrangedSubview(listingView)
+            }
+        }
     }
     
-    private func bindTableView() {
-        collectionDetailViewModel.listings.bind(to: tableView.rx.items(cellIdentifier: CollectionListingTableViewCell.ReuseIdentifier, cellType: CollectionListingTableViewCell.self)) { row, model, cell in
-            cell.updateData(with: model)
-        }.disposed(by: disposeBag)
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        guard let listingView = sender?.view as? ListingView else {
+            return
+        }
+        let listingUrlString = Constants.constructMagicedenListingUrl(with: listingView.listing.tokenMint)
+        
+        if let url = listingUrlString {
+            let config = SFSafariViewController.Configuration()
+            config.entersReaderIfAvailable = true
+
+            let vc = SFSafariViewController(url: url, configuration: config)
+            present(vc, animated: true)
+        }
     }
 }

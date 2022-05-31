@@ -10,6 +10,7 @@ import SkeletonView
 
 class CollectionSearchResultTableViewCell: UITableViewCell {
     static let ReuseIdentifier = "CollectionSearchResultTableViewCell"
+    
     var searchResult: CollectionSearchResult?
     
     let colorManager = ColorManager.sharedInstance

@@ -19,6 +19,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
     
     let collectionDetailViewModel = CollectionDetailViewModel()
     let disposeBag = DisposeBag()
+    
     let statisticsView: UIView = {
         let view = UIView()
         view.backgroundColor = ColorManager.sharedInstance.primaryCellColor
@@ -136,25 +137,29 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         self.watchlistButton = watchlistActionButton
         watchlistActionButton.titleLabel?.textColor = .white
         watchlistActionButton.titleLabel?.font = .primaryFont(size: 14)
+        watchlistActionButton.titleLabel?.textAlignment = .center
         view.addSubview(watchlistActionButton)
-        watchlistActionButton.anchor(top: statisticsView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0, height: 25, enableInsets: false)
+        
+        // Apply constraints to button
+        watchlistActionButton.anchor(top: statisticsView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 25, enableInsets: false)
+        watchlistActionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
         collectionDetailViewModel.isOnWatchlist.map { $0 ? "Watching" : "Add to Watchlist" }.bind(to: watchlistActionButton.rx.title()).disposed(by: disposeBag)
         _ = collectionDetailViewModel.isInWatchlist(collectionSymbol: collectionSymbol)
         watchlistActionButton.isUserInteractionEnabled = true
         watchlistActionButton.addTarget(self, action: #selector(toggleWatchlistStatus), for: .touchUpInside)
     }
     
+    // Creates scroll view containing current listings (fetched from Magiceden)
     private func fillListingStackView(with collectionListings: [CollectionListing]) {
         DispatchQueue.main.async {
-
-            print(collectionListings)
             self.view.addSubview(self.listingsScrollView)
             self.listingsScrollView.topAnchor.constraint(equalTo: self.watchlistButton?.bottomAnchor ?? self.statisticsView.bottomAnchor).isActive = true
             self.listingsScrollView.heightAnchor.constraint(equalToConstant: 250).isActive = true
             self.listingsScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 12.5).isActive = true
             self.listingsScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -12.5).isActive = true
             
-            
+            // Stack view that contains listing views
             let stackView = UIStackView()
             stackView.axis = .horizontal
             stackView.distribution = .equalSpacing
@@ -174,15 +179,15 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
                 let listingView = ListingView(listing: collectionListing, frame: .init(x: 0, y: 0, width: 400, height: stackView.bounds.height))
                 listingView.translatesAutoresizingMaskIntoConstraints = false
                 
-                let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.handleTap(_:)))
+                let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.openMagicedenListingWebpage(_:)))
                 listingView.addGestureRecognizer(gesture)
                 stackView.addArrangedSubview(listingView)
             }
         }
     }
     
-    
-    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+    // Action for when a ListingView is pressed, opens SFSafariViewController for listing
+    @objc func openMagicedenListingWebpage(_ sender: UITapGestureRecognizer? = nil) {
         guard let listingView = sender?.view as? ListingView else {
             return
         }

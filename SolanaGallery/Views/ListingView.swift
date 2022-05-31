@@ -7,6 +7,7 @@
 
 import UIKit
 import SafariServices
+import SkeletonView
 
 class ListingView: UIView {
 
@@ -27,6 +28,8 @@ class ListingView: UIView {
     
     let listingImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.isSkeletonable = true
+        imageView.skeletonCornerRadius = 10
         
         return imageView
     }()
@@ -52,22 +55,28 @@ class ListingView: UIView {
         addSubview(sellerStackView)
         sellerStackView.anchor(top: priceStackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12.5, paddingLeft: 5, paddingBottom: 0, paddingRight: 5, width: 0, height: 10, enableInsets: false)
     }
-    
-    private func setupListingImageView() {
-        listingImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0, enableInsets: false)
-        listingImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+}
 
+// Extension contains tedious UI view creation + constraint specifications
+extension ListingView {
+    private func setupListingImageView() {
+        listingImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 100, height: 100, enableInsets: false)
+        listingImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        
+        let animation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .topLeftBottomRight)
+        listingImageView.showAnimatedGradientSkeleton(animation: animation)
+        
         DispatchQueue.global(qos: .userInteractive).async {
             ImageManager.sharedInstance.fetchImage(imageUrlString: self.listing.image) { image in
                 DispatchQueue.main.async {
                     self.listingImageView.layer.cornerRadius = 10
-                    let targetSize = CGSize(width: 100, height: 100)
+                    self.listingImageView.hideSkeleton()
+                    
                     guard let image = image else { return }
                     let scaledImage = image.scalePreservingAspectRatio(
-                        targetSize: targetSize
+                        targetSize: .init(width: 100, height: 100)
                     )
                     self.listingImageView.image = scaledImage
-
                 }
             }
         }
@@ -166,5 +175,4 @@ class ListingView: UIView {
         
         return sellerStackView
     }
-    
 }

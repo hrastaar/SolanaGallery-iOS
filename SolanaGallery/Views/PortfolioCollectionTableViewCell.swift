@@ -9,7 +9,7 @@ import UIKit
 
 class PortfolioCollectionTableViewCell: UITableViewCell {
     static let ReuseIdentifier = "PortfolioCollectionTableViewCell"
-    
+
     var portfolioCollectionViewModel: PortfolioCollectionViewModel?
     
     let colorManager = ColorManager.sharedInstance

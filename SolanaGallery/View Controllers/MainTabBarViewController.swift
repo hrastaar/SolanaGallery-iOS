@@ -21,6 +21,7 @@ class MainTabBarViewController: UITabBarController {
         searchVC.tabBarItem.title = "Search"
         
         let walletTrackerVC = UINavigationController(rootViewController: WalletTrackerViewController())
+        walletTrackerVC.tabBarItem.image = UIImage(systemName: "mostViewed")
         walletTrackerVC.tabBarItem.title = "Portfolio"
 
         let watchlistVC = UINavigationController(rootViewController: WatchlistViewController())

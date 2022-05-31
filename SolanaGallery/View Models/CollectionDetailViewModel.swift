@@ -21,10 +21,6 @@ class CollectionDetailViewModel {
     init() {
         isOnWatchlist.onNext(false)
     }
-    
-    func clearContent() {
-        stats.onNext(nil)
-    }
 
     func fetchCollectionDetailsInfo(collectionSymbol: String) {
         // Check if collection is in watchlist

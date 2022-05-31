@@ -10,6 +10,7 @@ import SkeletonView
 
 class CollectionListingTableViewCell: UITableViewCell {
     static let ReuseIdentifier = "CollectionListingTableViewCell"
+    
     var collectionListing: CollectionListing?
     
     let colorManager = ColorManager.sharedInstance

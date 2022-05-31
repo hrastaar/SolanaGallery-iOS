@@ -19,9 +19,11 @@ struct Constants {
             static let CornerRadius = 20.0
         }
     }
+    
     static func constructMagicedenListingUrl(with tokenMint: String) -> URL? {
         let urlString = self.MagicedenListingUrlPrefix + tokenMint
         return URL(string: urlString)
     }
+    
     static let MagicedenListingUrlPrefix = "https://magiceden.io/item-details/"
 }

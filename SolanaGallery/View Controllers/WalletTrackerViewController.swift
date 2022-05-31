@@ -9,9 +9,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class WalletTrackerViewController: UIViewController {
-    static let cellIdentifier = "PortfolioCollectionTableViewCell"
-    
+class WalletTrackerViewController: UIViewController {    
     let walletAddressViewModel = WalletAddressViewModel()
     let disposeBag = DisposeBag()
     
@@ -56,7 +54,7 @@ class WalletTrackerViewController: UIViewController {
     
     var tableView: UITableView = {
         var tableView = UITableView(frame: .zero)
-        tableView.register(PortfolioCollectionTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.register(PortfolioCollectionTableViewCell.self, forCellReuseIdentifier: PortfolioCollectionTableViewCell.ReuseIdentifier)
         tableView.alpha = 0.0
         tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
         tableView.allowsMultipleSelectionDuringEditing = false

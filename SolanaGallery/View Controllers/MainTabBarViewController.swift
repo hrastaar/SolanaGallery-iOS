@@ -19,14 +19,17 @@ class MainTabBarViewController: UITabBarController {
         let searchVC = UINavigationController(rootViewController: SearchViewController())
         searchVC.tabBarItem.image = UIImage(systemName: "magnifyingglass")
         searchVC.tabBarItem.title = "Search"
+        searchVC.navigationBar.tintColor = .white
         
         let walletTrackerVC = UINavigationController(rootViewController: WalletTrackerViewController())
-        walletTrackerVC.tabBarItem.image = UIImage(systemName: "mostViewed")
+        walletTrackerVC.tabBarItem.image = UIImage(systemName: "wallet.pass")
         walletTrackerVC.tabBarItem.title = "Portfolio"
-
+        walletTrackerVC.navigationBar.tintColor = .white
+        
         let watchlistVC = UINavigationController(rootViewController: WatchlistViewController())
         watchlistVC.tabBarItem.image = UIImage(systemName: "bookmark")
         watchlistVC.tabBarItem.title = "Watchlist"
+        watchlistVC.navigationBar.tintColor = .white
         
         tabBar.tintColor = .label
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.primaryFont(size: 12)], for: .normal)

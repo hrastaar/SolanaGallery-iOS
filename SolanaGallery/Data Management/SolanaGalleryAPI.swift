@@ -41,8 +41,8 @@ class SolanaGalleryAPI {
     ///
     /// - Parameter wallet: A Solana wallet address string object. Bonfida domains are not supported.
     /// - Returns: Completion that provides collection stats (if available)
-    public func fetchCollectionStats(collectionName: String, completion: @escaping (CollectionStats?) -> Void) -> Void {
-        let endpoint = self.getNftCollectionStatsEndpoint(collectionName: collectionName)
+    public func fetchCollectionStats(collectionSymbol: String, completion: @escaping (CollectionStats?) -> Void) -> Void {
+        let endpoint = self.getNftCollectionStatsEndpoint(collectionName: collectionSymbol)
         guard let url = URL(string: endpoint) else {
             completion(nil)
             return
@@ -53,7 +53,7 @@ class SolanaGalleryAPI {
                 return
             }
             guard let collectionStats = try? JSONDecoder().decode(CollectionStats.self, from: data) else {
-                print("Couldn't decode data into CollectionStats for \(collectionName)")
+                print("Couldn't decode data into CollectionStats for \(collectionSymbol)")
                 completion(nil)
                 return
             }
@@ -63,8 +63,12 @@ class SolanaGalleryAPI {
         task.resume()
     }
     
-    public func fetchCollectionListings(collectionName: String, completion: @escaping ([CollectionListing]?) -> Void) -> Void {
-        let endpoint = self.getNftCollectionListingsEndpoint(collectionName: collectionName)
+    /// This function returns an array of collection listings for the collection provided
+    ///
+    /// - Parameter collectionSymbol: Collection symbol (representing a collection)
+    /// - Returns: Completion that provides an array of 20 current Magiceden listings
+    public func fetchCollectionListings(collectionSymbol: String, completion: @escaping ([CollectionListing]?) -> Void) -> Void {
+        let endpoint = self.getNftCollectionListingsEndpoint(collectionName: collectionSymbol)
         guard let url = URL(string: endpoint) else {
             completion(nil)
             return
@@ -75,11 +79,16 @@ class SolanaGalleryAPI {
                 return
             }
             guard let collectionListings = try? JSONDecoder().decode([CollectionListing].self, from: data) else {
-                print("Couldn't decode data into [CollectionListing] for \(collectionName)")
+                print("Couldn't decode data into [CollectionListing] for \(collectionSymbol)")
                 completion(nil)
                 return
             }
-            completion(collectionListings)
+            
+            // Sort resulting listings by price (ascending)
+            let sortedListings = collectionListings.sorted { listingA, listingB in
+                return listingA.price < listingB.price
+            }
+            completion(sortedListings)
             return
         }
         task.resume()
@@ -134,4 +143,7 @@ class SolanaGalleryAPI {
     private let COLLECTION_LISTING_ENDPOINT = "solana/listings/"
     private let GET_NFT_COLLECTION_COUNTS = "/get_nft_collection_counts"
     private let COLLECTION_SEARCH_EXTENSION = "solana/search/collections/"
+    
+    static let MagicedenListingUrlPrefix = "https://magiceden.io/item-details/"
+
 }

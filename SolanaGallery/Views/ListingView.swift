@@ -16,7 +16,7 @@ class ListingView: UIView {
     required init(listing: CollectionListing, frame: CGRect) {
         self.listing = listing
         super.init(frame: frame)
-        backgroundColor = ColorManager.sharedInstance.primaryCellColor
+        backgroundColor = ColorManager.primaryCellColor
         layer.cornerRadius = 17.5
         setupUI()
     }
@@ -30,6 +30,8 @@ class ListingView: UIView {
         let imageView = UIImageView()
         imageView.isSkeletonable = true
         imageView.skeletonCornerRadius = 10
+        imageView.autoresizingMask = .flexibleWidth
+        imageView.contentMode = .scaleAspectFit
         
         return imageView
     }()
@@ -60,7 +62,7 @@ class ListingView: UIView {
 // Extension contains tedious UI view creation + constraint specifications
 extension ListingView {
     private func setupListingImageView() {
-        listingImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 100, height: 100, enableInsets: false)
+        listingImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 100, enableInsets: false)
         listingImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
         let animation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .topLeftBottomRight)

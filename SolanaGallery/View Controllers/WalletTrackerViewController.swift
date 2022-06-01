@@ -14,12 +14,11 @@ class WalletTrackerViewController: UIViewController {
     let disposeBag = DisposeBag()
     
     let portfolioViewModel = PortfolioViewModel()
-    let colorManager = ColorManager.sharedInstance
 
     let walletSearchTextField: TextField = {
         let textField = TextField(frame: .zero)
         textField.placeholder = "Enter a valid Solana Wallet Address"
-        textField.backgroundColor = ColorManager.sharedInstance.primaryCellColor
+        textField.backgroundColor = ColorManager.primaryCellColor
         textField.layer.cornerRadius = Constants.UI.TextField.CornerRadius
         textField.adjustsFontSizeToFitWidth = true
         textField.font = UIFont.primaryFont(size: 15)
@@ -32,7 +31,7 @@ class WalletTrackerViewController: UIViewController {
     let searchButton: UIButton = {
         let button = UIButton()
         button.setTitle("Search", for: .normal)
-        button.backgroundColor = ColorManager.sharedInstance.primaryCellColor
+        button.backgroundColor = ColorManager.primaryCellColor
         button.layer.cornerRadius = Constants.UI.Button.CornerRadius
         button.isEnabled = false
         button.alpha = 0.1
@@ -66,7 +65,7 @@ class WalletTrackerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colorManager.backgroundColor
+        view.backgroundColor = ColorManager.backgroundColor
         
         // Do any additional setup after loading the view.
         self.bindTableData()
@@ -163,15 +162,15 @@ extension WalletTrackerViewController {
         stackView.axis = .horizontal
         stackView.spacing = 20
         view.addSubview(stackView)
-        stackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        stackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 25, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0, enableInsets: false)
         
         walletSearchTextField.anchor(top: stackView.topAnchor, left: stackView.leftAnchor, bottom: stackView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.bounds.width * 0.7, height: 50, enableInsets: false)
         
         searchButton.anchor(top: stackView.topAnchor, left: walletSearchTextField.rightAnchor, bottom: stackView.bottomAnchor, right: stackView.rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 25, width: 0, height: 50, enableInsets: false)
         
-        portfolioTotalValueLabel.anchor(top: searchButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingLeft: 0, paddingBottom: 25, paddingRight: 0, width: view.bounds.width * 0.3, height: 35, enableInsets: false)
+        portfolioTotalValueLabel.anchor(top: searchButton.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 25, paddingLeft: 0, paddingBottom: 25, paddingRight: 0, width: view.bounds.width * 0.3, height: 35, enableInsets: false)
         
-        tableView.anchor(top: portfolioTotalValueLabel.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        tableView.anchor(top: portfolioTotalValueLabel.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
     }
     
     private func setupNavigationTitle() {

@@ -8,8 +8,7 @@
 import UIKit
 
 class ColorManager {
-    static let sharedInstance = ColorManager()
-    let primaryCellColor = UIColor(hex: "#17181Aff")!
-    let backgroundColor = UIColor(hex: "#0C0C0Cff")!
-    let primarySelectedColor = UIColor(hex: "#242527ff")!
+    static let primaryCellColor = UIColor(hex: "#17181Aff")!
+    static let backgroundColor = UIColor(hex: "#0C0C0Cff")!
+    static let primarySelectedColor = UIColor(hex: "#242527ff")!
 }

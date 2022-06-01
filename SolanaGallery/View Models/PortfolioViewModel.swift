@@ -26,7 +26,7 @@ class PortfolioViewModel {
             
             for collectionCount in collectionCounts {
                 dispatchGroup.enter()
-                self.SolanaGalleryApiInstance.fetchCollectionStats(collectionName: collectionCount.collection) { stats in
+                self.SolanaGalleryApiInstance.fetchCollectionStats(collectionSymbol: collectionCount.collection) { stats in
                     guard let stats = stats else {
                         print("Failed to fetch stats for collection \(collectionCount.collection)")
                         dispatchGroup.leave()

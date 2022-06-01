@@ -14,15 +14,13 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
 
     let collectionSymbol: String
     let collectionName: String
-    
-    let colorManager = ColorManager.sharedInstance
-    
+        
     let collectionDetailViewModel = CollectionDetailViewModel()
     let disposeBag = DisposeBag()
     
     let statisticsView: UIView = {
         let view = UIView()
-        view.backgroundColor = ColorManager.sharedInstance.primaryCellColor
+        view.backgroundColor = ColorManager.primaryCellColor
         view.layer.cornerRadius = 20
         
         return view
@@ -35,6 +33,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.alwaysBounceHorizontal = true
         scrollView.backgroundColor = .clear
+        scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
     
@@ -42,6 +41,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         self.collectionSymbol = collectionSymbol
         self.collectionName = collectionName
         super.init(nibName: nil, bundle: nil)
+        self.navigationController?.navigationBar.backItem?.title = ""
         collectionDetailViewModel.fetchCollectionDetailsInfo(collectionSymbol: collectionSymbol)
     }
     
@@ -55,12 +55,13 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
     }
     
     private func setupUI() {
-        view.backgroundColor = colorManager.backgroundColor
+        view.backgroundColor = ColorManager.backgroundColor
+        self.navigationController?.navigationBar.backItem?.title = ""
         title = collectionName
         // Create UIView that displays basic collection statistics
         setupStatisticsView()
         // Create button that toggles adding a collection to watchlist
-        setupWatchlistButton()
+        self.watchlistButton = setupWatchlistButton()
 
         // Construct stack view with live listings once data fetched
         collectionDetailViewModel.listings.subscribe { listingEvent in
@@ -132,29 +133,31 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         listedCountStackView.centerYAnchor.constraint(equalTo: statisticsView.centerYAnchor).isActive = true
     }
     
-    private func setupWatchlistButton() {
+    private func setupWatchlistButton() -> UIButton {
         let watchlistActionButton = UIButton()
-        self.watchlistButton = watchlistActionButton
+        watchlistActionButton.layer.cornerRadius = Constants.UI.Button.CornerRadius
+        watchlistActionButton.backgroundColor = ColorManager.primaryCellColor
         watchlistActionButton.titleLabel?.textColor = .white
-        watchlistActionButton.titleLabel?.font = .primaryFont(size: 14)
+        watchlistActionButton.titleLabel?.font = .primaryFont(size: 16)
         watchlistActionButton.titleLabel?.textAlignment = .center
         view.addSubview(watchlistActionButton)
         
         // Apply constraints to button
-        watchlistActionButton.anchor(top: statisticsView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 25, enableInsets: false)
-        watchlistActionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        watchlistActionButton.anchor(top: statisticsView.bottomAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 10, paddingRight: 10, width: 100, height: 40, enableInsets: false)
         
-        collectionDetailViewModel.isOnWatchlist.map { $0 ? "Watching" : "Add to Watchlist" }.bind(to: watchlistActionButton.rx.title()).disposed(by: disposeBag)
+        collectionDetailViewModel.isOnWatchlist.map { $0 ? "Unfollow" : "Follow" }.bind(to: watchlistActionButton.rx.title()).disposed(by: disposeBag)
         _ = collectionDetailViewModel.isInWatchlist(collectionSymbol: collectionSymbol)
         watchlistActionButton.isUserInteractionEnabled = true
         watchlistActionButton.addTarget(self, action: #selector(toggleWatchlistStatus), for: .touchUpInside)
+        
+        return watchlistActionButton
     }
     
     // Creates scroll view containing current listings (fetched from Magiceden)
     private func fillListingStackView(with collectionListings: [CollectionListing]) {
         DispatchQueue.main.async {
             self.view.addSubview(self.listingsScrollView)
-            self.listingsScrollView.topAnchor.constraint(equalTo: self.watchlistButton?.bottomAnchor ?? self.statisticsView.bottomAnchor).isActive = true
+            self.listingsScrollView.topAnchor.constraint(equalTo: self.watchlistButton?.bottomAnchor ?? self.statisticsView.bottomAnchor, constant: 10).isActive = true
             self.listingsScrollView.heightAnchor.constraint(equalToConstant: 250).isActive = true
             self.listingsScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 12.5).isActive = true
             self.listingsScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -12.5).isActive = true

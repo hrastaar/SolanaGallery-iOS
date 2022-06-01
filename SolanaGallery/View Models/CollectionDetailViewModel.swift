@@ -26,11 +26,11 @@ class CollectionDetailViewModel {
         // Check if collection is in watchlist
         isOnWatchlist.onNext(isInWatchlist(collectionSymbol: collectionSymbol))
         
-        SolanaGalleryApi.fetchCollectionStats(collectionName: collectionSymbol) { stats in
+        SolanaGalleryApi.fetchCollectionStats(collectionSymbol: collectionSymbol) { stats in
             self.stats.onNext(stats)
         }
         
-        SolanaGalleryApi.fetchCollectionListings(collectionName: collectionSymbol) { listings in
+        SolanaGalleryApi.fetchCollectionListings(collectionSymbol: collectionSymbol) { listings in
             guard let listings = listings else {
                 return
             }

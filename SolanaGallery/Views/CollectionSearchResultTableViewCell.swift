@@ -13,8 +13,6 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
     
     var searchResult: CollectionSearchResult?
     
-    let colorManager = ColorManager.sharedInstance
-
     var collectionNameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -64,18 +62,21 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        backgroundColor = colorManager.primaryCellColor
+        backgroundColor = ColorManager.primaryCellColor
 
         addSubview(collectionNameLabel)
         addSubview(collectionImageView)
+        
         setupSkeletonViews()
+        
         let stackView = UIStackView(arrangedSubviews: [collectionImageView, collectionNameLabel])
         stackView.alignment = .leading
         stackView.axis = .horizontal
         stackView.spacing = 20
+        
         addSubview(stackView)
         stackView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 5, width: 0, height: 65, enableInsets: false)
-        collectionImageView.anchor(top: nil, left: stackView.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 10, paddingBottom: 25, paddingRight: 10, width: 50, height: 50, enableInsets: false)
+        collectionImageView.anchor(top: nil, left: stackView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 50, height: 50, enableInsets: false)
         collectionImageView.centerYAnchor.constraint(equalTo: stackView.centerYAnchor).isActive = true
 
         collectionNameLabel.anchor(top: stackView.topAnchor, left: collectionImageView.rightAnchor, bottom: stackView.bottomAnchor, right: stackView.rightAnchor, paddingTop: 5, paddingLeft: 10, paddingBottom: 5, paddingRight: 0, width: 0, height: 0, enableInsets: false)

@@ -21,9 +21,7 @@ struct Constants {
     }
     
     static func constructMagicedenListingUrl(with tokenMint: String) -> URL? {
-        let urlString = self.MagicedenListingUrlPrefix + tokenMint
+        let urlString = SolanaGalleryAPI.MagicedenListingUrlPrefix + tokenMint
         return URL(string: urlString)
     }
-    
-    static let MagicedenListingUrlPrefix = "https://magiceden.io/item-details/"
 }

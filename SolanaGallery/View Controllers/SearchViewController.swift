@@ -14,12 +14,11 @@ class SearchViewController: UIViewController {
     let collectionSearchViewModel = CollectionSearchViewModel()
 
     let disposeBag = DisposeBag()
-    let colorManager = ColorManager.sharedInstance
 
     let searchTextField: TextField = {
         let textField = TextField(frame: .zero)
         textField.placeholder = "Search for a collection"
-        textField.backgroundColor = ColorManager.sharedInstance.primaryCellColor
+        textField.backgroundColor = ColorManager.primaryCellColor
         textField.layer.cornerRadius = Constants.UI.TextField.CornerRadius
         textField.adjustsFontSizeToFitWidth = true
         textField.font = UIFont.primaryFont(size: 15)
@@ -43,7 +42,7 @@ class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = ColorManager.sharedInstance.backgroundColor
+        view.backgroundColor = ColorManager.backgroundColor
         // Position + arrange UI
         setupUI()
         // Use RxCocoa to bind data to tableview reactively
@@ -65,9 +64,9 @@ class SearchViewController: UIViewController {
         view.addSubview(searchTextField)
         view.addSubview(tableView)
         
-        searchTextField.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 100, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 50, enableInsets: false)
+        searchTextField.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 100, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 50, enableInsets: false)
         
-        tableView.anchor(top: searchTextField.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        tableView.anchor(top: searchTextField.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
         
         searchTextField.rx.controlEvent(.allEditingEvents)
             .subscribe(onNext: { event in

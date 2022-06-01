@@ -9,12 +9,10 @@ import UIKit
 import RxSwift
 
 class WatchlistViewController: UIViewController {
-    let watchlistListViewModel = WatchlistListViewModel()
+    let watchlistListViewModel = WatchlistViewModel()
     let disposeBag = DisposeBag()
 
     private let refreshControl = UIRefreshControl()
-
-    let colorManager = ColorManager.sharedInstance
     
     var tableView: UITableView = {
         var tableView = UITableView(frame: .zero)
@@ -33,7 +31,7 @@ class WatchlistViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-        populateWithCollections()
+        
         // Configure tableview data source (using rxswift/rxcocoa)
         self.bindTableData()
         
@@ -45,15 +43,19 @@ class WatchlistViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = colorManager.backgroundColor
+        view.backgroundColor = ColorManager.backgroundColor
         setupNavigationTitle()
         
         view.addSubview(tableView)
-        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        refreshWatchlist(self)
     }
 
     // Removes current watchlistItems from tableview and fetches up-to-date collection statistics via SolanaGalleryAPI
@@ -145,15 +147,5 @@ extension WatchlistViewController {
         } catch {
             print("error saving watchlist item")
         }
-    }
-    
-    private func populateWithCollections() {
-        addCollectionToWatchlist(collectionName: "atadians")
-        addCollectionToWatchlist(collectionName: "okay_bears")
-        addCollectionToWatchlist(collectionName: "quantum_traders")
-        addCollectionToWatchlist(collectionName: "solstein")
-        addCollectionToWatchlist(collectionName: "thugbirdz")
-        addCollectionToWatchlist(collectionName: "meerkat_millionaires_country_club")
-        addCollectionToWatchlist(collectionName: "naked_meerkats_beach_club")
     }
 }

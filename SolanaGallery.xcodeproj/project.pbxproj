@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7404139E2840741D0061DFE8 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 7404139D2840741D0061DFE8 /* SkeletonView */; };
 		740413C42840816F0061DFE8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740413C32840816F0061DFE8 /* Constants.swift */; };
 		740413C62841DF3A0061DFE8 /* CollectionListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740413C52841DF3A0061DFE8 /* CollectionListing.swift */; };
 		740413C82841ED080061DFE8 /* CollectionListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740413C72841ED080061DFE8 /* CollectionListingTableViewCell.swift */; };
@@ -25,13 +24,15 @@
 		741373A2281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373A0281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift */; };
 		741373A5281A41C5004B31A8 /* CollectionStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373A4281A41C5004B31A8 /* CollectionStats.swift */; };
 		741373A7281A41E9004B31A8 /* CollectionCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373A6281A41E9004B31A8 /* CollectionCount.swift */; };
-		741373AA281A4233004B31A8 /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373A9281A4233004B31A8 /* WatchlistViewModel.swift */; };
+		741373AA281A4233004B31A8 /* WatchlistCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373A9281A4233004B31A8 /* WatchlistCollectionViewModel.swift */; };
 		741373AE281B65C4004B31A8 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373AD281B65C4004B31A8 /* MainTabBarViewController.swift */; };
 		741373B0281B6DC4004B31A8 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741373AF281B6DC4004B31A8 /* HomePageViewController.swift */; };
 		743A50F72828D71F00101284 /* PortfolioCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743A50F62828D71F00101284 /* PortfolioCollectionViewModel.swift */; };
 		743A50F92828DB9200101284 /* WalletTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743A50F82828DB9200101284 /* WalletTrackerViewController.swift */; };
 		743A50FB2828DDA200101284 /* WalletAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743A50FA2828DDA200101284 /* WalletAddressViewModel.swift */; };
 		743A50FF28298FF100101284 /* PortfolioCollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743A50FE28298FF100101284 /* PortfolioCollectionTableViewCell.swift */; };
+		744D13422847516100F7651F /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 744D13412847516100F7651F /* SkeletonView */; };
+		744D13452847517000F7651F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 744D13442847517000F7651F /* RxCocoa */; };
 		745392B2281DD3EA003DE9CD /* WatchlistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392B1281DD3EA003DE9CD /* WatchlistTableViewCell.swift */; };
 		745392B5281DE154003DE9CD /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392B4281DE154003DE9CD /* UIView+Extension.swift */; };
 		745392B7281F7931003DE9CD /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392B6281F7931003DE9CD /* UIFont+Extension.swift */; };
@@ -40,11 +41,9 @@
 		745392C828236452003DE9CD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392C728236452003DE9CD /* SearchViewController.swift */; };
 		745392CA28236530003DE9CD /* CollectionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392C928236530003DE9CD /* CollectionDetailViewController.swift */; };
 		74606114282E153400BB1DDA /* PortfolioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606113282E153400BB1DDA /* PortfolioViewModel.swift */; };
-		74606116282E1F1400BB1DDA /* WatchlistListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */; };
+		74606116282E1F1400BB1DDA /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606115282E1F1400BB1DDA /* WatchlistViewModel.swift */; };
 		7460611A2833701900BB1DDA /* CollectionSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746061192833701900BB1DDA /* CollectionSearchResult.swift */; };
 		7460611C283372B100BB1DDA /* CollectionSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7460611B283372B100BB1DDA /* CollectionSearchViewModel.swift */; };
-		74B4BC85283AFEB2001BC218 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 74B4BC84283AFEB2001BC218 /* RxSwift */; };
-		74B4BC87283AFEB8001BC218 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 74B4BC86283AFEB8001BC218 /* RxCocoa */; };
 		74B4BC89283C91B6001BC218 /* CollectionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B4BC88283C91B6001BC218 /* CollectionDetailViewModel.swift */; };
 		74BC37F7283999C500887360 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BC37F6283999C500887360 /* ImageManager.swift */; };
 		74BF32FE2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BF32FD2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift */; };
@@ -72,7 +71,7 @@
 		741373A0281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchlistItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		741373A4281A41C5004B31A8 /* CollectionStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionStats.swift; sourceTree = "<group>"; };
 		741373A6281A41E9004B31A8 /* CollectionCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCount.swift; sourceTree = "<group>"; };
-		741373A9281A4233004B31A8 /* WatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewModel.swift; sourceTree = "<group>"; };
+		741373A9281A4233004B31A8 /* WatchlistCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistCollectionViewModel.swift; sourceTree = "<group>"; };
 		741373AD281B65C4004B31A8 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		741373AF281B6DC4004B31A8 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		743A50F62828D71F00101284 /* PortfolioCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioCollectionViewModel.swift; sourceTree = "<group>"; };
@@ -87,7 +86,7 @@
 		745392C728236452003DE9CD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		745392C928236530003DE9CD /* CollectionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailViewController.swift; sourceTree = "<group>"; };
 		74606113282E153400BB1DDA /* PortfolioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioViewModel.swift; sourceTree = "<group>"; };
-		74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistListViewModel.swift; sourceTree = "<group>"; };
+		74606115282E1F1400BB1DDA /* WatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewModel.swift; sourceTree = "<group>"; };
 		746061192833701900BB1DDA /* CollectionSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchResult.swift; sourceTree = "<group>"; };
 		7460611B283372B100BB1DDA /* CollectionSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchViewModel.swift; sourceTree = "<group>"; };
 		74B4BC88283C91B6001BC218 /* CollectionDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailViewModel.swift; sourceTree = "<group>"; };
@@ -102,9 +101,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74B4BC87283AFEB8001BC218 /* RxCocoa in Frameworks */,
-				7404139E2840741D0061DFE8 /* SkeletonView in Frameworks */,
-				74B4BC85283AFEB2001BC218 /* RxSwift in Frameworks */,
+				744D13452847517000F7651F /* RxCocoa in Frameworks */,
+				744D13422847516100F7651F /* SkeletonView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,9 +172,9 @@
 		741373A3281A41A8004B31A8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				746061192833701900BB1DDA /* CollectionSearchResult.swift */,
 				741373A4281A41C5004B31A8 /* CollectionStats.swift */,
 				741373A6281A41E9004B31A8 /* CollectionCount.swift */,
-				746061192833701900BB1DDA /* CollectionSearchResult.swift */,
 				740413C52841DF3A0061DFE8 /* CollectionListing.swift */,
 			);
 			path = Models;
@@ -187,10 +185,10 @@
 			children = (
 				7460611B283372B100BB1DDA /* CollectionSearchViewModel.swift */,
 				743A50F62828D71F00101284 /* PortfolioCollectionViewModel.swift */,
-				741373A9281A4233004B31A8 /* WatchlistViewModel.swift */,
+				741373A9281A4233004B31A8 /* WatchlistCollectionViewModel.swift */,
 				743A50FA2828DDA200101284 /* WalletAddressViewModel.swift */,
 				74606113282E153400BB1DDA /* PortfolioViewModel.swift */,
-				74606115282E1F1400BB1DDA /* WatchlistListViewModel.swift */,
+				74606115282E1F1400BB1DDA /* WatchlistViewModel.swift */,
 				74B4BC88283C91B6001BC218 /* CollectionDetailViewModel.swift */,
 			);
 			path = "View Models";
@@ -264,9 +262,8 @@
 			);
 			name = SolanaGallery;
 			packageProductDependencies = (
-				74B4BC84283AFEB2001BC218 /* RxSwift */,
-				74B4BC86283AFEB8001BC218 /* RxCocoa */,
-				7404139D2840741D0061DFE8 /* SkeletonView */,
+				744D13412847516100F7651F /* SkeletonView */,
+				744D13442847517000F7651F /* RxCocoa */,
 			);
 			productName = SolanaGallery;
 			productReference = 741373712819FBAF004B31A8 /* SolanaGallery.app */;
@@ -300,6 +297,8 @@
 				745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */,
 				74606110282A3EB800BB1DDA /* XCRemoteSwiftPackageReference "Charts" */,
 				7404139C2840741D0061DFE8 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				744D13402847516100F7651F /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				744D13432847517000F7651F /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 741373722819FBAF004B31A8 /* Products */;
 			projectDirPath = "";
@@ -337,7 +336,7 @@
 				74CFA7DB283A2A9B008AEB6D /* TextField.swift in Sources */,
 				745392B7281F7931003DE9CD /* UIFont+Extension.swift in Sources */,
 				745392C828236452003DE9CD /* SearchViewController.swift in Sources */,
-				741373AA281A4233004B31A8 /* WatchlistViewModel.swift in Sources */,
+				741373AA281A4233004B31A8 /* WatchlistCollectionViewModel.swift in Sources */,
 				740413C42840816F0061DFE8 /* Constants.swift in Sources */,
 				745392BB281F7CDA003DE9CD /* UIColor+Extension.swift in Sources */,
 				74B4BC89283C91B6001BC218 /* CollectionDetailViewModel.swift in Sources */,
@@ -346,7 +345,7 @@
 				7413738F2819FD4F004B31A8 /* SolanaGalleryAPI.swift in Sources */,
 				7460611C283372B100BB1DDA /* CollectionSearchViewModel.swift in Sources */,
 				743A50F92828DB9200101284 /* WalletTrackerViewController.swift in Sources */,
-				74606116282E1F1400BB1DDA /* WatchlistListViewModel.swift in Sources */,
+				74606116282E1F1400BB1DDA /* WatchlistViewModel.swift in Sources */,
 				74606114282E153400BB1DDA /* PortfolioViewModel.swift in Sources */,
 				741373A1281A3FB7004B31A8 /* WatchlistItem+CoreDataClass.swift in Sources */,
 				741373752819FBAF004B31A8 /* AppDelegate.swift in Sources */,
@@ -508,6 +507,7 @@
 				INFOPLIST_FILE = SolanaGallery/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -519,7 +519,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -535,6 +535,7 @@
 				INFOPLIST_FILE = SolanaGallery/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -546,7 +547,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -582,6 +583,22 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		744D13402847516100F7651F /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		744D13432847517000F7651F /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 		745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -601,17 +618,12 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7404139D2840741D0061DFE8 /* SkeletonView */ = {
+		744D13412847516100F7651F /* SkeletonView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7404139C2840741D0061DFE8 /* XCRemoteSwiftPackageReference "SkeletonView" */;
 			productName = SkeletonView;
 		};
-		74B4BC84283AFEB2001BC218 /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
-		74B4BC86283AFEB8001BC218 /* RxCocoa */ = {
+		744D13442847517000F7651F /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxCocoa;

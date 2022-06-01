@@ -10,10 +10,8 @@ import UIKit
 class WatchlistTableViewCell: UITableViewCell {
     static let ReuseIdentifier = "WatchlistTableViewCell"
 
-    var watchlistViewModel: WatchlistViewModel?
+    var watchlistViewModel: WatchlistCollectionViewModel?
     
-    let colorManager = ColorManager.sharedInstance
-
     var collectionNameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -42,7 +40,7 @@ class WatchlistTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    func updateData(with watchlistViewModel: WatchlistViewModel) {
+    func updateData(with watchlistViewModel: WatchlistCollectionViewModel) {
         self.watchlistViewModel = watchlistViewModel
         collectionNameLabel.text = watchlistViewModel.getCollectionNameString()
         floorPriceLabel.text = watchlistViewModel.getFloorPriceString()
@@ -50,7 +48,7 @@ class WatchlistTableViewCell: UITableViewCell {
         setupUI()
     }
     private func setupUI() {
-        backgroundColor = colorManager.primaryCellColor
+        backgroundColor = ColorManager.primaryCellColor
 
         super.addSubview(collectionNameLabel)
         super.addSubview(floorPriceLabel)

@@ -13,8 +13,6 @@ class CollectionListingTableViewCell: UITableViewCell {
     
     var collectionListing: CollectionListing?
     
-    let colorManager = ColorManager.sharedInstance
-
     var collectionNameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -64,7 +62,7 @@ class CollectionListingTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        backgroundColor = colorManager.primaryCellColor
+        backgroundColor = ColorManager.primaryCellColor
 
         addSubview(collectionNameLabel)
         addSubview(collectionImageView)

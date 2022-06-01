@@ -12,8 +12,6 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
 
     var portfolioCollectionViewModel: PortfolioCollectionViewModel?
     
-    let colorManager = ColorManager.sharedInstance
-
     var collectionNameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -53,7 +51,7 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
         setupUI()
     }
     private func setupUI() {
-        backgroundColor = colorManager.primaryCellColor
+        backgroundColor = ColorManager.primaryCellColor
 
         super.addSubview(collectionNameLabel)
         super.addSubview(floorPriceLabel)

@@ -2,41 +2,43 @@
 //  WatchlistViewModel.swift
 //  SolanaGallery
 //
-//  Created by Rastaar Haghi on 4/27/22.
+//  Created by Rastaar Haghi on 5/12/22.
 //
 
 import Foundation
+import RxSwift
 
 class WatchlistViewModel {
-    let collectionStats: CollectionStats
-    let coreDataItem: WatchlistItem
+    var watchlistItems = PublishSubject<[WatchlistCollectionViewModel]>()
     
-    init(withCollectionStats stats: CollectionStats, coreDataItem: WatchlistItem) {
-        self.collectionStats = stats
-        self.coreDataItem = coreDataItem
-    }
-    
-    func getCollectionNameString() -> String {
-        var collectionName = collectionStats.symbol
-        collectionName = collectionName.replacingOccurrences(of: "_", with: " ")
-        return collectionName.capitalized
-    }
-    
-    func getFloorPriceString() -> String {
-        return String(format: "Floor Price\n%.2f◎", collectionStats.floorPrice)
-    }
-    
-    func getListedCountString() -> String {
-        return "# Listed\n" + String(collectionStats.listedCount)
-    }
-    
-    func getLastUpdatedString() -> String {
-        let timestamp = Double(collectionStats.lastUpdated)
-        let date = Date(timeIntervalSince1970: timestamp)
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.current
-        dateFormatter.dateStyle = .full
+    let SolanaGalleryApiInstance = SolanaGalleryAPI.sharedInstance
         
-        return dateFormatter.string(from: date)
+    func fetchWatchlistData(watchlistItems: [WatchlistItem]) {
+        let dispatchGroup = DispatchGroup()
+        
+        var watchlistItemsResponse = [WatchlistCollectionViewModel]()
+        for item in watchlistItems {
+            guard let collectionName = item.collectionName else {
+                continue
+            }
+            dispatchGroup.enter()
+            self.SolanaGalleryApiInstance.fetchCollectionStats(collectionSymbol: collectionName) { stats in
+                guard let stats = stats else {
+                    print("Failed to fetch stats for collection \(collectionName)")
+                    dispatchGroup.leave()
+                    return
+                }
+                watchlistItemsResponse.append(WatchlistCollectionViewModel(withCollectionStats: stats, coreDataItem: item))
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
+            watchlistItemsResponse.sort { a, b in
+                return a.getCollectionNameString() < b.getCollectionNameString()
+            }
+            self.watchlistItems.onNext(watchlistItemsResponse)
+            print("Successfully fetched collection stats for \(watchlistItems.count) collections")
+        }
     }
 }

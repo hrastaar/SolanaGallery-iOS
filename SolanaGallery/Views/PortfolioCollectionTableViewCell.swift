@@ -14,6 +14,7 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
     
     var collectionNameLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 15)
@@ -24,6 +25,7 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
     
     var floorPriceLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 13)
@@ -32,6 +34,7 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
     }()
     var countLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 13)

@@ -17,8 +17,10 @@ class SearchViewController: UIViewController {
 
     let searchTextField: TextField = {
         let textField = TextField(frame: .zero)
+        
         textField.placeholder = "Search for a collection"
         textField.backgroundColor = ColorManager.primaryCellColor
+        textField.textColor = .white
         textField.layer.cornerRadius = Constants.UI.TextField.CornerRadius
         textField.adjustsFontSizeToFitWidth = true
         textField.font = UIFont.primaryFont(size: 15)
@@ -53,6 +55,7 @@ class SearchViewController: UIViewController {
     private func setupNavigationTitle() {
         let label = UILabel()
         label.text = "Search"
+        label.textColor = .white
         label.textAlignment = .center
         self.navigationItem.titleView = label
         label.translatesAutoresizingMaskIntoConstraints = false

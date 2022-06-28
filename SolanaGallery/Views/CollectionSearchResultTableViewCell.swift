@@ -15,6 +15,7 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
     
     var collectionNameLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 15)

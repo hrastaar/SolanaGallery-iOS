@@ -113,6 +113,7 @@ extension WatchlistViewController {
     
     private func setupNavigationTitle() {
         let label = UILabel()
+        label.textColor = .white
         label.text = "Watchlist"
         label.textAlignment = .center
         self.navigationItem.titleView = label

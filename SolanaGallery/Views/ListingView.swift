@@ -94,6 +94,8 @@ extension ListingView {
         
         let howrareLabel = UILabel()
         howrareLabel.font = .primaryFont(size: 12)
+        howrareLabel.textColor = .white
+        
         if let howrareScore = listing.howrare {
             howrareLabel.text = String(howrareScore)
         } else {
@@ -116,6 +118,8 @@ extension ListingView {
 
         let moonrankLabel = UILabel()
         moonrankLabel.font = .primaryFont(size: 12)
+        moonrankLabel.textColor = .white
+        
         if let moonrankScore = listing.moonrank {
             moonrankLabel.text = String(moonrankScore)
         } else {
@@ -140,10 +144,12 @@ extension ListingView {
         let priceLabel = UILabel()
         priceLabel.text = String(format: "%.2f◎",listing.price)
         priceLabel.font = .primaryFont(size: 14)
+        priceLabel.textColor = .white
         
         let priceRowLabel = UILabel()
         priceRowLabel.text = "Price"
         priceRowLabel.font = .primaryFont(size: 14)
+        priceRowLabel.textColor = .white
         
         let priceStackView = UIStackView(arrangedSubviews: [priceRowLabel, priceLabel])
         priceStackView.axis = .horizontal
@@ -161,10 +167,12 @@ extension ListingView {
         let sellerLabel = UILabel()
         sellerLabel.text = self.listing.getShortenedSellerAddressString()
         sellerLabel.font = .primaryFont(size: 10)
+        sellerLabel.textColor = .white
         
         let sellerRowLabel = UILabel()
         sellerRowLabel.text = "Seller"
         sellerRowLabel.font = .primaryFont(size: 10)
+        sellerRowLabel.textColor = .white
         
         let sellerStackView = UIStackView(arrangedSubviews: [sellerRowLabel, sellerLabel])
         sellerStackView.axis = .horizontal

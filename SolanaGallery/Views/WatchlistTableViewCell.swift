@@ -14,6 +14,7 @@ class WatchlistTableViewCell: UITableViewCell {
     
     var collectionNameLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 15)
@@ -23,6 +24,7 @@ class WatchlistTableViewCell: UITableViewCell {
     
     var floorPriceLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 13)
@@ -30,6 +32,7 @@ class WatchlistTableViewCell: UITableViewCell {
     }()
     var listedCountLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 13)

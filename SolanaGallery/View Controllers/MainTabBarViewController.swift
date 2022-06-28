@@ -31,7 +31,8 @@ class MainTabBarViewController: UITabBarController {
         watchlistVC.tabBarItem.title = "Watchlist"
         watchlistVC.navigationBar.tintColor = .white
         
-        tabBar.tintColor = .label
+        tabBar.barTintColor = .systemGray
+        tabBar.tintColor = .white
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.primaryFont(size: 12)], for: .normal)
 
         setViewControllers([searchVC, walletTrackerVC, watchlistVC], animated: true)

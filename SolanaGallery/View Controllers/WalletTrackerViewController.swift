@@ -17,6 +17,7 @@ class WalletTrackerViewController: UIViewController {
 
     let walletSearchTextField: TextField = {
         let textField = TextField(frame: .zero)
+        textField.textColor = .white
         textField.placeholder = "Enter a valid Solana Wallet Address"
         textField.backgroundColor = ColorManager.primaryCellColor
         textField.layer.cornerRadius = Constants.UI.TextField.CornerRadius
@@ -30,6 +31,7 @@ class WalletTrackerViewController: UIViewController {
     
     let searchButton: UIButton = {
         let button = UIButton()
+        button.tintColor = .white
         button.setTitle("Search", for: .normal)
         button.backgroundColor = ColorManager.primaryCellColor
         button.layer.cornerRadius = Constants.UI.Button.CornerRadius
@@ -176,6 +178,7 @@ extension WalletTrackerViewController {
     private func setupNavigationTitle() {
         let label = UILabel()
         label.text = "Portfolio"
+        label.textColor = .white
         label.textAlignment = .center
         self.navigationItem.titleView = label
         label.translatesAutoresizingMaskIntoConstraints = false

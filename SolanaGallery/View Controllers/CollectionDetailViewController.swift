@@ -26,6 +26,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         return view
     }()
     
+    var buyCollectionButton: UIButton?
     var watchlistButton: UIButton?
     
     var listingsScrollView: UIScrollView = {
@@ -60,6 +61,9 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         title = collectionName
         // Create UIView that displays basic collection statistics
         setupStatisticsView()
+        
+        self.buyCollectionButton = setupBuyCollectionButton()
+        
         // Create button that toggles adding a collection to watchlist
         self.watchlistButton = setupWatchlistButton()
 
@@ -83,9 +87,17 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         
         // Create information labels and provide default values
         let floorValueLabel = UILabel()
+        floorValueLabel.textColor = .white
+        
         let listedCountValueLabel = UILabel()
+        listedCountValueLabel.textColor = .white
+        
         let floorValueCategoryLabel = UILabel()
+        floorValueCategoryLabel.textColor = .white
+        
         let listedCountCategoryLabel = UILabel()
+        listedCountCategoryLabel.textColor = .white
+        
         DispatchQueue.main.async {
             floorValueLabel.text = "0◎"
             floorValueLabel.font = .primaryFont(size: 14)
@@ -153,6 +165,25 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         return watchlistActionButton
     }
     
+    private func setupBuyCollectionButton() -> UIButton {
+        let buyOnMagicEdenButton = UIButton()
+        buyOnMagicEdenButton.layer.cornerRadius = Constants.UI.Button.CornerRadius
+        buyOnMagicEdenButton.backgroundColor = ColorManager.primaryCellColor
+        buyOnMagicEdenButton.titleLabel?.textColor = .white
+        buyOnMagicEdenButton.titleLabel?.font = .primaryFont(size: 16)
+        buyOnMagicEdenButton.titleLabel?.textAlignment = .center
+        buyOnMagicEdenButton.setTitle("Buy on MagicEden", for: .normal)
+        view.addSubview(buyOnMagicEdenButton)
+        
+        // Apply constraints to button
+        buyOnMagicEdenButton.anchor(top: statisticsView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 150, height: 40, enableInsets: false)
+
+        buyOnMagicEdenButton.isUserInteractionEnabled = true
+        buyOnMagicEdenButton.addTarget(self, action: #selector(openMagicEdenCollectionSafariPage), for: .touchUpInside)
+        
+        return buyOnMagicEdenButton
+    }
+    
     // Creates scroll view containing current listings (fetched from Magiceden)
     private func fillListingStackView(with collectionListings: [CollectionListing]) {
         DispatchQueue.main.async {
@@ -182,7 +213,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
                 let listingView = ListingView(listing: collectionListing, frame: .init(x: 0, y: 0, width: 400, height: stackView.bounds.height))
                 listingView.translatesAutoresizingMaskIntoConstraints = false
                 
-                let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.openMagicedenListingWebpage(_:)))
+                let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.openMagicEdenListingSafariPage(_:)))
                 listingView.addGestureRecognizer(gesture)
                 stackView.addArrangedSubview(listingView)
             }
@@ -190,13 +221,25 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
     }
     
     // Action for when a ListingView is pressed, opens SFSafariViewController for listing
-    @objc func openMagicedenListingWebpage(_ sender: UITapGestureRecognizer? = nil) {
+    @objc
+    func openMagicEdenListingSafariPage(_ sender: UITapGestureRecognizer? = nil) {
         guard let listingView = sender?.view as? ListingView else {
             return
         }
-        let listingUrlString = Constants.constructMagicedenListingUrl(with: listingView.listing.tokenMint)
+        let listingUrlString = Constants.getMagicEdenListingUrl(with: listingView.listing.tokenMint)
         
         if let url = listingUrlString {
+            let config = SFSafariViewController.Configuration()
+            config.entersReaderIfAvailable = true
+
+            let vc = SFSafariViewController(url: url, configuration: config)
+            present(vc, animated: true)
+        }
+    }
+    
+    @objc
+    func openMagicEdenCollectionSafariPage(_ sender: UITapGestureRecognizer? = nil) {
+        if let url = Constants.getMagicEdenCollectionUrl(with: collectionSymbol) {
             let config = SFSafariViewController.Configuration()
             config.entersReaderIfAvailable = true
 

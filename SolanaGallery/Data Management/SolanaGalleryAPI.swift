@@ -145,5 +145,5 @@ class SolanaGalleryAPI {
     private let COLLECTION_SEARCH_EXTENSION = "solana/search/collections/"
     
     static let MagicedenListingUrlPrefix = "https://magiceden.io/item-details/"
-
+    static let MagicedenCollectionUrlPrefix = "https://magiceden.io/marketplace/"
 }

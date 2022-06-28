@@ -104,7 +104,7 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
         collectionImageView.showAnimatedGradientSkeleton(animation: animation)
         collectionNameLabel.skeletonTextLineHeight = .relativeToFont
         collectionNameLabel.skeletonTextNumberOfLines = 1
-        collectionNameLabel.linesCornerRadius = 10
+        collectionNameLabel.linesCornerRadius = 5
         collectionNameLabel.showSkeleton()
     }
 }

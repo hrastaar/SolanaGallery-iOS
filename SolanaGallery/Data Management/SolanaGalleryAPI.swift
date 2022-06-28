@@ -122,22 +122,22 @@ class SolanaGalleryAPI {
     }
     
     private func getNftCollectionCountsEndpoint(wallet: String) -> String {
-        return BASE_URL + WALLET_ENDPOINT_EXTENSION + wallet + GET_NFT_COLLECTION_COUNTS;
+        return SOLANA_GALLERY_API_BASE_URL + WALLET_ENDPOINT_EXTENSION + wallet + GET_NFT_COLLECTION_COUNTS;
     }
     
     private func getNftCollectionStatsEndpoint(collectionName: String) -> String {
-        return BASE_URL + COLLECTION_STATS_ENDPOINT + collectionName
+        return SOLANA_GALLERY_API_BASE_URL + COLLECTION_STATS_ENDPOINT + collectionName
     }
     
     private func getNftCollectionListingsEndpoint(collectionName: String) -> String {
-        return BASE_URL + COLLECTION_LISTING_ENDPOINT + collectionName
+        return SOLANA_GALLERY_API_BASE_URL + COLLECTION_LISTING_ENDPOINT + collectionName
     }
 
     private func getSearchCollectionsEndpoint(searchText: String) -> String {
-        return BASE_URL + COLLECTION_SEARCH_EXTENSION + searchText
+        return SOLANA_GALLERY_API_BASE_URL + COLLECTION_SEARCH_EXTENSION + searchText
     }
     
-    private let BASE_URL = "https://rastaar.com/"
+    private let SOLANA_GALLERY_API_BASE_URL = "https://rastaar.com/"
     private let WALLET_ENDPOINT_EXTENSION = "solana/wallet/"
     private let COLLECTION_STATS_ENDPOINT = "solana/stats/"
     private let COLLECTION_LISTING_ENDPOINT = "solana/listings/"

@@ -19,4 +19,8 @@ class CollectionSearchViewModel {
             self.collectionSearchResults.onNext(searchResults)
         }
     }
+    
+    func clearSearchResults() {
+        self.collectionSearchResults.onNext([])
+    }
 }

@@ -101,7 +101,10 @@ class SearchViewController: UIViewController {
                 let detailVC = CollectionDetailViewController(collectionSymbol: symbol, collectionName: collectionName)
                 self.navigationController?.pushViewController(detailVC, animated: true)
 
+                // Deselect row, clear search text, remove search results
                 self.tableView.deselectRow(at: $0, animated: true)
+                self.searchTextField.text = ""
+                self.collectionSearchViewModel.clearSearchResults()
             }).disposed(by: disposeBag)
     }
 }

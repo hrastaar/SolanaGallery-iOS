@@ -16,11 +16,13 @@ class WatchlistViewController: UIViewController {
     
     var tableView: UITableView = {
         var tableView = UITableView(frame: .zero)
+        
         tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: WatchlistTableViewCell.ReuseIdentifier)
         tableView.allowsMultipleSelectionDuringEditing = false
         tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
+        tableView.showsVerticalScrollIndicator = false
         
         return tableView
     }()
@@ -30,32 +32,17 @@ class WatchlistViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Configure UI elements
         setupUI()
         
         // Configure tableview data source (using rxswift/rxcocoa)
-        self.bindTableData()
+        bindTableData()
         
         // Setup refresh control
-        self.initializeTableViewRefreshControl()
+        initializeTableViewRefreshControl()
         
         // Fetch watchlist collection data
-        self.syncWatchlistCollections()
-    }
-    
-    private func setupUI() {
-        view.backgroundColor = ColorManager.backgroundColor
-        setupNavigationTitle()
-        
-        view.addSubview(tableView)
-        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        refreshWatchlist(self)
+        syncWatchlistCollections()
     }
 
     // Removes current watchlistItems from tableview and fetches up-to-date collection statistics via SolanaGalleryAPI
@@ -69,6 +56,7 @@ class WatchlistViewController: UIViewController {
     }
 }
 
+// MARK: Data Binding Implementation
 extension WatchlistViewController {
 
     private func bindTableData() {
@@ -96,6 +84,26 @@ extension WatchlistViewController {
                 self.tableView.deselectRow(at: $0, animated: true)
             }).disposed(by: disposeBag)
     }
+}
+
+// MARK: UI Implementation
+extension WatchlistViewController {
+    
+    private func setupUI() {
+        view.backgroundColor = ColorManager.backgroundColor
+        setupNavigationTitle()
+        
+        view.addSubview(tableView)
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        refreshWatchlist(self)
+    }
     
     private func initializeTableViewRefreshControl() {
         // Add Refresh Control to Table View
@@ -121,7 +129,8 @@ extension WatchlistViewController {
         label.anchor(top: navigationController?.navigationBar.topAnchor, left: navigationController?.navigationBar.leftAnchor, bottom: navigationController?.navigationBar.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: navigationController?.navigationBar.bounds.width ?? 0, height: 0, enableInsets: false)
     }
     
-    @objc private func refreshWatchlist(_ sender: Any) {
+    @objc
+    private func refreshWatchlist(_ sender: Any) {
         syncWatchlistCollections()
         DispatchQueue.main.async {
             self.refreshControl.endRefreshing()

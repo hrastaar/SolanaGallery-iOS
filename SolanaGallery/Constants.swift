@@ -16,7 +16,7 @@ struct Constants {
             static let CornerRadius = 20.0
         }
         struct TableView {
-            static let CornerRadius = 20.0
+            static let CornerRadius = 5.0
         }
     }
     

@@ -32,6 +32,7 @@ class SearchViewController: UIViewController {
     
     let tableView: UITableView = {
         var tableView = UITableView(frame: .zero)
+        
         tableView.register(CollectionSearchResultTableViewCell.self, forCellReuseIdentifier: CollectionSearchResultTableViewCell.ReuseIdentifier)
         tableView.allowsMultipleSelectionDuringEditing = false
         tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
@@ -52,6 +53,16 @@ class SearchViewController: UIViewController {
         
     }
     
+    private func setupUI() {
+        setupNavigationTitle()
+        view.addSubview(searchTextField)
+        view.addSubview(tableView)
+        
+        searchTextField.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 100, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 50, enableInsets: false)
+        
+        tableView.anchor(top: searchTextField.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+    }
+    
     private func setupNavigationTitle() {
         let label = UILabel()
         label.text = "Search"
@@ -61,16 +72,12 @@ class SearchViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.anchor(top: navigationController?.navigationBar.topAnchor, left: navigationController?.navigationBar.leftAnchor, bottom: navigationController?.navigationBar.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: navigationController?.navigationBar.bounds.width ?? 0, height: 0, enableInsets: false)
     }
-    
-    private func setupUI() {
-        setupNavigationTitle()
-        view.addSubview(searchTextField)
-        view.addSubview(tableView)
-        
-        searchTextField.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 100, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 50, enableInsets: false)
-        
-        tableView.anchor(top: searchTextField.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
-        
+}
+
+// MARK: Data Binding
+extension SearchViewController {
+    private func bindTableView() {
+        // Configure search text field to update search request per each text event
         searchTextField.rx.controlEvent(.allEditingEvents)
             .subscribe(onNext: { event in
                 guard let searchText = self.searchTextField.text else {
@@ -78,9 +85,8 @@ class SearchViewController: UIViewController {
                 }
                 self.collectionSearchViewModel.filterSearchResults(searchInput: searchText)
             }).disposed(by: disposeBag)
-    }
-    
-    private func bindTableView() {
+        
+        // Bind search results data from view model to table view
         collectionSearchViewModel.collectionSearchResults.bind(
             to: tableView.rx.items(
                 cellIdentifier: CollectionSearchResultTableViewCell.ReuseIdentifier,
@@ -89,6 +95,7 @@ class SearchViewController: UIViewController {
             cell.updateData(with: model)
         }.disposed(by: disposeBag)
         
+        // Open collection detail view controller when a search result is selected
         tableView.rx.itemSelected
             .subscribe(onNext: {
                 guard let cell = self.tableView.cellForRow(at: $0) as? CollectionSearchResultTableViewCell,

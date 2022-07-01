@@ -134,7 +134,7 @@ class SolanaGalleryAPI {
     }
 
     private func getSearchCollectionsEndpoint(searchText: String) -> String {
-        return SOLANA_GALLERY_API_BASE_URL + COLLECTION_SEARCH_EXTENSION + searchText
+        return SOLANA_GALLERY_API_BASE_URL + COLLECTION_SEARCH_EXTENSION + (searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")
     }
     
     private let SOLANA_GALLERY_API_BASE_URL = "https://rastaar.com/"

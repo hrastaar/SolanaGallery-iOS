@@ -23,11 +23,8 @@ class SolanaGalleryAPI {
         }
         
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, err in
-            guard let data = data else {
-                completion(nil)
-                return
-            }
-            guard let collectionCounts = try? JSONDecoder().decode([CollectionCount].self, from: data) else {
+            guard let data = data,
+                  let collectionCounts = try? JSONDecoder().decode([CollectionCount].self, from: data) else {
                 completion(nil)
                 return
             }
@@ -48,12 +45,8 @@ class SolanaGalleryAPI {
             return
         }
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, _ in
-            guard let data = data else {
-                completion(nil)
-                return
-            }
-            guard let collectionStats = try? JSONDecoder().decode(CollectionStats.self, from: data) else {
-                print("Couldn't decode data into CollectionStats for \(collectionSymbol)")
+            guard let data = data,
+                  let collectionStats = try? JSONDecoder().decode(CollectionStats.self, from: data) else {
                 completion(nil)
                 return
             }
@@ -74,12 +67,8 @@ class SolanaGalleryAPI {
             return
         }
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, _ in
-            guard let data = data else {
-                completion(nil)
-                return
-            }
-            guard let collectionListings = try? JSONDecoder().decode([CollectionListing].self, from: data) else {
-                print("Couldn't decode data into [CollectionListing] for \(collectionSymbol)")
+            guard let data = data,
+                  let collectionListings = try? JSONDecoder().decode([CollectionListing].self, from: data) else {
                 completion(nil)
                 return
             }
@@ -105,13 +94,8 @@ class SolanaGalleryAPI {
             return
         }
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, _ in
-            guard let data = data else {
-                completion(nil)
-                return
-            }
-            
-            guard let collectionSearchResults = try? JSONDecoder().decode([CollectionSearchResult].self, from: data) else {
-                print("Couldn't decode data into CollectionSearchResults")
+            guard let data = data,
+                  let collectionSearchResults = try? JSONDecoder().decode([CollectionSearchResult].self, from: data) else {
                 completion(nil)
                 return
             }

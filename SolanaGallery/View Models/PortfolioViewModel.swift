@@ -18,7 +18,6 @@ class PortfolioViewModel {
             var collectionDataArr = [PortfolioCollectionViewModel]()
             guard let collectionCounts = counts else {
                 self.collections.onNext(collectionDataArr)
-                self.collections.onCompleted()
                 return
             }
             
@@ -41,7 +40,7 @@ class PortfolioViewModel {
             }
             dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
                 print("Successfully fetched collection stats for \(collectionDataArr.count) collections")
-                self.collections.onCompleted()
+                self.collections.onNext(collectionDataArr)
             }
         }
     }

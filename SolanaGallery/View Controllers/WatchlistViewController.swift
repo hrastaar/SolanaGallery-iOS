@@ -9,7 +9,8 @@ import UIKit
 import RxSwift
 
 class WatchlistViewController: UIViewController {
-    let watchlistListViewModel = WatchlistViewModel()
+    let watchlistListViewModel = WatchlistViewModel.sharedInstance
+    
     let disposeBag = DisposeBag()
 
     private let refreshControl = UIRefreshControl()
@@ -26,9 +27,7 @@ class WatchlistViewController: UIViewController {
         
         return tableView
     }()
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        
+            
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,12 +46,7 @@ class WatchlistViewController: UIViewController {
 
     // Removes current watchlistItems from tableview and fetches up-to-date collection statistics via SolanaGalleryAPI
     private func syncWatchlistCollections() {
-        do {
-            let collections = try context.fetch(WatchlistItem.fetchRequest())
-            watchlistListViewModel.fetchWatchlistData(watchlistItems: collections)
-        } catch {
-            print(error)
-        }
+        watchlistListViewModel.fetchWatchlistData()
     }
 }
 
@@ -134,28 +128,6 @@ extension WatchlistViewController {
         syncWatchlistCollections()
         DispatchQueue.main.async {
             self.refreshControl.endRefreshing()
-        }
-    }
-}
-
-// MARK: CoreData Save Interactions
-extension WatchlistViewController {
-    // Save new collection to CoreData
-    func addCollectionToWatchlist(collectionName: String) {
-        do {
-            let items = try context.fetch(WatchlistItem.fetchRequest())
-            
-            // check if collection is duplicate
-            if !(items.filter {$0.collectionName == collectionName}).isEmpty {
-                return
-            }
-            let newItem = WatchlistItem(context: context)
-            newItem.collectionName = collectionName
-            newItem.order = Int16(items.count)
-            
-            try context.save()
-        } catch {
-            print("error saving watchlist item")
         }
     }
 }

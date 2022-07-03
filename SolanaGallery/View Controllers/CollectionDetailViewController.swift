@@ -16,10 +16,13 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
     let collectionName: String
         
     let collectionDetailViewModel = CollectionDetailViewModel()
+    let watchlistViewModel = WatchlistViewModel.sharedInstance
+    
     let disposeBag = DisposeBag()
     
     let statisticsView: UIView = {
         let view = UIView()
+        
         view.backgroundColor = ColorManager.primaryCellColor
         view.layer.cornerRadius = 20
         
@@ -44,6 +47,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         super.init(nibName: nil, bundle: nil)
         self.navigationController?.navigationBar.backItem?.title = ""
         collectionDetailViewModel.fetchCollectionDetailsInfo(collectionSymbol: collectionSymbol)
+        _ = watchlistViewModel.isInWatchlist(collectionSymbol: collectionSymbol)
     }
     
     required init?(coder: NSCoder) {
@@ -78,7 +82,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @objc func toggleWatchlistStatus() {
-        collectionDetailViewModel.toggleCollectionInWatchlist(collectionSymbol: self.collectionSymbol)
+        watchlistViewModel.toggleCollectionInWatchlist(collectionSymbol: self.collectionSymbol)
     }
     
     private func setupStatisticsView() {
@@ -157,8 +161,8 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         // Apply constraints to button
         watchlistActionButton.anchor(top: statisticsView.bottomAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 10, paddingRight: 10, width: 100, height: 40, enableInsets: false)
         
-        collectionDetailViewModel.isOnWatchlist.map { $0 ? "Unfollow" : "Follow" }.bind(to: watchlistActionButton.rx.title()).disposed(by: disposeBag)
-        _ = collectionDetailViewModel.isInWatchlist(collectionSymbol: collectionSymbol)
+        watchlistViewModel.isOnWatchlist.map { $0 ? "Unfollow" : "Follow" }.bind(to: watchlistActionButton.rx.title()).disposed(by: disposeBag)
+        _ = watchlistViewModel.isInWatchlist(collectionSymbol: collectionSymbol)
         watchlistActionButton.isUserInteractionEnabled = true
         watchlistActionButton.addTarget(self, action: #selector(toggleWatchlistStatus), for: .touchUpInside)
         

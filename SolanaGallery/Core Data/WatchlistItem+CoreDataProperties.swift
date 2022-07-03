@@ -17,8 +17,6 @@ extension WatchlistItem {
     }
 
     @NSManaged public var collectionName: String?
-    @NSManaged public var order: Int16
-
 }
 
 extension WatchlistItem : Identifiable {

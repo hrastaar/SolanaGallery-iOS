@@ -18,9 +18,7 @@ class WatchlistViewModel {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
-    init() {
-        isOnWatchlist.onNext(false)
-    }
+    init() { isOnWatchlist.onNext(false) }
 
     func fetchWatchlistData() {
         do {
@@ -40,7 +38,9 @@ class WatchlistViewModel {
                         dispatchGroup.leave()
                         return
                     }
-                    watchlistItemsResponse.append(WatchlistCollectionViewModel(withCollectionStats: stats, coreDataItem: item))
+                    watchlistItemsResponse.append(
+                        WatchlistCollectionViewModel(withCollectionStats: stats)
+                    )
                     dispatchGroup.leave()
                 }
             }

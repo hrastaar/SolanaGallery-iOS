@@ -33,6 +33,7 @@
 		743A50FF28298FF100101284 /* PortfolioCollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743A50FE28298FF100101284 /* PortfolioCollectionTableViewCell.swift */; };
 		744D13422847516100F7651F /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 744D13412847516100F7651F /* SkeletonView */; };
 		744D13452847517000F7651F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 744D13442847517000F7651F /* RxCocoa */; };
+		7451B7112873F47900CC451B /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = 7451B7102873F47900CC451B /* NVActivityIndicatorView */; };
 		745392B2281DD3EA003DE9CD /* WatchlistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392B1281DD3EA003DE9CD /* WatchlistTableViewCell.swift */; };
 		745392B5281DE154003DE9CD /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392B4281DE154003DE9CD /* UIView+Extension.swift */; };
 		745392B7281F7931003DE9CD /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392B6281F7931003DE9CD /* UIFont+Extension.swift */; };
@@ -103,6 +104,7 @@
 			files = (
 				744D13452847517000F7651F /* RxCocoa in Frameworks */,
 				744D13422847516100F7651F /* SkeletonView in Frameworks */,
+				7451B7112873F47900CC451B /* NVActivityIndicatorView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +266,7 @@
 			packageProductDependencies = (
 				744D13412847516100F7651F /* SkeletonView */,
 				744D13442847517000F7651F /* RxCocoa */,
+				7451B7102873F47900CC451B /* NVActivityIndicatorView */,
 			);
 			productName = SolanaGallery;
 			productReference = 741373712819FBAF004B31A8 /* SolanaGallery.app */;
@@ -299,6 +302,7 @@
 				7404139C2840741D0061DFE8 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				744D13402847516100F7651F /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				744D13432847517000F7651F /* XCRemoteSwiftPackageReference "RxSwift" */,
+				7451B70F2873F47900CC451B /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
 			);
 			productRefGroup = 741373722819FBAF004B31A8 /* Products */;
 			projectDirPath = "";
@@ -599,6 +603,14 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		7451B70F2873F47900CC451B /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ninjaprox/NVActivityIndicatorView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -627,6 +639,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxCocoa;
+		};
+		7451B7102873F47900CC451B /* NVActivityIndicatorView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7451B70F2873F47900CC451B /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
+			productName = NVActivityIndicatorView;
 		};
 /* End XCSwiftPackageProductDependency section */
 

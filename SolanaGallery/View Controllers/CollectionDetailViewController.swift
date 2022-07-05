@@ -45,7 +45,6 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         self.collectionSymbol = collectionSymbol
         self.collectionName = collectionName
         super.init(nibName: nil, bundle: nil)
-        self.navigationController?.navigationBar.backItem?.title = ""
         collectionDetailViewModel.fetchCollectionDetailsInfo(collectionSymbol: collectionSymbol)
         _ = watchlistViewModel.isInWatchlist(collectionSymbol: collectionSymbol)
     }
@@ -62,7 +61,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
     private func setupUI() {
         view.backgroundColor = ColorManager.backgroundColor
         self.navigationController?.navigationBar.backItem?.title = ""
-        title = collectionName
+        setupNavigationTitle()
         // Create UIView that displays basic collection statistics
         setupStatisticsView()
         
@@ -222,6 +221,15 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
                 stackView.addArrangedSubview(listingView)
             }
         }
+    }
+    
+    private func setupNavigationTitle() {
+        let label = UILabel()
+        label.textColor = .white
+        label.text = collectionName
+        label.textAlignment = .center
+        self.navigationItem.titleView = label
+        label.translatesAutoresizingMaskIntoConstraints = false
     }
     
     // Action for when a ListingView is pressed, opens SFSafariViewController for listing

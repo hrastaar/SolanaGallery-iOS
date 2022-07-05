@@ -196,6 +196,5 @@ extension WalletTrackerViewController {
         label.textAlignment = .center
         self.navigationItem.titleView = label
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.anchor(top: navigationController?.navigationBar.topAnchor, left: navigationController?.navigationBar.leftAnchor, bottom: navigationController?.navigationBar.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: navigationController?.navigationBar.bounds.width ?? 0, height: 0, enableInsets: false)
     }
 }

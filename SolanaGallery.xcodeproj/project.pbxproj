@@ -41,6 +41,7 @@
 		745392BB281F7CDA003DE9CD /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392BA281F7CDA003DE9CD /* UIColor+Extension.swift */; };
 		745392C828236452003DE9CD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392C728236452003DE9CD /* SearchViewController.swift */; };
 		745392CA28236530003DE9CD /* CollectionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392C928236530003DE9CD /* CollectionDetailViewController.swift */; };
+		745EA495288377CD00611748 /* SolanaGalleryAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745EA494288377CD00611748 /* SolanaGalleryAPIError.swift */; };
 		74606114282E153400BB1DDA /* PortfolioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606113282E153400BB1DDA /* PortfolioViewModel.swift */; };
 		74606116282E1F1400BB1DDA /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606115282E1F1400BB1DDA /* WatchlistViewModel.swift */; };
 		7460611A2833701900BB1DDA /* CollectionSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746061192833701900BB1DDA /* CollectionSearchResult.swift */; };
@@ -86,6 +87,7 @@
 		745392BA281F7CDA003DE9CD /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		745392C728236452003DE9CD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		745392C928236530003DE9CD /* CollectionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailViewController.swift; sourceTree = "<group>"; };
+		745EA494288377CD00611748 /* SolanaGalleryAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaGalleryAPIError.swift; sourceTree = "<group>"; };
 		74606113282E153400BB1DDA /* PortfolioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioViewModel.swift; sourceTree = "<group>"; };
 		74606115282E1F1400BB1DDA /* WatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewModel.swift; sourceTree = "<group>"; };
 		746061192833701900BB1DDA /* CollectionSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchResult.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				74BC37F6283999C500887360 /* ImageManager.swift */,
 				7413738E2819FD4F004B31A8 /* SolanaGalleryAPI.swift */,
 				74CFA7D82839F838008AEB6D /* ColorManager.swift */,
+				745EA494288377CD00611748 /* SolanaGalleryAPIError.swift */,
 			);
 			path = "Data Management";
 			sourceTree = "<group>";
@@ -298,10 +301,7 @@
 			mainGroup = 741373682819FBAF004B31A8;
 			packageReferences = (
 				745E142E28261CEF00478A8D /* XCRemoteSwiftPackageReference "RxSwift" */,
-				74606110282A3EB800BB1DDA /* XCRemoteSwiftPackageReference "Charts" */,
 				7404139C2840741D0061DFE8 /* XCRemoteSwiftPackageReference "SkeletonView" */,
-				744D13402847516100F7651F /* XCRemoteSwiftPackageReference "SkeletonView" */,
-				744D13432847517000F7651F /* XCRemoteSwiftPackageReference "RxSwift" */,
 				7451B70F2873F47900CC451B /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
 			);
 			productRefGroup = 741373722819FBAF004B31A8 /* Products */;
@@ -357,6 +357,7 @@
 				745392B5281DE154003DE9CD /* UIView+Extension.swift in Sources */,
 				743A50F72828D71F00101284 /* PortfolioCollectionViewModel.swift in Sources */,
 				741373B0281B6DC4004B31A8 /* HomePageViewController.swift in Sources */,
+				745EA495288377CD00611748 /* SolanaGalleryAPIError.swift in Sources */,
 				741373A5281A41C5004B31A8 /* CollectionStats.swift in Sources */,
 				74CFA7D92839F838008AEB6D /* ColorManager.swift in Sources */,
 				741373A7281A41E9004B31A8 /* CollectionCount.swift in Sources */,
@@ -587,22 +588,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		744D13402847516100F7651F /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Juanpe/SkeletonView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-		744D13432847517000F7651F /* XCRemoteSwiftPackageReference "RxSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.0.0;
-			};
-		};
 		7451B70F2873F47900CC451B /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ninjaprox/NVActivityIndicatorView";
@@ -617,14 +602,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 6.0.0;
-			};
-		};
-		74606110282A3EB800BB1DDA /* XCRemoteSwiftPackageReference "Charts" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/danielgindi/Charts.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

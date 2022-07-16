@@ -32,7 +32,13 @@ class WatchlistViewModel {
                     continue
                 }
                 dispatchGroup.enter()
-                self.SolanaGalleryApiInstance.fetchCollectionStats(collectionSymbol: collectionName) { stats in
+                self.SolanaGalleryApiInstance.fetchCollectionStats(collectionSymbol: collectionName) { stats, err in
+                    if let err = err {
+                        print("WatchlistViewModel failed to fetch collection stats.")
+                        print(err.localizedDescription)
+                        dispatchGroup.leave()
+                        return
+                    }
                     guard let stats = stats else {
                         print("Failed to fetch stats for collection \(collectionName)")
                         dispatchGroup.leave()

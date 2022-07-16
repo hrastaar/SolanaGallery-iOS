@@ -15,20 +15,24 @@ class SolanaGalleryAPI {
     ///
     /// - Parameter wallet: A Solana wallet address string. Bonfida domains are not supported.
     /// - Returns: Completion that provides an optional array of CollectionCount objects
-    public func getNftCollectionCounts(wallet: String, completion: @escaping ([CollectionCount]?) -> Void) -> Void {
+    public func getNftCollectionCounts(wallet: String, completion: @escaping ([CollectionCount]?, Error?) -> Void) -> Void {
         let endpoint = self.getNftCollectionCountsEndpoint(wallet: wallet)
         guard let url = URL(string: endpoint) else {
-            completion(nil)
+            completion(nil, URLError(.badURL))
             return
         }
         
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, err in
+            if let err = err {
+                print(err.localizedDescription)
+                completion(nil, SolanaGalleryAPIError(error: err))
+            }
             guard let data = data,
                   let collectionCounts = try? JSONDecoder().decode([CollectionCount].self, from: data) else {
-                completion(nil)
+                completion(nil, SolanaGalleryAPIError(errorType: .responseParsing))
                 return
             }
-            completion(collectionCounts)
+            completion(collectionCounts, nil)
         }
         
         task.resume()
@@ -38,19 +42,24 @@ class SolanaGalleryAPI {
     ///
     /// - Parameter wallet: A Solana wallet address string object. Bonfida domains are not supported.
     /// - Returns: Completion that provides collection stats (if available)
-    public func fetchCollectionStats(collectionSymbol: String, completion: @escaping (CollectionStats?) -> Void) -> Void {
+    public func fetchCollectionStats(collectionSymbol: String, completion: @escaping (CollectionStats?, Error?) -> Void) -> Void {
         let endpoint = self.getNftCollectionStatsEndpoint(collectionName: collectionSymbol)
         guard let url = URL(string: endpoint) else {
-            completion(nil)
+            completion(nil, URLError(.badURL))
             return
         }
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, _ in
-            guard let data = data,
-                  let collectionStats = try? JSONDecoder().decode(CollectionStats.self, from: data) else {
-                completion(nil)
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, err in
+            if let err = err {
+                print("Error fetching collection stats for \(collectionSymbol)")
+                completion(nil, SolanaGalleryAPIError(error: err, message: err.localizedDescription))
                 return
             }
-            completion(collectionStats)
+            guard let data = data,
+                  let collectionStats = try? JSONDecoder().decode(CollectionStats.self, from: data) else {
+                completion(nil, SolanaGalleryAPIError(errorType: .responseParsing))
+                return
+            }
+            completion(collectionStats, nil)
             return
         }
         task.resume()
@@ -60,16 +69,21 @@ class SolanaGalleryAPI {
     ///
     /// - Parameter collectionSymbol: Collection symbol (representing a collection)
     /// - Returns: Completion that provides an array of 20 current Magiceden listings
-    public func fetchCollectionListings(collectionSymbol: String, completion: @escaping ([CollectionListing]?) -> Void) -> Void {
+    public func fetchCollectionListings(collectionSymbol: String, completion: @escaping ([CollectionListing]?, Error?) -> Void) -> Void {
         let endpoint = self.getNftCollectionListingsEndpoint(collectionName: collectionSymbol)
         guard let url = URL(string: endpoint) else {
-            completion(nil)
+            completion(nil, URLError(.badURL))
             return
         }
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, _ in
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, err in
+            if let err = err {
+                print(err.localizedDescription)
+                completion(nil, SolanaGalleryAPIError(error: err))
+                return
+            }
             guard let data = data,
                   let collectionListings = try? JSONDecoder().decode([CollectionListing].self, from: data) else {
-                completion(nil)
+                completion(nil, SolanaGalleryAPIError(errorType: .responseParsing))
                 return
             }
             
@@ -77,7 +91,7 @@ class SolanaGalleryAPI {
             let sortedListings = collectionListings.sorted { listingA, listingB in
                 return listingA.price < listingB.price
             }
-            completion(sortedListings)
+            completion(sortedListings, nil)
             return
         }
         task.resume()
@@ -87,19 +101,24 @@ class SolanaGalleryAPI {
     ///
     /// - Parameter searchText: Search text string
     /// - Returns: Completion that provides an array of all collections that match the search text
-    public func fetchCollectionsList(searchText: String, completion: @escaping ([CollectionSearchResult]?) -> Void) -> Void {
+    public func fetchCollectionsList(searchText: String, completion: @escaping ([CollectionSearchResult]?, Error?) -> Void) -> Void {
         let endpoint = getSearchCollectionsEndpoint(searchText: searchText)
         guard let url = URL(string: endpoint) else {
-            completion(nil)
+            completion(nil, URLError(.badURL))
             return
         }
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, _ in
-            guard let data = data,
-                  let collectionSearchResults = try? JSONDecoder().decode([CollectionSearchResult].self, from: data) else {
-                completion(nil)
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, err in
+            if let err = err {
+                print(err.localizedDescription)
+                completion(nil, URLError(.unknown))
                 return
             }
-            completion(collectionSearchResults)
+            guard let data = data,
+                  let collectionSearchResults = try? JSONDecoder().decode([CollectionSearchResult].self, from: data) else {
+                completion(nil, SolanaGalleryAPIError(errorType: .responseParsing))
+                return
+            }
+            completion(collectionSearchResults, nil)
             return
         }
         task.resume()

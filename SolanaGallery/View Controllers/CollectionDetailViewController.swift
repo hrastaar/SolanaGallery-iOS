@@ -80,7 +80,8 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
 
     }
     
-    @objc func toggleWatchlistStatus() {
+    @objc
+    private func toggleWatchlistStatus() {
         watchlistViewModel.toggleCollectionInWatchlist(collectionSymbol: self.collectionSymbol)
     }
     

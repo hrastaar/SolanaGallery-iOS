@@ -11,6 +11,7 @@ import RxSwift
 class CollectionDetailViewModel {
     let stats = PublishSubject<CollectionStats?>()
     let listings = PublishSubject<[CollectionListing]>()
+    let activities = PublishSubject<[CollectionActivityEvent]>()
     
     let SolanaGalleryApi = SolanaGalleryAPI.sharedInstance
             
@@ -28,11 +29,24 @@ class CollectionDetailViewModel {
             if let err = err {
                 print(err.localizedDescription)
                 self.listings.onNext([])
+                return
             }
             guard let listings = listings else {
                 return
             }
             self.listings.onNext(listings)
+        }
+        
+        SolanaGalleryApi.fetchCollectionActivities(collectionSymbol: collectionSymbol, numberOfActivities: 20) { activities, err in
+            if let err = err {
+                print(err.localizedDescription)
+                self.activities.onNext([])
+                return
+            }
+            guard let activities = activities else {
+                return
+            }
+            self.activities.onNext(activities)
         }
     }
 }

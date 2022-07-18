@@ -42,6 +42,7 @@
 		745392C828236452003DE9CD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392C728236452003DE9CD /* SearchViewController.swift */; };
 		745392CA28236530003DE9CD /* CollectionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745392C928236530003DE9CD /* CollectionDetailViewController.swift */; };
 		745EA495288377CD00611748 /* SolanaGalleryAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745EA494288377CD00611748 /* SolanaGalleryAPIError.swift */; };
+		745EA49728851F9400611748 /* CollectionActivityEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745EA49628851F9400611748 /* CollectionActivityEvent.swift */; };
 		74606114282E153400BB1DDA /* PortfolioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606113282E153400BB1DDA /* PortfolioViewModel.swift */; };
 		74606116282E1F1400BB1DDA /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74606115282E1F1400BB1DDA /* WatchlistViewModel.swift */; };
 		7460611A2833701900BB1DDA /* CollectionSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746061192833701900BB1DDA /* CollectionSearchResult.swift */; };
@@ -88,6 +89,7 @@
 		745392C728236452003DE9CD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		745392C928236530003DE9CD /* CollectionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailViewController.swift; sourceTree = "<group>"; };
 		745EA494288377CD00611748 /* SolanaGalleryAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaGalleryAPIError.swift; sourceTree = "<group>"; };
+		745EA49628851F9400611748 /* CollectionActivityEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionActivityEvent.swift; sourceTree = "<group>"; };
 		74606113282E153400BB1DDA /* PortfolioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioViewModel.swift; sourceTree = "<group>"; };
 		74606115282E1F1400BB1DDA /* WatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewModel.swift; sourceTree = "<group>"; };
 		746061192833701900BB1DDA /* CollectionSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchResult.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				741373A4281A41C5004B31A8 /* CollectionStats.swift */,
 				741373A6281A41E9004B31A8 /* CollectionCount.swift */,
 				740413C52841DF3A0061DFE8 /* CollectionListing.swift */,
+				745EA49628851F9400611748 /* CollectionActivityEvent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				740413CC284303A10061DFE8 /* ListingView.swift in Sources */,
 				741373A2281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift in Sources */,
 				741373772819FBAF004B31A8 /* SceneDelegate.swift in Sources */,
+				745EA49728851F9400611748 /* CollectionActivityEvent.swift in Sources */,
 				745392CA28236530003DE9CD /* CollectionDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

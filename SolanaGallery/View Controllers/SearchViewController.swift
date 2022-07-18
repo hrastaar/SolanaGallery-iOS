@@ -61,7 +61,6 @@ class SearchViewController: UIViewController {
         searchTextField.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 25, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 50, enableInsets: false)
         
         tableView.anchor(top: searchTextField.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
-        tableView.rowHeight = 75
     }
     
     private func setupNavigationTitle() {
@@ -74,9 +73,18 @@ class SearchViewController: UIViewController {
     }
 }
 
+extension SearchViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 75
+    }
+}
+
 // MARK: Data Binding
 extension SearchViewController {
     private func bindTableView() {
+        tableView
+            .rx.setDelegate(self)
+            .disposed(by: disposeBag)
         // Configure search text field to update search request per each text event
         searchTextField.rx.controlEvent(.allEditingEvents)
             .subscribe(onNext: { event in

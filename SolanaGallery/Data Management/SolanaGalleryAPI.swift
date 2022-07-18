@@ -97,6 +97,30 @@ class SolanaGalleryAPI {
         task.resume()
     }
     
+    public func fetchCollectionActivities(collectionSymbol: String, numberOfActivities: Int, completion: @escaping ([CollectionActivityEvent]?, Error?) -> Void) -> Void {
+        let endpoint = self.getNftCollectionActivitiesEndpoint(collectionSymbol: collectionSymbol, desiredCount: numberOfActivities)
+        guard let url = URL(string: endpoint) else {
+            completion(nil, URLError(.badURL))
+            return
+        }
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, err in
+            if let err = err {
+                print(err.localizedDescription)
+                completion(nil, SolanaGalleryAPIError(error: err))
+                return
+            }
+            guard let data = data,
+                  let collectionActivities = try? JSONDecoder().decode([CollectionActivityEvent].self, from: data) else {
+                completion(nil, SolanaGalleryAPIError(errorType: .responseParsing))
+                return
+            }
+            print(collectionActivities)
+            completion(collectionActivities, nil)
+            return
+        }
+        task.resume()
+    }
+    
     /// This function returns an array of CollectionSearchResult objects that partially match the search text provided.
     ///
     /// - Parameter searchText: Search text string
@@ -135,6 +159,11 @@ class SolanaGalleryAPI {
     private func getNftCollectionListingsEndpoint(collectionName: String) -> String {
         return SOLANA_GALLERY_API_BASE_URL + COLLECTION_LISTING_ENDPOINT + collectionName
     }
+    
+    private func getNftCollectionActivitiesEndpoint(collectionSymbol: String, desiredCount: Int) -> String {
+        let countString = String(desiredCount)
+        return SOLANA_GALLERY_API_BASE_URL + COLLECTION_ACTIVITIES_ENDPOINT + collectionSymbol + "/0/" + countString
+    }
 
     private func getSearchCollectionsEndpoint(searchText: String) -> String {
         return SOLANA_GALLERY_API_BASE_URL + COLLECTION_SEARCH_EXTENSION + (searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")
@@ -144,6 +173,7 @@ class SolanaGalleryAPI {
     private let WALLET_ENDPOINT_EXTENSION = "solana/wallet/"
     private let COLLECTION_STATS_ENDPOINT = "solana/stats/"
     private let COLLECTION_LISTING_ENDPOINT = "solana/listings/"
+    private let COLLECTION_ACTIVITIES_ENDPOINT = "solana/activities/"
     private let GET_NFT_COLLECTION_COUNTS = "/get_nft_collection_counts"
     private let COLLECTION_SEARCH_EXTENSION = "solana/search/collections/"
     

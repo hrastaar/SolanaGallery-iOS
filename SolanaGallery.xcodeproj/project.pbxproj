@@ -52,6 +52,7 @@
 		74BF32FE2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BF32FD2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift */; };
 		74CFA7D92839F838008AEB6D /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CFA7D82839F838008AEB6D /* ColorManager.swift */; };
 		74CFA7DB283A2A9B008AEB6D /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CFA7DA283A2A9B008AEB6D /* TextField.swift */; };
+		74FE304828868A910059F4DF /* CollectionActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE304728868A910059F4DF /* CollectionActivityTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,7 @@
 		74BF32FD2834BCB0008FDF62 /* CollectionSearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		74CFA7D82839F838008AEB6D /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		74CFA7DA283A2A9B008AEB6D /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		74FE304728868A910059F4DF /* CollectionActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionActivityTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 				745392B1281DD3EA003DE9CD /* WatchlistTableViewCell.swift */,
 				740413C72841ED080061DFE8 /* CollectionListingTableViewCell.swift */,
 				740413CB284303A10061DFE8 /* ListingView.swift */,
+				74FE304728868A910059F4DF /* CollectionActivityTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				743A50FB2828DDA200101284 /* WalletAddressViewModel.swift in Sources */,
 				740413CC284303A10061DFE8 /* ListingView.swift in Sources */,
 				741373A2281A3FB7004B31A8 /* WatchlistItem+CoreDataProperties.swift in Sources */,
+				74FE304828868A910059F4DF /* CollectionActivityTableViewCell.swift in Sources */,
 				741373772819FBAF004B31A8 /* SceneDelegate.swift in Sources */,
 				745EA49728851F9400611748 /* CollectionActivityEvent.swift in Sources */,
 				745392CA28236530003DE9CD /* CollectionDetailViewController.swift in Sources */,

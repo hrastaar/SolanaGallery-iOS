@@ -32,6 +32,31 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
     var buyCollectionButton: UIButton?
     var watchlistButton: UIButton?
     
+    let activitySectionLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "Recent Activity"
+        label.textColor = .white
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.font = UIFont.primaryFont(size: 20)
+        
+        return label
+    }()
+    
+    var activityTableView: UITableView = {
+        var tableView = UITableView(frame: .zero)
+        
+        tableView.register(CollectionActivityTableViewCell.self, forCellReuseIdentifier: CollectionActivityTableViewCell.ReuseIdentifier)
+        tableView.allowsMultipleSelectionDuringEditing = false
+        tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
+        tableView.backgroundColor = .clear
+        tableView.separatorColor = .clear
+        tableView.showsVerticalScrollIndicator = false
+        
+        return tableView
+    }()
+    
     var listingsScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,6 +85,9 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
     
     private func setupUI() {
         view.backgroundColor = ColorManager.backgroundColor
+        view.addSubview(activitySectionLabel)
+        view.addSubview(activityTableView)
+        
         self.navigationController?.navigationBar.backItem?.title = ""
         setupNavigationTitle()
         // Create UIView that displays basic collection statistics
@@ -77,7 +105,20 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
             }
             self.fillListingStackView(with: elements)
         }.disposed(by: disposeBag)
+        
+        bindTableData()
 
+    }
+    
+    private func bindTableData() {
+        // Reactively manage watch list items based on WatchlistListViewModel
+        collectionDetailViewModel.activities.bind(
+            to: activityTableView.rx.items(
+                cellIdentifier: CollectionActivityTableViewCell.ReuseIdentifier,
+                cellType: CollectionActivityTableViewCell.self)
+        ) { row, model, cell in
+            cell.updateData(with: model)
+        }.disposed(by: disposeBag)
     }
     
     @objc
@@ -221,7 +262,12 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
                 listingView.addGestureRecognizer(gesture)
                 stackView.addArrangedSubview(listingView)
             }
+            
+            self.activitySectionLabel.anchor(top: stackView.bottomAnchor, left: self.view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: self.view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+            
+            self.activityTableView.anchor(top: self.activitySectionLabel.bottomAnchor, left: self.view.safeAreaLayoutGuide.leftAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, right: self.view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
         }
+
     }
     
     private func setupNavigationTitle() {
@@ -259,5 +305,11 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
             let vc = SFSafariViewController(url: url, configuration: config)
             present(vc, animated: true)
         }
+    }
+}
+
+extension CollectionDetailViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 65
     }
 }

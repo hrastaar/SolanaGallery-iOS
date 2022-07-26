@@ -5,58 +5,57 @@
 //  Created by Rastaar Haghi on 5/4/22.
 //
 
-import UIKit
-import SafariServices
-import RxSwift
 import RxCocoa
+import RxSwift
+import SafariServices
+import UIKit
 
 class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
-
     let collectionSymbol: String
     let collectionName: String
-        
+
     let collectionDetailViewModel = CollectionDetailViewModel()
     let watchlistViewModel = WatchlistViewModel.sharedInstance
-    
+
     let disposeBag = DisposeBag()
-    
+
     let statisticsView: UIView = {
         let view = UIView()
-        
+
         view.backgroundColor = ColorManager.primaryCellColor
         view.layer.cornerRadius = 20
-        
+
         return view
     }()
-    
+
     var buyCollectionButton: UIButton?
     var watchlistButton: UIButton?
-    
+
     let activitySectionLabel: UILabel = {
         let label = UILabel()
-        
+
         label.text = "Recent Activity"
         label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 1
         label.font = UIFont.primaryFont(size: 20)
-        
+
         return label
     }()
-    
+
     var activityTableView: UITableView = {
         var tableView = UITableView(frame: .zero)
-        
+
         tableView.register(CollectionActivityTableViewCell.self, forCellReuseIdentifier: CollectionActivityTableViewCell.ReuseIdentifier)
         tableView.allowsMultipleSelectionDuringEditing = false
         tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
         tableView.showsVerticalScrollIndicator = false
-        
+
         return tableView
     }()
-    
+
     var listingsScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +64,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
-    
+
     init(collectionSymbol: String, collectionName: String) {
         self.collectionSymbol = collectionSymbol
         self.collectionName = collectionName
@@ -73,30 +72,31 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         collectionDetailViewModel.fetchCollectionDetailsInfo(collectionSymbol: collectionSymbol)
         _ = watchlistViewModel.isInWatchlist(collectionSymbol: collectionSymbol)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
-    
+
     private func setupUI() {
         view.backgroundColor = ColorManager.backgroundColor
         view.addSubview(activitySectionLabel)
         view.addSubview(activityTableView)
-        
-        self.navigationController?.navigationBar.backItem?.title = ""
+
+        navigationController?.navigationBar.backItem?.title = ""
         setupNavigationTitle()
         // Create UIView that displays basic collection statistics
         setupStatisticsView()
-        
-        self.buyCollectionButton = setupBuyCollectionButton()
-        
+
+        buyCollectionButton = setupBuyCollectionButton()
+
         // Create button that toggles adding a collection to watchlist
-        self.watchlistButton = setupWatchlistButton()
+        watchlistButton = setupWatchlistButton()
 
         // Construct stack view with live listings once data fetched
         collectionDetailViewModel.listings.subscribe { listingEvent in
@@ -105,64 +105,64 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
             }
             self.fillListingStackView(with: elements)
         }.disposed(by: disposeBag)
-        
-        bindTableData()
 
+        bindTableData()
     }
-    
+
     private func bindTableData() {
         // Reactively manage watch list items based on WatchlistListViewModel
         collectionDetailViewModel.activities.bind(
             to: activityTableView.rx.items(
                 cellIdentifier: CollectionActivityTableViewCell.ReuseIdentifier,
-                cellType: CollectionActivityTableViewCell.self)
-        ) { row, model, cell in
+                cellType: CollectionActivityTableViewCell.self
+            )
+        ) { _, model, cell in
             cell.updateData(with: model)
         }.disposed(by: disposeBag)
     }
-    
+
     @objc
     private func toggleWatchlistStatus() {
-        watchlistViewModel.toggleCollectionInWatchlist(collectionSymbol: self.collectionSymbol)
+        watchlistViewModel.toggleCollectionInWatchlist(collectionSymbol: collectionSymbol)
     }
-    
+
     private func setupStatisticsView() {
         view.addSubview(statisticsView)
         statisticsView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 80, enableInsets: false)
-        
+
         // Create information labels and provide default values
         let floorValueLabel = UILabel()
         floorValueLabel.textColor = .white
-        
+
         let listedCountValueLabel = UILabel()
         listedCountValueLabel.textColor = .white
-        
+
         let floorValueCategoryLabel = UILabel()
         floorValueCategoryLabel.textColor = .white
-        
+
         let listedCountCategoryLabel = UILabel()
         listedCountCategoryLabel.textColor = .white
-        
+
         DispatchQueue.main.async {
             floorValueLabel.text = "0◎"
             floorValueLabel.font = .primaryFont(size: 14)
-            
+
             listedCountValueLabel.text = "0"
             listedCountValueLabel.font = .primaryFont(size: 14)
-            
+
             floorValueCategoryLabel.text = "Floor Price"
             floorValueCategoryLabel.font = .primaryFont(size: 14)
-            
+
             listedCountCategoryLabel.text = "Number of NFT's Listed"
             listedCountCategoryLabel.font = .primaryFont(size: 14)
         }
-        
+
         // Add binding to update statistics whenever model values change
         collectionDetailViewModel.stats.bind(onNext: { stats in
             guard let stats = stats else {
                 return
             }
-            let floorPriceString = String(format:"%.2f◎", stats.floorPrice)
+            let floorPriceString = String(format: "%.2f◎", stats.floorPrice)
             let listedCountString = String(stats.listedCount)
             DispatchQueue.main.async {
                 floorValueLabel.text = floorPriceString
@@ -170,13 +170,13 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
             }
 
         }).disposed(by: disposeBag)
-        
+
         let floorValueStackView = UIStackView(arrangedSubviews: [floorValueLabel, floorValueCategoryLabel])
         floorValueStackView.axis = .vertical
         floorValueStackView.alignment = .center
         floorValueStackView.spacing = 10
         statisticsView.addSubview(floorValueStackView)
-        
+
         floorValueStackView.anchor(top: nil, left: statisticsView.leftAnchor, bottom: nil, right: statisticsView.centerXAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
         floorValueStackView.centerYAnchor.constraint(equalTo: statisticsView.centerYAnchor).isActive = true
 
@@ -185,11 +185,11 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         listedCountStackView.alignment = .center
         listedCountStackView.spacing = 10
         statisticsView.addSubview(listedCountStackView)
-        
+
         listedCountStackView.anchor(top: nil, left: statisticsView.centerXAnchor, bottom: nil, right: statisticsView.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
         listedCountStackView.centerYAnchor.constraint(equalTo: statisticsView.centerYAnchor).isActive = true
     }
-    
+
     private func setupWatchlistButton() -> UIButton {
         let watchlistActionButton = UIButton()
         watchlistActionButton.layer.cornerRadius = Constants.UI.Button.CornerRadius
@@ -198,18 +198,18 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         watchlistActionButton.titleLabel?.font = .primaryFont(size: 16)
         watchlistActionButton.titleLabel?.textAlignment = .center
         view.addSubview(watchlistActionButton)
-        
+
         // Apply constraints to button
         watchlistActionButton.anchor(top: statisticsView.bottomAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 10, paddingRight: 10, width: 100, height: 40, enableInsets: false)
-        
+
         watchlistViewModel.isOnWatchlist.map { $0 ? "Unfollow" : "Follow" }.bind(to: watchlistActionButton.rx.title()).disposed(by: disposeBag)
         _ = watchlistViewModel.isInWatchlist(collectionSymbol: collectionSymbol)
         watchlistActionButton.isUserInteractionEnabled = true
         watchlistActionButton.addTarget(self, action: #selector(toggleWatchlistStatus), for: .touchUpInside)
-        
+
         return watchlistActionButton
     }
-    
+
     private func setupBuyCollectionButton() -> UIButton {
         let buyOnMagicEdenButton = UIButton()
         buyOnMagicEdenButton.layer.cornerRadius = Constants.UI.Button.CornerRadius
@@ -219,16 +219,16 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         buyOnMagicEdenButton.titleLabel?.textAlignment = .center
         buyOnMagicEdenButton.setTitle("Buy on MagicEden", for: .normal)
         view.addSubview(buyOnMagicEdenButton)
-        
+
         // Apply constraints to button
         buyOnMagicEdenButton.anchor(top: statisticsView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 150, height: 40, enableInsets: false)
 
         buyOnMagicEdenButton.isUserInteractionEnabled = true
         buyOnMagicEdenButton.addTarget(self, action: #selector(openMagicEdenCollectionSafariPage), for: .touchUpInside)
-        
+
         return buyOnMagicEdenButton
     }
-    
+
     // Creates scroll view containing current listings (fetched from Magiceden)
     private func fillListingStackView(with collectionListings: [CollectionListing]) {
         DispatchQueue.main.async {
@@ -237,7 +237,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
             self.listingsScrollView.heightAnchor.constraint(equalToConstant: 250).isActive = true
             self.listingsScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 12.5).isActive = true
             self.listingsScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -12.5).isActive = true
-            
+
             // Stack view that contains listing views
             let stackView = UIStackView()
             stackView.axis = .horizontal
@@ -253,32 +253,31 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
             stackView.trailingAnchor.constraint(equalTo: self.listingsScrollView.trailingAnchor).isActive = true
             stackView.bottomAnchor.constraint(equalTo: self.listingsScrollView.bottomAnchor).isActive = true
             stackView.heightAnchor.constraint(equalTo: self.listingsScrollView.heightAnchor).isActive = true
-        
+
             for collectionListing in collectionListings {
                 let listingView = ListingView(listing: collectionListing, frame: .init(x: 0, y: 0, width: 400, height: stackView.bounds.height))
                 listingView.translatesAutoresizingMaskIntoConstraints = false
-                
-                let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.openMagicEdenListingSafariPage(_:)))
+
+                let gesture = UITapGestureRecognizer(target: self, action: #selector(self.openMagicEdenListingSafariPage(_:)))
                 listingView.addGestureRecognizer(gesture)
                 stackView.addArrangedSubview(listingView)
             }
-            
+
             self.activitySectionLabel.anchor(top: stackView.bottomAnchor, left: self.view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: self.view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
-            
+
             self.activityTableView.anchor(top: self.activitySectionLabel.bottomAnchor, left: self.view.safeAreaLayoutGuide.leftAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, right: self.view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
         }
-
     }
-    
+
     private func setupNavigationTitle() {
         let label = UILabel()
         label.textColor = .white
         label.text = collectionName
         label.textAlignment = .center
-        self.navigationItem.titleView = label
+        navigationItem.titleView = label
         label.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     // Action for when a ListingView is pressed, opens SFSafariViewController for listing
     @objc
     func openMagicEdenListingSafariPage(_ sender: UITapGestureRecognizer? = nil) {
@@ -286,7 +285,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
             return
         }
         let listingUrlString = Constants.getMagicEdenListingUrl(with: listingView.listing.tokenMint)
-        
+
         if let url = listingUrlString {
             let config = SFSafariViewController.Configuration()
             config.entersReaderIfAvailable = true
@@ -295,9 +294,9 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
             present(vc, animated: true)
         }
     }
-    
+
     @objc
-    func openMagicEdenCollectionSafariPage(_ sender: UITapGestureRecognizer? = nil) {
+    func openMagicEdenCollectionSafariPage(_: UITapGestureRecognizer? = nil) {
         if let url = Constants.getMagicEdenCollectionUrl(with: collectionSymbol) {
             let config = SFSafariViewController.Configuration()
             config.entersReaderIfAvailable = true
@@ -309,7 +308,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
 }
 
 extension CollectionDetailViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 65
     }
 }

@@ -11,7 +11,7 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
     static let ReuseIdentifier = "PortfolioCollectionTableViewCell"
 
     var portfolioCollectionViewModel: PortfolioCollectionViewModel?
-    
+
     var collectionNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -19,33 +19,34 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 15)
         label.sizeToFit()
-        
+
         return label
     }()
-    
+
     var floorPriceLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 13)
-        
+
         return label
     }()
+
     var countLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 13)
-        
+
         return label
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     func updateData(with portfolioCollectionViewModel: PortfolioCollectionViewModel) {
         self.portfolioCollectionViewModel = portfolioCollectionViewModel
         collectionNameLabel.text = portfolioCollectionViewModel.getCollectionNameString()
@@ -53,6 +54,7 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
         floorPriceLabel.text = portfolioCollectionViewModel.getFloorPriceString()
         setupUI()
     }
+
     private func setupUI() {
         backgroundColor = ColorManager.primaryCellColor
 
@@ -69,15 +71,16 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
         addSubview(stackView)
         stackView.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 5, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
     }

@@ -8,36 +8,34 @@
 import UIKit
 
 class MainTabBarViewController: UITabBarController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabBarViewControllers()
     }
-    
+
     private func setupTabBarViewControllers() {
-        
         let searchVC = UINavigationController(rootViewController: SearchViewController())
         searchVC.tabBarItem.image = UIImage(systemName: "magnifyingglass")
         searchVC.tabBarItem.title = "Search"
         searchVC.navigationBar.tintColor = .white
-        
+
         let walletTrackerVC = UINavigationController(rootViewController: WalletTrackerViewController())
         walletTrackerVC.tabBarItem.image = UIImage(systemName: "wallet.pass")
         walletTrackerVC.tabBarItem.title = "Portfolio"
         walletTrackerVC.navigationBar.tintColor = .white
-        
+
         let watchlistVC = UINavigationController(rootViewController: WatchlistViewController())
         watchlistVC.tabBarItem.image = UIImage(systemName: "bookmark")
         watchlistVC.tabBarItem.title = "Watchlist"
         watchlistVC.navigationBar.tintColor = .white
-        
+
         tabBar.barTintColor = .black
         tabBar.tintColor = .white
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.primaryFont(size: 12)], for: .normal)
 
         setViewControllers([searchVC, walletTrackerVC, watchlistVC], animated: true)
     }
-    
+
     private func setupNavigationTitle(with titleName: String) -> UILabel {
         let label = UILabel()
         label.text = titleName

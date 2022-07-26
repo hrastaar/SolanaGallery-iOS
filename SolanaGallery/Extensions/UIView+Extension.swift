@@ -8,30 +8,29 @@
 import UIKit
 
 extension UIView {
- 
-    func anchor (top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat, enableInsets: Bool) {
+    func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat, enableInsets: Bool) {
         var topInset = CGFloat(0)
         var bottomInset = CGFloat(0)
 
         if #available(iOS 11, *), enableInsets {
             let insets = self.safeAreaInsets
-                topInset = insets.top
-                bottomInset = insets.bottom
+            topInset = insets.top
+            bottomInset = insets.bottom
         }
 
         translatesAutoresizingMaskIntoConstraints = false
 
         if let top = top {
-            self.topAnchor.constraint(equalTo: top, constant: paddingTop+topInset).isActive = true
+            topAnchor.constraint(equalTo: top, constant: paddingTop + topInset).isActive = true
         }
         if let left = left {
-            self.leftAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
+            leftAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
         }
         if let right = right {
             rightAnchor.constraint(equalTo: right, constant: -paddingRight).isActive = true
         }
         if let bottom = bottom {
-            bottomAnchor.constraint(equalTo: bottom, constant: -paddingBottom-bottomInset).isActive = true
+            bottomAnchor.constraint(equalTo: bottom, constant: -paddingBottom - bottomInset).isActive = true
         }
         if height != 0 {
             heightAnchor.constraint(equalToConstant: height).isActive = true
@@ -47,9 +46,9 @@ extension UIImage {
         // Determine the scale factor that preserves aspect ratio
         let widthRatio = targetSize.width / size.width
         let heightRatio = targetSize.height / size.height
-        
+
         let scaleFactor = min(widthRatio, heightRatio)
-        
+
         // Compute the new image size that preserves aspect ratio
         let scaledImageSize = CGSize(
             width: size.width * scaleFactor,
@@ -67,7 +66,7 @@ extension UIImage {
                 size: scaledImageSize
             ))
         }
-        
+
         return scaledImage
     }
 }

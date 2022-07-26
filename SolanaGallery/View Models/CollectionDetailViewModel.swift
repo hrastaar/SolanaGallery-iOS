@@ -5,16 +5,16 @@
 //  Created by Rastaar Haghi on 5/23/22.
 //
 
-import UIKit
 import RxSwift
+import UIKit
 
 class CollectionDetailViewModel {
     let stats = PublishSubject<CollectionStats?>()
     let listings = PublishSubject<[CollectionListing]>()
     let activities = PublishSubject<[CollectionActivityEvent]>()
-    
+
     let SolanaGalleryApi = SolanaGalleryAPI.sharedInstance
-            
+
     func fetchCollectionDetailsInfo(collectionSymbol: String) {
         SolanaGalleryApi.fetchCollectionStats(collectionSymbol: collectionSymbol) { stats, err in
             if let err = err {
@@ -24,7 +24,7 @@ class CollectionDetailViewModel {
             }
             self.stats.onNext(stats)
         }
-        
+
         SolanaGalleryApi.fetchCollectionListings(collectionSymbol: collectionSymbol) { listings, err in
             if let err = err {
                 print(err.localizedDescription)
@@ -36,7 +36,7 @@ class CollectionDetailViewModel {
             }
             self.listings.onNext(listings)
         }
-        
+
         SolanaGalleryApi.fetchCollectionActivities(collectionSymbol: collectionSymbol, numberOfActivities: 20) { activities, err in
             if let err = err {
                 print(err.localizedDescription)

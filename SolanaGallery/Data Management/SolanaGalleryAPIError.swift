@@ -11,7 +11,7 @@ class SolanaGalleryAPIError: Error {
     let error: Error?
     let message: String
     let errorType: SolanaGalleryAPIErrorType
-    
+
     init(error: Error? = nil, message: String = "SolanaGalleryAPI Error occurred", errorType: SolanaGalleryAPIErrorType = .unknown) {
         self.error = error
         self.message = message

@@ -8,22 +8,17 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
 
-
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-                window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-                window?.windowScene = windowScene
-                window?.rootViewController = MainTabBarViewController()
-        self.window?.makeKeyAndVisible()
+        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        window?.windowScene = windowScene
+        window?.rootViewController = MainTabBarViewController()
+        window?.makeKeyAndVisible()
     }
 
-    func sceneDidEnterBackground(_ scene: UIScene) {
+    func sceneDidEnterBackground(_: UIScene) {
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
-
-
 }
-

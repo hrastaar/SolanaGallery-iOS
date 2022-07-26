@@ -5,14 +5,14 @@
 //  Created by Rastaar Haghi on 5/27/22.
 //
 
-import UIKit
 import SkeletonView
+import UIKit
 
 class CollectionListingTableViewCell: UITableViewCell {
     static let ReuseIdentifier = "CollectionListingTableViewCell"
-    
+
     var collectionListing: CollectionListing?
-    
+
     var collectionNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -21,23 +21,23 @@ class CollectionListingTableViewCell: UITableViewCell {
         label.font = UIFont.primaryFont(size: 15)
         label.sizeToFit()
         label.isSkeletonable = true
-        
+
         return label
     }()
-    
+
     var collectionImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.isSkeletonable = true
         imageView.skeletonCornerRadius = 10
-        
+
         return imageView
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     func updateData(with collectionListing: CollectionListing) {
         self.collectionListing = collectionListing
         collectionNameLabel.text = self.collectionListing?.tokenMint
@@ -56,12 +56,11 @@ class CollectionListingTableViewCell: UITableViewCell {
                         self.collectionNameLabel.hideSkeleton()
                     }
                 }
-
             }
         }
         setupUI()
     }
-    
+
     private func setupUI() {
         backgroundColor = ColorManager.primaryCellColor
 
@@ -79,15 +78,16 @@ class CollectionListingTableViewCell: UITableViewCell {
 
         collectionNameLabel.anchor(top: stackView.topAnchor, left: collectionImageView.rightAnchor, bottom: stackView.bottomAnchor, right: stackView.rightAnchor, paddingTop: 5, paddingLeft: 10, paddingBottom: 5, paddingRight: 0, width: 0, height: 0, enableInsets: false)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
     }
@@ -95,7 +95,7 @@ class CollectionListingTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     private func setupSkeletonViews() {
         let animation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .topLeftBottomRight)
         collectionImageView.showAnimatedGradientSkeleton(animation: animation)

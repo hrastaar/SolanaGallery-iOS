@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(WatchlistItem)
-public class WatchlistItem: NSManagedObject {
-
-}
+public class WatchlistItem: NSManagedObject {}

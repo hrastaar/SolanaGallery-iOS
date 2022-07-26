@@ -15,8 +15,8 @@ struct CollectionListing: Decodable {
     let moonrank: Int?
     let howrare: Int?
     let collectionSize: Int?
-    
-    private enum CodingKeys : String, CodingKey {
+
+    private enum CodingKeys: String, CodingKey {
         case collectionSize = "expectedPieces",
              tokenMint,
              seller,
@@ -25,11 +25,11 @@ struct CollectionListing: Decodable {
              moonrank,
              howrare
     }
-    
+
     func getMagicedenListingUrlString() -> String {
         return "https://magiceden.io/item-details/" + tokenMint
     }
-    
+
     func getShortenedTokenMintString() -> String {
         if tokenMint.count > 8 {
             return tokenMint.prefix(4) + "..." + tokenMint.suffix(4)
@@ -37,7 +37,7 @@ struct CollectionListing: Decodable {
             return tokenMint
         }
     }
-    
+
     func getShortenedSellerAddressString() -> String {
         if seller.count > 8 {
             return seller.prefix(4) + "..." + seller.suffix(4)

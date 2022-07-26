@@ -5,14 +5,14 @@
 //  Created by Rastaar Haghi on 5/17/22.
 //
 
-import UIKit
 import SkeletonView
+import UIKit
 
 class CollectionSearchResultTableViewCell: UITableViewCell {
     static let ReuseIdentifier = "CollectionSearchResultTableViewCell"
-    
+
     var searchResult: CollectionSearchResult?
-    
+
     var collectionNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -21,23 +21,23 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
         label.font = UIFont.primaryFont(size: 15)
         label.sizeToFit()
         label.isSkeletonable = true
-        
+
         return label
     }()
-    
+
     var collectionImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.isSkeletonable = true
         imageView.skeletonCornerRadius = 10
-        
+
         return imageView
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     func updateData(with searchResult: CollectionSearchResult) {
         self.searchResult = searchResult
         collectionNameLabel.text = self.searchResult?.name
@@ -56,25 +56,24 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
                         self.collectionNameLabel.hideSkeleton()
                     }
                 }
-
             }
         }
         setupUI()
     }
-    
+
     private func setupUI() {
         backgroundColor = ColorManager.primaryCellColor
 
         addSubview(collectionNameLabel)
         addSubview(collectionImageView)
-        
+
         setupSkeletonViews()
-        
+
         let stackView = UIStackView(arrangedSubviews: [collectionImageView, collectionNameLabel])
         stackView.alignment = .leading
         stackView.axis = .horizontal
         stackView.spacing = 20
-        
+
         addSubview(stackView)
         stackView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 5, width: 0, height: 65, enableInsets: false)
         collectionImageView.anchor(top: nil, left: stackView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 50, height: 50, enableInsets: false)
@@ -82,15 +81,16 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
 
         collectionNameLabel.anchor(top: stackView.topAnchor, left: collectionImageView.rightAnchor, bottom: stackView.bottomAnchor, right: stackView.rightAnchor, paddingTop: 5, paddingLeft: 10, paddingBottom: 5, paddingRight: 0, width: 0, height: 0, enableInsets: false)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
     }
@@ -98,7 +98,7 @@ class CollectionSearchResultTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     private func setupSkeletonViews() {
         let animation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .topLeftBottomRight)
         collectionImageView.showAnimatedGradientSkeleton(animation: animation)

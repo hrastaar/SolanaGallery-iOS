@@ -6,19 +6,15 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-
-extension WatchlistItem {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<WatchlistItem> {
+public extension WatchlistItem {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<WatchlistItem> {
         return NSFetchRequest<WatchlistItem>(entityName: "WatchlistItem")
     }
 
-    @NSManaged public var collectionName: String?
+    @NSManaged var collectionName: String?
 }
 
-extension WatchlistItem : Identifiable {
-
-}
+extension WatchlistItem: Identifiable {}

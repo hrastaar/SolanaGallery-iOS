@@ -14,26 +14,26 @@ struct CollectionActivityEvent: Decodable {
     let tokenMint: String
     let price: Double
     let blockTime: Int64
-    
-    var priceString : String {
+
+    var priceString: String {
         switch type {
-            case .bid:
-                return "Someone bid " + String(format: "%.2f◎", self.price)
-            case .cancelBid:
-                return "Someone cancelled a bid for " + String(format: "%.2f◎", self.price)
-            case .list:
-                return "An NFT owner listed their item for " + String(format: "%.2f◎", self.price)
-            case .delist:
-                return "An NFT owner delisted their item"
-            case .buyNow:
-                return "Someone purchased an NFT for " + String(format: "%.2f◎", self.price)
-            default:
-               return "N/A"
+        case .bid:
+            return "Someone bid " + String(format: "%.2f◎", price)
+        case .cancelBid:
+            return "Someone cancelled a bid for " + String(format: "%.2f◎", price)
+        case .list:
+            return "An NFT owner listed their item for " + String(format: "%.2f◎", price)
+        case .delist:
+            return "An NFT owner delisted their item"
+        case .buyNow:
+            return "Someone purchased an NFT for " + String(format: "%.2f◎", price)
+        default:
+            return "N/A"
         }
     }
-    
+
     var dateString: String {
-        let date = Date(timeIntervalSince1970: TimeInterval(self.blockTime))
+        let date = Date(timeIntervalSince1970: TimeInterval(blockTime))
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy HH:mm"
         formatter.timeZone = TimeZone(abbreviation: "PST")
@@ -48,25 +48,25 @@ enum CollectionActivityType: Decodable, CustomStringConvertible {
         let container = try decoder.singleValueContainer()
         let status = try? container.decode(String.self)
         switch status {
-              case "bid": self = .bid
-              case "cancelBid": self = .cancelBid
-              case "list": self = .list
-              case "delist": self = .delist
-              case "buyNow": self = .buyNow
-              default:
-                 self = .unknown(value: status ?? "unknown")
-          }
+        case "bid": self = .bid
+        case "cancelBid": self = .cancelBid
+        case "list": self = .list
+        case "delist": self = .delist
+        case "buyNow": self = .buyNow
+        default:
+            self = .unknown(value: status ?? "unknown")
+        }
     }
-    
-    var description : String {
+
+    var description: String {
         switch self {
-            // Use Internationalization, as appropriate.
-            case .bid: return "Bid"
-            case .cancelBid: return "Bid Cancelled"
-            case .list: return "Item Listed"
-            case .delist: return "Item Delisted"
-            case .buyNow: return "Buy Now"
-            default: return "Unknown"
+        // Use Internationalization, as appropriate.
+        case .bid: return "Bid"
+        case .cancelBid: return "Bid Cancelled"
+        case .list: return "Item Listed"
+        case .delist: return "Item Delisted"
+        case .buyNow: return "Buy Now"
+        default: return "Unknown"
         }
     }
 }

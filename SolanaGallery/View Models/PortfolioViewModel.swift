@@ -10,9 +10,9 @@ import RxSwift
 
 class PortfolioViewModel {
     var collections = PublishSubject<[PortfolioCollectionViewModel]>()
-    
+
     private let SolanaGalleryApiInstance = SolanaGalleryAPI.sharedInstance
-    
+
     func fetchWalletPortfolioData(wallet: String) {
         SolanaGalleryApiInstance.getNftCollectionCounts(wallet: wallet) { counts, err in
             if let err = err {
@@ -25,9 +25,9 @@ class PortfolioViewModel {
                 self.collections.onNext(collectionDataArr)
                 return
             }
-            
+
             let dispatchGroup = DispatchGroup()
-            
+
             for collectionCount in collectionCounts {
                 dispatchGroup.enter()
                 self.SolanaGalleryApiInstance.fetchCollectionStats(collectionSymbol: collectionCount.collection) { stats, err in

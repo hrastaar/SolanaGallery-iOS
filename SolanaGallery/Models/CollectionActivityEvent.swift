@@ -20,7 +20,7 @@ struct CollectionActivityEvent: Decodable {
         case .bid:
             return "Someone bid " + String(format: "%.2f◎", price)
         case .cancelBid:
-            return "Someone cancelled a bid for " + String(format: "%.2f◎", price)
+            return "Someone cancelled their bid"
         case .list:
             return "An NFT owner listed their item for " + String(format: "%.2f◎", price)
         case .delist:

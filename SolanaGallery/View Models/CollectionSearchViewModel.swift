@@ -20,7 +20,8 @@ class CollectionSearchViewModel {
             guard let searchResults = searchResults else {
                 return
             }
-            self.collectionSearchResults.onNext(searchResults)
+            let filteredOutSearchResults = Array(Set(searchResults))
+            self.collectionSearchResults.onNext(filteredOutSearchResults)
         }
     }
 

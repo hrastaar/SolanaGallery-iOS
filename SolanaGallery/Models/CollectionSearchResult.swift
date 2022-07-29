@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CollectionSearchResult: Decodable {
+struct CollectionSearchResult: Decodable, Hashable {
     let symbol: String
     let name: String
     let image: String

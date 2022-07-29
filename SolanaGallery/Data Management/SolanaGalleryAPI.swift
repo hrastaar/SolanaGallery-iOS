@@ -116,7 +116,6 @@ class SolanaGalleryAPI {
                 completion(nil, SolanaGalleryAPIError(errorType: .responseParsing))
                 return
             }
-            print(collectionActivities)
             completion(collectionActivities, nil)
         }
         task.resume()

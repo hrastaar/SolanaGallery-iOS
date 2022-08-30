@@ -8,27 +8,25 @@
 import Foundation
 
 struct Constants {
-    enum UI {
-        enum TextField {
-            static let CornerRadius = 20.0
-        }
+    enum TextField {
+        static let CornerRadius = 20.0
+    }
 
-        enum Button {
-            static let CornerRadius = 20.0
-        }
+    enum Button {
+        static let CornerRadius = 20.0
+    }
 
-        enum TableView {
-            static let CornerRadius = 5.0
-        }
+    enum TableView {
+        static let CornerRadius = 5.0
     }
 
     static func getMagicEdenListingUrl(with tokenMint: String) -> URL? {
-        let urlString = SolanaGalleryAPI.MagicedenListingUrlPrefix + tokenMint
+        let urlString = SolanaGalleryAPI.magicedenListingUrlPrefix + tokenMint
         return URL(string: urlString)
     }
 
     static func getMagicEdenCollectionUrl(with collectionSymbol: String) -> URL? {
-        let urlString = SolanaGalleryAPI.MagicedenCollectionUrlPrefix + collectionSymbol
+        let urlString = SolanaGalleryAPI.magicedenCollectionUrlPrefix + collectionSymbol
         return URL(string: urlString)
     }
 }

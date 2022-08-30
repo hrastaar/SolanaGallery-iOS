@@ -22,7 +22,7 @@ class WalletTrackerViewController: UIViewController {
         textField.textColor = .white
         textField.placeholder = "Enter a valid Solana Wallet Address"
         textField.backgroundColor = ColorManager.primaryCellColor
-        textField.layer.cornerRadius = Constants.UI.TextField.CornerRadius
+        textField.layer.cornerRadius = Constants.TextField.CornerRadius
         textField.adjustsFontSizeToFitWidth = true
         textField.font = UIFont.primaryFont(size: 15)
         textField.autocapitalizationType = .none
@@ -37,7 +37,7 @@ class WalletTrackerViewController: UIViewController {
         button.tintColor = .white
         button.setTitle("Search", for: .normal)
         button.backgroundColor = ColorManager.primaryCellColor
-        button.layer.cornerRadius = Constants.UI.Button.CornerRadius
+        button.layer.cornerRadius = Constants.Button.CornerRadius
         button.isEnabled = false
         button.alpha = 0.1
         button.titleLabel?.font = UIFont.primaryFont(size: 15)
@@ -61,9 +61,12 @@ class WalletTrackerViewController: UIViewController {
     var tableView: UITableView = {
         var tableView = UITableView(frame: .zero)
 
-        tableView.register(PortfolioCollectionTableViewCell.self, forCellReuseIdentifier: PortfolioCollectionTableViewCell.ReuseIdentifier)
+        tableView.register(
+            PortfolioCollectionTableViewCell.self,
+            forCellReuseIdentifier: PortfolioCollectionTableViewCell.ReuseIdentifier
+        )
         tableView.alpha = 0.0
-        tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
+        tableView.layer.cornerRadius = Constants.TableView.CornerRadius
         tableView.allowsMultipleSelectionDuringEditing = false
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
@@ -143,7 +146,10 @@ extension WalletTrackerViewController {
                     return
                 }
 
-                let detailVC = CollectionDetailViewController(collectionSymbol: selectedViewModel.collectionStats.symbol, collectionName: selectedViewModel.getCollectionNameString())
+                let detailVC = CollectionDetailViewController(
+                    collectionSymbol: selectedViewModel.collectionStats.symbol,
+                    collectionName: selectedViewModel.getCollectionNameString()
+                )
                 self.navigationController?.pushViewController(detailVC, animated: true)
 
                 self.tableView.deselectRow(at: $0, animated: true)
@@ -179,11 +185,47 @@ extension WalletTrackerViewController {
         let stackView = UIStackView(arrangedSubviews: [walletSearchTextField, searchButton])
         stackView.axis = .horizontal
         view.addSubview(stackView)
-        stackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 25, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 50, enableInsets: false)
+        stackView.anchor(
+            top: view.safeAreaLayoutGuide.topAnchor,
+            left: view.safeAreaLayoutGuide.leftAnchor,
+            bottom: nil,
+            right: view.safeAreaLayoutGuide.rightAnchor,
+            paddingTop: 25,
+            paddingLeft: 10,
+            paddingBottom: 0,
+            paddingRight: 10,
+            width: 0,
+            height: 50,
+            enableInsets: false
+        )
 
-        walletSearchTextField.anchor(top: stackView.topAnchor, left: stackView.leftAnchor, bottom: stackView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.bounds.width * 0.65, height: 50, enableInsets: false)
+        walletSearchTextField.anchor(
+            top: stackView.topAnchor,
+            left: stackView.leftAnchor,
+            bottom: stackView.bottomAnchor,
+            right: nil,
+            paddingTop: 0,
+            paddingLeft: 0,
+            paddingBottom: 0,
+            paddingRight: 0,
+            width: view.bounds.width * 0.65,
+            height: 50,
+            enableInsets: false
+        )
 
-        searchButton.anchor(top: stackView.topAnchor, left: walletSearchTextField.rightAnchor, bottom: stackView.bottomAnchor, right: stackView.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 50, enableInsets: false)
+        searchButton.anchor(
+            top: stackView.topAnchor,
+            left: walletSearchTextField.rightAnchor,
+            bottom: stackView.bottomAnchor,
+            right: stackView.rightAnchor,
+            paddingTop: 0,
+            paddingLeft: 20,
+            paddingBottom: 0,
+            paddingRight: 0,
+            width: 0,
+            height: 50,
+            enableInsets: false
+        )
 
         // Configure Portfolio Value Label below search stack view
         portfolioTotalValueLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -192,7 +234,19 @@ extension WalletTrackerViewController {
         portfolioTotalValueLabel.heightAnchor.constraint(equalToConstant: 35).isActive = true
 
         // Configure tableview below portfolio label
-        tableView.anchor(top: portfolioTotalValueLabel.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        tableView.anchor(
+            top: portfolioTotalValueLabel.bottomAnchor,
+            left: view.safeAreaLayoutGuide.leftAnchor,
+            bottom: view.safeAreaLayoutGuide.bottomAnchor,
+            right: view.safeAreaLayoutGuide.rightAnchor,
+            paddingTop: 10,
+            paddingLeft: 10,
+            paddingBottom: 10,
+            paddingRight: 10,
+            width: 0,
+            height: 0,
+            enableInsets: false
+        )
     }
 
     private func setupNavigationTitle() {

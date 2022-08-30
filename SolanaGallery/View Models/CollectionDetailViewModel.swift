@@ -13,10 +13,10 @@ class CollectionDetailViewModel {
     let listings = PublishSubject<[CollectionListing]>()
     let activities = PublishSubject<[CollectionActivityEvent]>()
 
-    let SolanaGalleryApi = SolanaGalleryAPI.sharedInstance
+    let solanaGalleryApi = SolanaGalleryAPI.sharedInstance
 
     func fetchCollectionDetailsInfo(collectionSymbol: String) {
-        SolanaGalleryApi.fetchCollectionStats(collectionSymbol: collectionSymbol) { stats, err in
+        solanaGalleryApi.fetchCollectionStats(collectionSymbol: collectionSymbol) { stats, err in
             if let err = err {
                 print("CollectionDetailsViewModel failed to fetch collection stats")
                 print(err.localizedDescription)
@@ -25,7 +25,7 @@ class CollectionDetailViewModel {
             self.stats.onNext(stats)
         }
 
-        SolanaGalleryApi.fetchCollectionListings(collectionSymbol: collectionSymbol) { listings, err in
+        solanaGalleryApi.fetchCollectionListings(collectionSymbol: collectionSymbol) { listings, err in
             if let err = err {
                 print(err.localizedDescription)
                 self.listings.onNext([])
@@ -37,7 +37,8 @@ class CollectionDetailViewModel {
             self.listings.onNext(listings)
         }
 
-        SolanaGalleryApi.fetchCollectionActivities(collectionSymbol: collectionSymbol, numberOfActivities: 20) { activities, err in
+        solanaGalleryApi.fetchCollectionActivities(collectionSymbol: collectionSymbol,
+                                                   numberOfActivities: 20) { activities, err in
             if let err = err {
                 print(err.localizedDescription)
                 self.activities.onNext([])

@@ -22,7 +22,7 @@ class WatchlistViewController: UIViewController {
 
         tableView.register(WatchlistTableViewCell.self, forCellReuseIdentifier: WatchlistTableViewCell.ReuseIdentifier)
         tableView.allowsMultipleSelectionDuringEditing = false
-        tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
+        tableView.layer.cornerRadius = Constants.TableView.CornerRadius
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
         tableView.showsVerticalScrollIndicator = false
@@ -33,16 +33,16 @@ class WatchlistViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Configure UI elements
+        // 1. Configure UI elements
         setupUI()
 
-        // Configure tableview data source
+        // 2. Configure tableview data source
         bindTableData()
 
-        // Setup refresh control
+        // 3. Setup refresh control
         initializeTableViewRefreshControl()
 
-        // Fetch watchlist collection data
+        // 4. Fetch watchlist collection data
         watchlistListViewModel.fetchWatchlistData()
     }
 }
@@ -71,7 +71,10 @@ extension WatchlistViewController {
                     return
                 }
 
-                let detailVC = CollectionDetailViewController(collectionSymbol: watchlistViewModel.collectionStats.symbol, collectionName: watchlistViewModel.getCollectionNameString())
+                let detailVC = CollectionDetailViewController(
+                    collectionSymbol: watchlistViewModel.collectionStats.symbol,
+                    collectionName: watchlistViewModel.getCollectionNameString()
+                )
 
                 self.navigationController?.pushViewController(detailVC, animated: true)
 
@@ -88,9 +91,29 @@ extension WatchlistViewController {
         setupNavigationTitle()
 
         view.addSubview(tableView)
-        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        tableView.anchor(
+            top: view.safeAreaLayoutGuide.topAnchor,
+            left: view.safeAreaLayoutGuide.leftAnchor,
+            bottom: view.safeAreaLayoutGuide.bottomAnchor,
+            right: view.safeAreaLayoutGuide.rightAnchor,
+            paddingTop: 10,
+            paddingLeft: 10,
+            paddingBottom: 10,
+            paddingRight: 10,
+            width: 0,
+            height: 0,
+            enableInsets: false
+        )
 
-        loadingView = NVActivityIndicatorView(frame: .init(x: view.bounds.width / 2.0 - 50, y: view.bounds.height / 2.0 - 50, width: 100.0, height: 100.0), type: .ballClipRotateMultiple, color: UIColor().getSolanaPurpleColor(), padding: 0)
+        loadingView = NVActivityIndicatorView(
+            frame: .init(x: view.bounds.width / 2.0 - 50,
+                         y: view.bounds.height / 2.0 - 50,
+                         width: 100.0,
+                         height: 100.0),
+            type: .ballClipRotateMultiple,
+            color: UIColor().getSolanaPurpleColor(),
+            padding: 0
+        )
         loadingView?.layer.zPosition = .greatestFiniteMagnitude
 
         guard let loadingView = loadingView else {

@@ -44,24 +44,72 @@ class ListingView: UIView {
             return
         }
         addSubview(rarityStackView)
-        rarityStackView.anchor(top: centerYAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 2.5, paddingBottom: 0, paddingRight: 2.5, width: 0, height: 40, enableInsets: false)
+        rarityStackView.anchor(
+            top: centerYAnchor,
+            left: leftAnchor,
+            bottom: nil,
+            right: rightAnchor,
+            paddingTop: 0,
+            paddingLeft: 2.5,
+            paddingBottom: 0,
+            paddingRight: 2.5,
+            width: 0,
+            height: 40,
+            enableInsets: false
+        )
 
         // Create price stack view
         let priceStackView = createPriceStackView()
         addSubview(priceStackView)
-        priceStackView.anchor(top: rarityStackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 0, paddingRight: 5, width: 0, height: 20, enableInsets: false)
+        priceStackView.anchor(
+            top: rarityStackView.bottomAnchor,
+            left: leftAnchor,
+            bottom: nil,
+            right: rightAnchor,
+            paddingTop: 5,
+            paddingLeft: 5,
+            paddingBottom: 0,
+            paddingRight: 5,
+            width: 0,
+            height: 20,
+            enableInsets: false
+        )
 
         // Create seller stack view
         let sellerStackView = createSellerStackView()
         addSubview(sellerStackView)
-        sellerStackView.anchor(top: priceStackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12.5, paddingLeft: 5, paddingBottom: 0, paddingRight: 5, width: 0, height: 10, enableInsets: false)
+        sellerStackView.anchor(
+            top: priceStackView.bottomAnchor,
+            left: leftAnchor,
+            bottom: nil,
+            right: rightAnchor,
+            paddingTop: 12.5,
+            paddingLeft: 5,
+            paddingBottom: 0,
+            paddingRight: 5,
+            width: 0,
+            height: 10,
+            enableInsets: false
+        )
     }
 }
 
 // Extension contains tedious UI view creation + constraint specifications
 extension ListingView {
     private func setupListingImageView() {
-        listingImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 100, enableInsets: false)
+        listingImageView.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            bottom: nil,
+            right: rightAnchor,
+            paddingTop: 10,
+            paddingLeft: 10,
+            paddingBottom: 0,
+            paddingRight: 10,
+            width: 0,
+            height: 100,
+            enableInsets: false
+        )
         listingImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
 
         let animation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .topLeftBottomRight)
@@ -101,7 +149,19 @@ extension ListingView {
             howrareLabel.text = "N/A"
         }
         let howrareStack = UIStackView(arrangedSubviews: [howrareImageView, howrareLabel])
-        howrareImageView.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 2, paddingLeft: 2, paddingBottom: 2, paddingRight: 2, width: 12, height: 12, enableInsets: false)
+        howrareImageView.anchor(
+            top: nil,
+            left: nil,
+            bottom: nil,
+            right: nil,
+            paddingTop: 2,
+            paddingLeft: 2,
+            paddingBottom: 2,
+            paddingRight: 2,
+            width: 12,
+            height: 12,
+            enableInsets: false
+        )
         howrareImageView.centerYAnchor.constraint(equalTo: howrareStack.centerYAnchor).isActive = true
         howrareLabel.centerYAnchor.constraint(equalTo: howrareStack.centerYAnchor).isActive = true
         howrareStack.axis = .horizontal
@@ -125,7 +185,19 @@ extension ListingView {
             moonrankLabel.text = "N/A"
         }
         let moonrankStack = UIStackView(arrangedSubviews: [moonrankImageView, moonrankLabel])
-        moonrankImageView.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 2, paddingLeft: 2, paddingBottom: 2, paddingRight: 2, width: 12, height: 12, enableInsets: false)
+        moonrankImageView.anchor(
+            top: nil,
+            left: nil,
+            bottom: nil,
+            right: nil,
+            paddingTop: 2,
+            paddingLeft: 2,
+            paddingBottom: 2,
+            paddingRight: 2,
+            width: 12,
+            height: 12,
+            enableInsets: false
+        )
         moonrankImageView.centerYAnchor.constraint(equalTo: moonrankStack.centerYAnchor).isActive = true
         moonrankLabel.centerYAnchor.constraint(equalTo: moonrankStack.centerYAnchor).isActive = true
         moonrankStack.axis = .horizontal
@@ -153,10 +225,34 @@ extension ListingView {
         let priceStackView = UIStackView(arrangedSubviews: [priceRowLabel, priceLabel])
         priceStackView.axis = .horizontal
 
-        priceRowLabel.anchor(top: priceStackView.topAnchor, left: priceStackView.leftAnchor, bottom: priceStackView.bottomAnchor, right: priceStackView.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 20, enableInsets: false)
+        priceRowLabel.anchor(
+            top: priceStackView.topAnchor,
+            left: priceStackView.leftAnchor,
+            bottom: priceStackView.bottomAnchor,
+            right: priceStackView.centerXAnchor,
+            paddingTop: 0,
+            paddingLeft: 0,
+            paddingBottom: 0,
+            paddingRight: 0,
+            width: 0,
+            height: 20,
+            enableInsets: false
+        )
         priceRowLabel.textAlignment = .left
 
-        priceLabel.anchor(top: priceStackView.topAnchor, left: priceStackView.centerXAnchor, bottom: priceStackView.bottomAnchor, right: priceStackView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 20, enableInsets: false)
+        priceLabel.anchor(
+            top: priceStackView.topAnchor,
+            left: priceStackView.centerXAnchor,
+            bottom: priceStackView.bottomAnchor,
+            right: priceStackView.rightAnchor,
+            paddingTop: 0,
+            paddingLeft: 0,
+            paddingBottom: 0,
+            paddingRight: 0,
+            width: 0,
+            height: 20,
+            enableInsets: false
+        )
         priceLabel.textAlignment = .right
 
         return priceStackView
@@ -176,10 +272,34 @@ extension ListingView {
         let sellerStackView = UIStackView(arrangedSubviews: [sellerRowLabel, sellerLabel])
         sellerStackView.axis = .horizontal
 
-        sellerRowLabel.anchor(top: sellerStackView.topAnchor, left: sellerStackView.leftAnchor, bottom: sellerStackView.bottomAnchor, right: sellerStackView.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 20, enableInsets: false)
+        sellerRowLabel.anchor(
+            top: sellerStackView.topAnchor,
+            left: sellerStackView.leftAnchor,
+            bottom: sellerStackView.bottomAnchor,
+            right: sellerStackView.centerXAnchor,
+            paddingTop: 0,
+            paddingLeft: 0,
+            paddingBottom: 0,
+            paddingRight: 0,
+            width: 0,
+            height: 20,
+            enableInsets: false
+        )
         sellerRowLabel.textAlignment = .left
 
-        sellerLabel.anchor(top: sellerStackView.topAnchor, left: sellerStackView.centerXAnchor, bottom: sellerStackView.bottomAnchor, right: sellerStackView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 20, enableInsets: false)
+        sellerLabel.anchor(
+            top: sellerStackView.topAnchor,
+            left: sellerStackView.centerXAnchor,
+            bottom: sellerStackView.bottomAnchor,
+            right: sellerStackView.rightAnchor,
+            paddingTop: 0,
+            paddingLeft: 0,
+            paddingBottom: 0,
+            paddingRight: 0,
+            width: 0,
+            height: 20,
+            enableInsets: false
+        )
         sellerLabel.textAlignment = .right
 
         return sellerStackView

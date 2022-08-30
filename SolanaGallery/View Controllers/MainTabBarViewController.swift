@@ -31,17 +31,36 @@ class MainTabBarViewController: UITabBarController {
 
         tabBar.barTintColor = .black
         tabBar.tintColor = .white
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.primaryFont(size: 12)], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes(
+            [
+                NSAttributedString.Key.font: UIFont.primaryFont(size: 12)
+            ],
+            for: .normal
+        )
 
         setViewControllers([searchVC, walletTrackerVC, watchlistVC], animated: true)
     }
 
     private func setupNavigationTitle(with titleName: String) -> UILabel {
         let label = UILabel()
+        
         label.text = titleName
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.anchor(top: navigationController?.navigationBar.topAnchor, left: navigationController?.navigationBar.leftAnchor, bottom: navigationController?.navigationBar.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: navigationController?.navigationBar.bounds.width ?? 0, height: 0, enableInsets: false)
+        label.anchor(
+            top: navigationController?.navigationBar.topAnchor,
+            left: navigationController?.navigationBar.leftAnchor,
+            bottom: navigationController?.navigationBar.bottomAnchor,
+            right: nil,
+            paddingTop: 0,
+            paddingLeft: 20,
+            paddingBottom: 0,
+            paddingRight: 0,
+            width: navigationController?.navigationBar.bounds.width ?? 0,
+            height: 0,
+            enableInsets: false
+        )
+        
         return label
     }
 }

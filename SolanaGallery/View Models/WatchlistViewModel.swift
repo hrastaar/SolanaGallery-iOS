@@ -14,7 +14,7 @@ class WatchlistViewModel {
     var watchlistItems = PublishSubject<[WatchlistCollectionViewModel]>()
     let isOnWatchlist = PublishSubject<Bool>()
 
-    let SolanaGalleryApiInstance = SolanaGalleryAPI.sharedInstance
+    let solanaGalleryApi = SolanaGalleryAPI.sharedInstance
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -32,7 +32,7 @@ class WatchlistViewModel {
                     continue
                 }
                 dispatchGroup.enter()
-                SolanaGalleryApiInstance.fetchCollectionStats(collectionSymbol: collectionName) { stats, err in
+                solanaGalleryApi.fetchCollectionStats(collectionSymbol: collectionName) { stats, err in
                     if let err = err {
                         print("WatchlistViewModel failed to fetch collection stats.")
                         print(err.localizedDescription)
@@ -52,8 +52,8 @@ class WatchlistViewModel {
             }
 
             dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
-                watchlistItemsResponse.sort { a, b in
-                    a.getCollectionNameString() < b.getCollectionNameString()
+                watchlistItemsResponse.sort { first, second in
+                    first.getCollectionNameString() < second.getCollectionNameString()
                 }
                 self.watchlistItems.onNext(watchlistItemsResponse)
                 print("Successfully fetched collection stats for \(watchlistItems.count) collections")

@@ -46,9 +46,12 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
     var activityTableView: UITableView = {
         var tableView = UITableView(frame: .zero)
 
-        tableView.register(CollectionActivityTableViewCell.self, forCellReuseIdentifier: CollectionActivityTableViewCell.ReuseIdentifier)
+        tableView.register(
+            CollectionActivityTableViewCell.self,
+            forCellReuseIdentifier: CollectionActivityTableViewCell.ReuseIdentifier
+        )
         tableView.allowsMultipleSelectionDuringEditing = false
-        tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
+        tableView.layer.cornerRadius = Constants.TableView.CornerRadius
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
         tableView.showsVerticalScrollIndicator = false
@@ -128,8 +131,24 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
 
     private func setupStatisticsView() {
         view.addSubview(statisticsView)
-        statisticsView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 80, enableInsets: false)
+        statisticsView.anchor(
+            top: view.safeAreaLayoutGuide.topAnchor,
+            left: view.safeAreaLayoutGuide.leftAnchor,
+            bottom: nil,
+            right: view.safeAreaLayoutGuide.rightAnchor,
+            paddingTop: 10,
+            paddingLeft: 10,
+            paddingBottom: 10,
+            paddingRight: 10,
+            width: 0,
+            height: 80,
+            enableInsets: false
+        )
 
+        createStatisticStatsViews()
+    }
+
+    private func createStatisticStatsViews() {
         // Create information labels and provide default values
         let floorValueLabel = UILabel()
         floorValueLabel.textColor = .white
@@ -175,9 +194,23 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         floorValueStackView.axis = .vertical
         floorValueStackView.alignment = .center
         floorValueStackView.spacing = 10
+        
         statisticsView.addSubview(floorValueStackView)
 
-        floorValueStackView.anchor(top: nil, left: statisticsView.leftAnchor, bottom: nil, right: statisticsView.centerXAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        floorValueStackView.anchor(
+            top: nil,
+            left: statisticsView.leftAnchor,
+            bottom: nil,
+            right: statisticsView.centerXAnchor,
+            paddingTop: 10,
+            paddingLeft: 10,
+            paddingBottom: 10,
+            paddingRight: 10,
+            width: 0,
+            height: 0,
+            enableInsets: false
+        )
+        
         floorValueStackView.centerYAnchor.constraint(equalTo: statisticsView.centerYAnchor).isActive = true
 
         let listedCountStackView = UIStackView(arrangedSubviews: [listedCountValueLabel, listedCountCategoryLabel])
@@ -186,13 +219,26 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         listedCountStackView.spacing = 10
         statisticsView.addSubview(listedCountStackView)
 
-        listedCountStackView.anchor(top: nil, left: statisticsView.centerXAnchor, bottom: nil, right: statisticsView.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        listedCountStackView.anchor(
+            top: nil,
+            left: statisticsView.centerXAnchor,
+            bottom: nil,
+            right: statisticsView.rightAnchor,
+            paddingTop: 10,
+            paddingLeft: 10,
+            paddingBottom: 10,
+            paddingRight: 10,
+            width: 0,
+            height: 0,
+            enableInsets: false
+        )
+        
         listedCountStackView.centerYAnchor.constraint(equalTo: statisticsView.centerYAnchor).isActive = true
     }
 
     private func setupWatchlistButton() -> UIButton {
         let watchlistActionButton = UIButton()
-        watchlistActionButton.layer.cornerRadius = Constants.UI.Button.CornerRadius
+        watchlistActionButton.layer.cornerRadius = Constants.Button.CornerRadius
         watchlistActionButton.backgroundColor = ColorManager.primaryCellColor
         watchlistActionButton.titleLabel?.textColor = .white
         watchlistActionButton.titleLabel?.font = .primaryFont(size: 16)
@@ -200,9 +246,24 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         view.addSubview(watchlistActionButton)
 
         // Apply constraints to button
-        watchlistActionButton.anchor(top: statisticsView.bottomAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 10, paddingRight: 10, width: 100, height: 40, enableInsets: false)
+        watchlistActionButton.anchor(
+            top: statisticsView.bottomAnchor,
+            left: nil,
+            bottom: nil,
+            right: view.rightAnchor,
+            paddingTop: 10,
+            paddingLeft: 0,
+            paddingBottom: 10,
+            paddingRight: 10,
+            width: 100,
+            height: 40,
+            enableInsets: false
+        )
 
-        watchlistViewModel.isOnWatchlist.map { $0 ? "Unfollow" : "Follow" }.bind(to: watchlistActionButton.rx.title()).disposed(by: disposeBag)
+        watchlistViewModel.isOnWatchlist.map {
+            $0 ? "Unfollow" : "Follow"
+        }.bind(to: watchlistActionButton.rx.title()).disposed(by: disposeBag)
+        
         _ = watchlistViewModel.isInWatchlist(collectionSymbol: collectionSymbol)
         watchlistActionButton.isUserInteractionEnabled = true
         watchlistActionButton.addTarget(self, action: #selector(toggleWatchlistStatus), for: .touchUpInside)
@@ -212,7 +273,7 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
 
     private func setupBuyCollectionButton() -> UIButton {
         let buyOnMagicEdenButton = UIButton()
-        buyOnMagicEdenButton.layer.cornerRadius = Constants.UI.Button.CornerRadius
+        buyOnMagicEdenButton.layer.cornerRadius = Constants.Button.CornerRadius
         buyOnMagicEdenButton.backgroundColor = ColorManager.primaryCellColor
         buyOnMagicEdenButton.titleLabel?.textColor = .white
         buyOnMagicEdenButton.titleLabel?.font = .primaryFont(size: 16)
@@ -221,7 +282,19 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
         view.addSubview(buyOnMagicEdenButton)
 
         // Apply constraints to button
-        buyOnMagicEdenButton.anchor(top: statisticsView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 150, height: 40, enableInsets: false)
+        buyOnMagicEdenButton.anchor(
+            top: statisticsView.bottomAnchor,
+            left: view.leftAnchor,
+            bottom: nil,
+            right: nil,
+            paddingTop: 10,
+            paddingLeft: 10,
+            paddingBottom: 10,
+            paddingRight: 10,
+            width: 150,
+            height: 40,
+            enableInsets: false
+        )
 
         buyOnMagicEdenButton.isUserInteractionEnabled = true
         buyOnMagicEdenButton.addTarget(self, action: #selector(openMagicEdenCollectionSafariPage), for: .touchUpInside)
@@ -233,10 +306,22 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
     private func fillListingStackView(with collectionListings: [CollectionListing]) {
         DispatchQueue.main.async {
             self.view.addSubview(self.listingsScrollView)
-            self.listingsScrollView.topAnchor.constraint(equalTo: self.watchlistButton?.bottomAnchor ?? self.statisticsView.bottomAnchor, constant: 10).isActive = true
+            self.listingsScrollView.topAnchor.constraint(
+                equalTo: self.watchlistButton?.bottomAnchor ?? self.statisticsView.bottomAnchor,
+                constant: 10
+            ).isActive = true
+            
             self.listingsScrollView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-            self.listingsScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 12.5).isActive = true
-            self.listingsScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -12.5).isActive = true
+            
+            self.listingsScrollView.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor,
+                constant: 12.5
+            ).isActive = true
+            
+            self.listingsScrollView.trailingAnchor.constraint(
+                equalTo: self.view.trailingAnchor,
+                constant: -12.5
+            ).isActive = true
 
             // Stack view that contains listing views
             let stackView = UIStackView()
@@ -255,17 +340,54 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
             stackView.heightAnchor.constraint(equalTo: self.listingsScrollView.heightAnchor).isActive = true
 
             for collectionListing in collectionListings {
-                let listingView = ListingView(listing: collectionListing, frame: .init(x: 0, y: 0, width: 400, height: stackView.bounds.height))
+                let listingView = ListingView(
+                    listing: collectionListing,
+                    frame: .init(
+                        x: 0,
+                        y: 0,
+                        width: 400,
+                        height: stackView.bounds.height
+                    )
+                )
+                
                 listingView.translatesAutoresizingMaskIntoConstraints = false
 
-                let gesture = UITapGestureRecognizer(target: self, action: #selector(self.openMagicEdenListingSafariPage(_:)))
+                let gesture = UITapGestureRecognizer(
+                    target: self,
+                    action: #selector(self.openMagicEdenListingSafariPage(_:))
+                )
+                
                 listingView.addGestureRecognizer(gesture)
                 stackView.addArrangedSubview(listingView)
             }
 
-            self.activitySectionLabel.anchor(top: stackView.bottomAnchor, left: self.view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: self.view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+            self.activitySectionLabel.anchor(
+                top: stackView.bottomAnchor,
+                left: self.view.safeAreaLayoutGuide.leftAnchor,
+                bottom: nil,
+                right: self.view.safeAreaLayoutGuide.rightAnchor,
+                paddingTop: 10,
+                paddingLeft: 10,
+                paddingBottom: 10,
+                paddingRight: 10,
+                width: 0,
+                height: 0,
+                enableInsets: false
+            )
 
-            self.activityTableView.anchor(top: self.activitySectionLabel.bottomAnchor, left: self.view.safeAreaLayoutGuide.leftAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, right: self.view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+            self.activityTableView.anchor(
+                top: self.activitySectionLabel.bottomAnchor,
+                left: self.view.safeAreaLayoutGuide.leftAnchor,
+                bottom: self.view.safeAreaLayoutGuide.bottomAnchor,
+                right: self.view.safeAreaLayoutGuide.rightAnchor,
+                paddingTop: 10,
+                paddingLeft: 10,
+                paddingBottom: 10,
+                paddingRight: 10,
+                width: 0,
+                height: 0,
+                enableInsets: false
+            )
         }
     }
 
@@ -290,8 +412,8 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
             let config = SFSafariViewController.Configuration()
             config.entersReaderIfAvailable = true
 
-            let vc = SFSafariViewController(url: url, configuration: config)
-            present(vc, animated: true)
+            let viewController = SFSafariViewController(url: url, configuration: config)
+            present(viewController, animated: true)
         }
     }
 
@@ -301,8 +423,8 @@ class CollectionDetailViewController: UIViewController, UIScrollViewDelegate {
             let config = SFSafariViewController.Configuration()
             config.entersReaderIfAvailable = true
 
-            let vc = SFSafariViewController(url: url, configuration: config)
-            present(vc, animated: true)
+            let viewController = SFSafariViewController(url: url, configuration: config)
+            present(viewController, animated: true)
         }
     }
 }

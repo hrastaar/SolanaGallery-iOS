@@ -60,7 +60,19 @@ class CollectionActivityTableViewCell: UITableViewCell {
         stackView.spacing = 15
         addSubview(stackView)
 
-        stackView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        stackView.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 10,
+            paddingLeft: 10,
+            paddingBottom: 10,
+            paddingRight: 10,
+            width: 0,
+            height: 0,
+            enableInsets: false
+        )
     }
 
     @available(*, unavailable)

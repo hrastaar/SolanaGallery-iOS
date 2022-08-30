@@ -12,7 +12,9 @@ class CollectionSearchViewModel {
     let collectionSearchResults = PublishSubject<[CollectionSearchResult]>()
 
     func filterSearchResults(searchInput: String) {
-        SolanaGalleryAPI.sharedInstance.fetchCollectionsList(searchText: searchInput.lowercased()) { searchResults, err in
+        SolanaGalleryAPI.sharedInstance.fetchCollectionsList(
+            searchText: searchInput.lowercased()
+        ) { searchResults, err in
             if let err = err {
                 print(err.localizedDescription)
                 self.collectionSearchResults.onNext([])

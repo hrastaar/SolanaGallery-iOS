@@ -21,7 +21,7 @@ class SearchViewController: UIViewController {
         textField.placeholder = "Search for a collection"
         textField.backgroundColor = ColorManager.primaryCellColor
         textField.textColor = .white
-        textField.layer.cornerRadius = Constants.UI.TextField.CornerRadius
+        textField.layer.cornerRadius = Constants.TextField.CornerRadius
         textField.adjustsFontSizeToFitWidth = true
         textField.font = UIFont.primaryFont(size: 15)
         textField.autocapitalizationType = .none
@@ -33,9 +33,12 @@ class SearchViewController: UIViewController {
     let tableView: UITableView = {
         var tableView = UITableView(frame: .zero)
 
-        tableView.register(CollectionSearchResultTableViewCell.self, forCellReuseIdentifier: CollectionSearchResultTableViewCell.ReuseIdentifier)
+        tableView.register(
+            CollectionSearchResultTableViewCell.self,
+            forCellReuseIdentifier: CollectionSearchResultTableViewCell.ReuseIdentifier
+        )
         tableView.allowsMultipleSelectionDuringEditing = false
-        tableView.layer.cornerRadius = Constants.UI.TableView.CornerRadius
+        tableView.layer.cornerRadius = Constants.TableView.CornerRadius
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
 
@@ -56,9 +59,33 @@ class SearchViewController: UIViewController {
         view.addSubview(searchTextField)
         view.addSubview(tableView)
 
-        searchTextField.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 25, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 50, enableInsets: false)
+        searchTextField.anchor(
+            top: view.safeAreaLayoutGuide.topAnchor,
+            left: view.safeAreaLayoutGuide.leftAnchor,
+            bottom: nil,
+            right: view.safeAreaLayoutGuide.rightAnchor,
+            paddingTop: 25,
+            paddingLeft: 10,
+            paddingBottom: 0,
+            paddingRight: 10,
+            width: 0,
+            height: 50,
+            enableInsets: false
+        )
 
-        tableView.anchor(top: searchTextField.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        tableView.anchor(
+            top: searchTextField.bottomAnchor,
+            left: view.safeAreaLayoutGuide.leftAnchor,
+            bottom: view.safeAreaLayoutGuide.bottomAnchor,
+            right: view.safeAreaLayoutGuide.rightAnchor,
+            paddingTop: 10,
+            paddingLeft: 10,
+            paddingBottom: 10,
+            paddingRight: 10,
+            width: 0,
+            height: 0,
+            enableInsets: false
+        )
     }
 
     private func setupNavigationTitle() {

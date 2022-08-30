@@ -10,12 +10,12 @@ import UIKit
 extension UIColor {
     /// RGB String conversion material. Credited to https://stackoverflow.com/questions/36341358/how-to-convert-uicolor-to-string-and-string-to-uicolor-using-swift
     var rgbComponents: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
-        if getRed(&r, green: &g, blue: &b, alpha: &a) {
-            return (r, g, b, a)
+        var redComponent: CGFloat = 0
+        var greenComponent: CGFloat = 0
+        var blueComponent: CGFloat = 0
+        var alpha: CGFloat = 0
+        if getRed(&redComponent, green: &greenComponent, blue: &blueComponent, alpha: &alpha) {
+            return (redComponent, greenComponent, blueComponent, alpha)
         }
         return (0, 0, 0, 0)
     }
@@ -61,7 +61,7 @@ extension UIColor {
     }
 
     public convenience init?(hex: String) {
-        let r, g, b, a: CGFloat
+        let red, green, blue, alpha: CGFloat
 
         if hex.hasPrefix("#") {
             let start = hex.index(hex.startIndex, offsetBy: 1)
@@ -72,12 +72,12 @@ extension UIColor {
                 var hexNumber: UInt64 = 0
 
                 if scanner.scanHexInt64(&hexNumber) {
-                    r = CGFloat((hexNumber & 0xFF00_0000) >> 24) / 255
-                    g = CGFloat((hexNumber & 0x00FF_0000) >> 16) / 255
-                    b = CGFloat((hexNumber & 0x0000_FF00) >> 8) / 255
-                    a = CGFloat(hexNumber & 0x0000_00FF) / 255
+                    red = CGFloat((hexNumber & 0xFF00_0000) >> 24) / 255
+                    green = CGFloat((hexNumber & 0x00FF_0000) >> 16) / 255
+                    blue = CGFloat((hexNumber & 0x0000_FF00) >> 8) / 255
+                    alpha = CGFloat(hexNumber & 0x0000_00FF) / 255
 
-                    self.init(red: r, green: g, blue: b, alpha: a)
+                    self.init(red: red, green: green, blue: blue, alpha: alpha)
                     return
                 }
             }

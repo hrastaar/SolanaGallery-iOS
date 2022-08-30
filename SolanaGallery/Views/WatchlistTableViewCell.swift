@@ -14,29 +14,35 @@ class WatchlistTableViewCell: UITableViewCell {
 
     var collectionNameLabel: UILabel = {
         let label = UILabel()
+
         label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 15)
         label.sizeToFit()
+
         return label
     }()
 
     var floorPriceLabel: UILabel = {
         let label = UILabel()
+
         label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 13)
+
         return label
     }()
 
     var listedCountLabel: UILabel = {
         let label = UILabel()
+
         label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = UIFont.primaryFont(size: 13)
+
         return label
     }()
 
@@ -59,14 +65,38 @@ class WatchlistTableViewCell: UITableViewCell {
         super.addSubview(floorPriceLabel)
         super.addSubview(listedCountLabel)
 
-        collectionNameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 10, paddingBottom: 5, paddingRight: 0, width: 0, height: 0, enableInsets: false)
+        collectionNameLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: nil,
+            paddingTop: 5,
+            paddingLeft: 10,
+            paddingBottom: 5,
+            paddingRight: 0,
+            width: 0,
+            height: 0,
+            enableInsets: false
+        )
 
         let stackView = UIStackView(arrangedSubviews: [floorPriceLabel, listedCountLabel])
         stackView.distribution = .equalSpacing
         stackView.axis = .vertical
         stackView.spacing = 20
         addSubview(stackView)
-        stackView.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 5, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        stackView.anchor(
+            top: topAnchor,
+            left: nil,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 10,
+            paddingLeft: 5,
+            paddingBottom: 10,
+            paddingRight: 10,
+            width: 0,
+            height: 0,
+            enableInsets: false
+        )
     }
 
     @available(*, unavailable)

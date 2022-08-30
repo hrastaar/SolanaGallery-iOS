@@ -62,14 +62,38 @@ class PortfolioCollectionTableViewCell: UITableViewCell {
         super.addSubview(floorPriceLabel)
         super.addSubview(countLabel)
 
-        collectionNameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 10, paddingBottom: 5, paddingRight: 0, width: 0, height: 0, enableInsets: false)
+        collectionNameLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: nil,
+            paddingTop: 5,
+            paddingLeft: 10,
+            paddingBottom: 5,
+            paddingRight: 0,
+            width: 0,
+            height: 0,
+            enableInsets: false
+        )
 
         let stackView = UIStackView(arrangedSubviews: [floorPriceLabel, countLabel])
         stackView.distribution = .equalSpacing
         stackView.axis = .vertical
         stackView.spacing = 20
         addSubview(stackView)
-        stackView.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 5, paddingBottom: 10, paddingRight: 10, width: 0, height: 0, enableInsets: false)
+        stackView.anchor(
+            top: topAnchor,
+            left: nil,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 10,
+            paddingLeft: 5,
+            paddingBottom: 10,
+            paddingRight: 10,
+            width: 0,
+            height: 0,
+            enableInsets: false
+        )
     }
 
     @available(*, unavailable)

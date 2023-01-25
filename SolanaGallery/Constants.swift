@@ -21,12 +21,12 @@ struct Constants {
     }
 
     static func getMagicEdenListingUrl(with tokenMint: String) -> URL? {
-        let urlString = SolanaGalleryAPI.magicedenListingUrlPrefix + tokenMint
+        let urlString = SolanaGalleryAPI.MAGICEDEN_LISTINGS_URL + tokenMint
         return URL(string: urlString)
     }
 
     static func getMagicEdenCollectionUrl(with collectionSymbol: String) -> URL? {
-        let urlString = SolanaGalleryAPI.magicedenCollectionUrlPrefix + collectionSymbol
+        let urlString = SolanaGalleryAPI.MAGICEDEN_COLLECTION_URL + collectionSymbol
         return URL(string: urlString)
     }
 }

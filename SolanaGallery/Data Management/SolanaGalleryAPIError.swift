@@ -20,6 +20,8 @@ class SolanaGalleryAPIError: Error {
         self.error = error
         self.message = message
         self.errorType = errorType
+        
+        print("SolanaGalleryAPIError created: ", message)
     }
 }
 

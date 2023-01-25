@@ -26,15 +26,17 @@ class SolanaGalleryAPI {
             return
         }
 
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, err in
+        let task = URLSession.shared.dataTask(with: createAuthorizedURLRequestFrom(url: url)) { data, _, err in
             if let err = err {
                 print(err.localizedDescription)
-                completion(nil, SolanaGalleryAPIError(error: err))
+                completion(nil, SolanaGalleryAPIError(error: err, message: "Response error returned from endpoint: \(endpoint)"))
             }
-            guard let data = data,
-                  let collectionCounts = try? JSONDecoder().decode([CollectionCount].self, from: data)
-            else {
-                completion(nil, SolanaGalleryAPIError(errorType: .responseParsing))
+            guard let data = data else {
+                completion(nil, URLError(.unknown))
+                return
+            }
+            guard let collectionCounts = try? JSONDecoder().decode([CollectionCount].self, from: data) else {
+                completion(nil, SolanaGalleryAPIError(message: "Couldn't convert data to [CollectionCount].self", errorType: .responseParsing))
                 return
             }
             completion(collectionCounts, nil)
@@ -56,16 +58,17 @@ class SolanaGalleryAPI {
             completion(nil, URLError(.badURL))
             return
         }
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, err in
+        let task = URLSession.shared.dataTask(with: createAuthorizedURLRequestFrom(url: url)) { data, _, err in
             if let err = err {
-                print("Error fetching collection stats for \(collectionSymbol)")
-                completion(nil, SolanaGalleryAPIError(error: err, message: err.localizedDescription))
+                completion(nil, SolanaGalleryAPIError(error: err, message: "Response error returned from endpoint: \(endpoint)"))
                 return
             }
-            guard let data = data,
-                  let collectionStats = try? JSONDecoder().decode(CollectionStats.self, from: data)
-            else {
-                completion(nil, SolanaGalleryAPIError(errorType: .responseParsing))
+            guard let data = data else {
+                completion(nil, URLError(.unknown))
+                return
+            }
+            guard let collectionStats = try? JSONDecoder().decode(CollectionStats.self, from: data) else {
+                completion(nil, SolanaGalleryAPIError(message: "Couldn't convert data to CollectionStats.self", errorType: .responseParsing))
                 return
             }
             completion(collectionStats, nil)
@@ -86,16 +89,17 @@ class SolanaGalleryAPI {
             completion(nil, URLError(.badURL))
             return
         }
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, err in
+        let task = URLSession.shared.dataTask(with: createAuthorizedURLRequestFrom(url: url)) { data, _, err in
             if let err = err {
-                print(err.localizedDescription)
-                completion(nil, SolanaGalleryAPIError(error: err))
+                completion(nil, SolanaGalleryAPIError(error: err, message: "Response error returned from endpoint: \(endpoint)"))
                 return
             }
-            guard let data = data,
-                  let collectionListings = try? JSONDecoder().decode([CollectionListing].self, from: data)
-            else {
-                completion(nil, SolanaGalleryAPIError(errorType: .responseParsing))
+            guard let data = data else {
+                completion(nil, URLError(.unknown))
+                return
+            }
+            guard let collectionListings = try? JSONDecoder().decode([CollectionListing].self, from: data) else {
+                completion(nil, SolanaGalleryAPIError(message: "Couldn't convert data to [CollectionListing].self", errorType: .responseParsing))
                 return
             }
 
@@ -121,16 +125,17 @@ class SolanaGalleryAPI {
             completion(nil, URLError(.badURL))
             return
         }
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, err in
+        let task = URLSession.shared.dataTask(with: createAuthorizedURLRequestFrom(url: url)) { data, _, err in
             if let err = err {
-                print(err.localizedDescription)
-                completion(nil, SolanaGalleryAPIError(error: err))
+                completion(nil, SolanaGalleryAPIError(error: err, message: "Response error returned from endpoint: \(endpoint)"))
                 return
             }
-            guard let data = data,
-                  let collectionActivities = try? JSONDecoder().decode([CollectionActivityEvent].self, from: data)
-            else {
-                completion(nil, SolanaGalleryAPIError(errorType: .responseParsing))
+            guard let data = data else {
+                completion(nil, URLError(.unknown))
+                return
+            }
+            guard let collectionActivities = try? JSONDecoder().decode([CollectionActivityEvent].self, from: data) else {
+                completion(nil, SolanaGalleryAPIError(message: "Couldn't convert data to [CollectionActivityEvent].self", errorType: .responseParsing))
                 return
             }
             completion(collectionActivities, nil)
@@ -151,53 +156,62 @@ class SolanaGalleryAPI {
             completion(nil, URLError(.badURL))
             return
         }
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, err in
+        let task = URLSession.shared.dataTask(with: createAuthorizedURLRequestFrom(url: url)) { data, _, err in
             if let err = err {
-                print(err.localizedDescription)
+                completion(nil, SolanaGalleryAPIError(error: err, message: "Response error returned from endpoint: \(endpoint)"))
+                return
+            }
+            guard let data = data else {
                 completion(nil, URLError(.unknown))
                 return
             }
-            guard let data = data,
-                  let collectionSearchResults = try? JSONDecoder().decode([CollectionSearchResult].self, from: data)
-            else {
-                completion(nil, SolanaGalleryAPIError(errorType: .responseParsing))
+            guard let collectionSearchResults = try? JSONDecoder().decode([CollectionSearchResult].self, from: data) else {
+                completion(nil, SolanaGalleryAPIError(message: "Couldn't convert data to [CollectionSearchResult].self", errorType: .responseParsing))
                 return
             }
             completion(collectionSearchResults, nil)
         }
         task.resume()
     }
+    
+    private func createAuthorizedURLRequestFrom(url: URL) -> URLRequest {
+        var urlRequest = URLRequest(url: url)
+        urlRequest.addValue(API_KEY, forHTTPHeaderField: API_KEY_HEADER)
+        return urlRequest
+    }
 
     private func getNftCollectionCountsEndpoint(wallet: String) -> String {
-        return solanaGalleryApiBaseUrl + walletEndpoint + wallet + getNftCollectionCounts
+        return API_BASE_URL + WALLET_ENDPOINT + wallet + GET_NFT_COLLECTION_COUNTS
     }
 
     private func getNftCollectionStatsEndpoint(collectionName: String) -> String {
-        return solanaGalleryApiBaseUrl + statsEndpoint + collectionName
+        return API_BASE_URL + STATS_ENDPOINT + collectionName
     }
 
     private func getNftCollectionListingsEndpoint(collectionName: String) -> String {
-        return solanaGalleryApiBaseUrl + listingsEndpoint + collectionName
+        return API_BASE_URL + LISTINGS_ENDPOINT + collectionName
     }
 
     private func getNftCollectionActivitiesEndpoint(collectionSymbol: String, desiredCount: Int) -> String {
         let countString = String(desiredCount)
-        return solanaGalleryApiBaseUrl + activitiesEndpoint + collectionSymbol + "/0/" + countString
+        return API_BASE_URL + ACTIVITIES_ENDPOINT + collectionSymbol + "/0/" + countString
     }
 
     private func getSearchCollectionsEndpoint(searchText: String) -> String {
         let translatedSearchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        return solanaGalleryApiBaseUrl + collectionSearchResults + translatedSearchText
+        return API_BASE_URL + COLLECTION_SEARCH_RESULTS_ENDPOINT + translatedSearchText
     }
 
-    private let solanaGalleryApiBaseUrl = "https://rastaar.com/"
-    private let walletEndpoint = "solana/wallet/"
-    private let statsEndpoint = "solana/stats/"
-    private let listingsEndpoint = "solana/listings/"
-    private let activitiesEndpoint = "solana/activities/"
-    private let getNftCollectionCounts = "/get_nft_collection_counts"
-    private let collectionSearchResults = "solana/search/collections/"
+    private let API_BASE_URL = "https://rastaar.com/"
+    private let WALLET_ENDPOINT = "solana/wallet/"
+    private let STATS_ENDPOINT = "solana/stats/"
+    private let LISTINGS_ENDPOINT = "solana/listings/"
+    private let ACTIVITIES_ENDPOINT = "solana/activities/"
+    private let GET_NFT_COLLECTION_COUNTS = "/get_nft_collection_counts"
+    private let COLLECTION_SEARCH_RESULTS_ENDPOINT = "solana/search/collections/"
+    private let API_KEY_HEADER = "x-api-key"
+    private let API_KEY = "2bhbc6xjvb9x2pvscg1hre1jy8ug52"
 
-    static let magicedenListingUrlPrefix = "https://magiceden.io/item-details/"
-    static let magicedenCollectionUrlPrefix = "https://magiceden.io/marketplace/"
+    static let MAGICEDEN_LISTINGS_URL = "https://magiceden.io/item-details/"
+    static let MAGICEDEN_COLLECTION_URL = "https://magiceden.io/marketplace/"
 }

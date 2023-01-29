@@ -41,7 +41,7 @@ struct CollectionActivityEvent: Decodable {
     }
 }
 
-enum CollectionActivityType: Decodable, CustomStringConvertible {
+enum CollectionActivityType: Decodable, CustomStringConvertible, Equatable {
     case bid, cancelBid, list, delist, buyNow
     case unknown(value: String)
     init(from decoder: Decoder) throws {

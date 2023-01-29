@@ -47,7 +47,10 @@ class CollectionDetailViewModel {
             guard let activities = activities else {
                 return
             }
-            self.activities.onNext(activities)
+            let salesActivities = activities.filter { activity in
+                return (activity.type == .buyNow) || (activity.type == .bid)
+            }
+            self.activities.onNext(salesActivities)
         }
     }
 }

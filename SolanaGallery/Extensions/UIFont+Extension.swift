@@ -8,7 +8,8 @@
 import UIKit
 
 extension UIFont {
+    static let FONT_FAMILY_NAME = "D-DIN"
     static func primaryFont(size: CGFloat) -> UIFont {
-        return UIFont(name: "D-DIN", size: size)!
+        return UIFont(name: FONT_FAMILY_NAME, size: size)!
     }
 }

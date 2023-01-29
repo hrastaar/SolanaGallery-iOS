@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SolanaGalleryAPIError: Error {
+class SolanaGalleryAPIError: DebugPrintingError {
     let error: Error?
     let message: String
     let errorType: SolanaGalleryAPIErrorType
@@ -20,8 +20,15 @@ class SolanaGalleryAPIError: Error {
         self.error = error
         self.message = message
         self.errorType = errorType
-        
-        print("SolanaGalleryAPIError created: ", message)
+        super.init(debugMessage: message)
+    }
+}
+
+class DebugPrintingError: Error {
+    let debugMessage: String
+    init(debugMessage: String) {
+        self.debugMessage = debugMessage
+        print(debugMessage)
     }
 }
 
